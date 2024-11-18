@@ -1,0 +1,55 @@
+' plantuml 기준 문서
+
+@startuml
+start
+
+
+fork
+  :get amenities list; 
+  :Map.showIcons();
+
+  fork
+   repeat
+   backward: warning;
+   repeat while (Map.onClick()) is (error) not (ok)
+      :open amenity popup;
+      : click close button;
+
+   fork again
+    repeat
+    repeat while (filter amenities?) is (no) not (yes)
+      :filter amenities list;
+
+    
+
+fork again
+  : display \n QnA button;
+  : click \n QnA button;
+  : display QnA Board;
+  if (login) then (admin)
+  : click comment button;
+  repeat
+  backward: Warning;
+  repeat while (User.commentOnPost()) is (error) not (ok);
+
+  else (general)
+  : click write button;
+  repeat
+  backward: Warning;
+  repeat while (User.writePost()) is (error) not (ok);
+  endif
+
+fork again
+  : display update \n amenity button;
+  if (login) then (admin)
+  repeat
+  backward: Warning;
+  repeat while (User.manageAmenities()) is (error) not (ok);
+  else (general)
+  : popup error message;
+  endif
+
+end merge
+  : Map.showIcons();
+stop
+@enduml
