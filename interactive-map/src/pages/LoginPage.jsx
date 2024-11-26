@@ -32,19 +32,19 @@ const LoginPage = () => {
         </Title>
         <form onSubmit={form.onSubmit()}>
           <TextInput
-            label="User name"
-            placeholder="User name"
+            label="아이디"
+            placeholder="아이디"
             size="xl"
-            aria-label="Enter your email"
+            aria-label="아이디 입력"
             {...form.getInputProps("email")}
             required
           />
           <PasswordInput
-            label="Password"
-            placeholder="Password"
+            label="비밀번호"
+            placeholder="비밀번호"
             mt="md"
             size="xl"
-            aria-label="Enter your password"
+            aria-label="비밀번호 입력"
             // description="password at least 8 characters"
             {...form.getInputProps("password")}
             required
