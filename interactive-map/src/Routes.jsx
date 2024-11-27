@@ -25,7 +25,7 @@ function MyRoute() {
         }
       />
 
-      {/* Route to the login page */}
+      
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/forum" element={<ForumBtn />} />
     </Routes>
