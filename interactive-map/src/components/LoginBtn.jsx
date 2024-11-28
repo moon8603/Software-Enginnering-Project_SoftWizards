@@ -17,11 +17,3 @@ const LoginBtn = () => {
 }
 
 export default LoginBtn
-/*
-<div>
-    <Map />
-    <LoginBtn />
-    <Filter />
-    <ForumBtn />
-  </div>
-*/

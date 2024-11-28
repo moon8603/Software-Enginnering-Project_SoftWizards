@@ -1,29 +1,27 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { useEffect, useState } from "react";
 
 // Import the icon, may add more icon later
 import customIconUrl from "../images/red-icon.png";
 import "leaflet/dist/leaflet.css";
 
 const Map = () => {
+  const [facilities, setFacilities] = useState([]);
   // Set initial position to be centered on campus
   const campusCoordinates = [37.583825, 127.060001];
   const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
 
-  const facilities = [
-    {
-      id: 1,
-      name: "중앙도서관",
-      coordinates: [37.584939, 127.062061],
-      description: "Main Library",
-    },
-    {
-      id: 2,
-      name: "학생회관",
-      coordinates: [37.58367, 127.059945],
-      description: "Student Hall",
-    },
-  ];
+  useEffect(() => {
+    fetch("./src/data/facilities.json") //index.html 기준의 path
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch facilities data");
+        }
+        return response.json();
+      })
+      .then((data) => setFacilities(data))
+  }, []);
 
   // Define a custom icon for facilities
   const customIcon = new L.Icon({
@@ -47,6 +45,7 @@ const Map = () => {
         maxZoom={20}
       />
 
+      {/* Render markers only when facilities data is loaded */}
       {facilities.map((facility) => (
         <Marker
           key={facility.id}
@@ -57,6 +56,7 @@ const Map = () => {
           <Popup>
             <h3>{facility.name}</h3>
             <p>{facility.description}</p>
+            <p>Working Hours: {facility.workingHour}</p>
           </Popup>
         </Marker>
       ))}
