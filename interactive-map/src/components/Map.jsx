@@ -12,6 +12,7 @@ const Map = () => {
   const campusCoordinates = [37.583825, 127.060001];
   const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
 
+  // facilities 데이터 가져오기
   useEffect(() => {
     fetch("./src/data/facilities.json") //index.html 기준의 path
       .then((response) => {
