@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "중앙도서관",
+    "coordinates": [37.584939, 127.062061],
+    "description": "Main Library",
+    "workingHour": "9:00 ~ 18:00",
+    "type": ["건물", "도서관"]
+  },
+  {
+    "id": 2,
+    "name": "학생회관",
+    "coordinates": [37.58367, 127.059945],
+    "description": "Student Hall",
+    "workingHour": "0:00 ~ 23:59",
+    "type": ["건물", "학생"]
+  }
+]

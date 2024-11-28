@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Facility A is missing information",
+    "content": "I couldn't find details about Facility A. Please update.",
+    "author": "User1",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Thanks for the feedback. We'll update soon!",
+        "author": "Admin"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "The map is too slow to load",
+    "content": "The map takes too long to load on mobile.",
+    "author": "User2",
+    "comments": []
+  }
+]
