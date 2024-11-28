@@ -18,3 +18,5 @@
 Local: http://localhost:5173/
 
 링크를 누르면 웹페이지로 리디렉팅 될 것이다.
+
+![image](https://github.com/user-attachments/assets/5359fe37-1fbc-4e9a-94f0-8f91a311d225)
