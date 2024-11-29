@@ -1,6 +1,9 @@
 # 📁 프로젝트 관련
 [프로젝트 관련 정보 보기 (참여자, 목표 등)](ProjectRelated.md)
 
+[시설 정보 추가하는 방법 (JSON)](acilitiesRelated.md
+)
+
 # 🚀 웹 앱 실행 방법
 
 1. **모든 코드를 다운로드한 상태에서 Terminal을 열기**
