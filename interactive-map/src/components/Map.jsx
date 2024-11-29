@@ -21,7 +21,7 @@ const Map = () => {
         }
         return response.json();
       })
-      .then((data) => setFacilities(data))
+      .then((data) => setFacilities(data));
   }, []);
 
   // Define a custom icon for facilities

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { Textarea, Button, Stack } from "@mantine/core";
 
 const ReplyForm = ({ onSubmit }) => {
   const [reply, setReply] = useState("");
@@ -8,18 +9,21 @@ const ReplyForm = ({ onSubmit }) => {
     setReply("");
   };
 
-
   return (
-    <div>
-      <textarea 
-        placeholder='Reply as Admin'
+    <Stack
+      spacing="md"
+      style={{ width: "100%", margin: "0", marginTop: "20px" }}
+    >
+      <Textarea
+        placeholder="Reply as Admin"
         value={reply}
         onChange={(e) => setReply(e.target.value)}
       />
-      <button onClick={handleReply}>댓글</button>
-    </div>
+      <Button onClick={handleReply} color="blue" fullWidth>
+        댓글
+      </Button>
+    </Stack>
   );
 };
 
-export default ReplyForm
-
+export default ReplyForm;

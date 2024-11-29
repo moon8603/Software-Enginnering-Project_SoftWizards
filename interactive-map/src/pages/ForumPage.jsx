@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
-import { Button, Container, Group, Title } from '@mantine/core';
-import '../index.css'
+import { Button, Container, Group, Title } from "@mantine/core";
+import "../index.css";
 
 const ForumPage = () => {
   const [posts, setPosts] = useState([]);
@@ -27,7 +27,9 @@ const ForumPage = () => {
   };
 
   const handleUpdatePost = (updatedPost) => {
-    setPosts(posts.map((post) => (post.id === updatedPost.id ? updatedPost : post)));
+    setPosts(
+      posts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
   };
 
   const handleDeletePost = (id) => {
@@ -42,7 +44,11 @@ const ForumPage = () => {
               ...post,
               replies: [
                 ...post.replies,
-                { id: post.replies.length + 1, content: replyContent, author: "Admin" },
+                {
+                  id: post.replies.length + 1,
+                  content: replyContent,
+                  author: "Admin",
+                },
               ],
             }
           : post
@@ -52,10 +58,18 @@ const ForumPage = () => {
 
   return (
     <Container w="100%" h="100vh">
-      <Title order={1} align="center" mb="lg" pt="xl">게시판</Title>
+      <Title order={1} align="center" mb="lg" pt="xl">
+        게시판
+      </Title>
       <Group position="center" mb="sm">
-        <Button onClick={() => setIsCreating(true)} variant="filled" fz="md">글 작성</Button>
-        <Button onClick={() => setRole(role === "user" ? "admin" : "user")} variant="outline" fz="md">
+        <Button onClick={() => setIsCreating(true)} variant="filled" fz="md">
+          글 작성
+        </Button>
+        <Button
+          onClick={() => setRole(role === "user" ? "admin" : "user")}
+          variant="outline"
+          fz="md"
+        >
           {role === "admin" ? "관리자 모드 OFF" : "관리자 모드 ON"}
         </Button>
       </Group>
