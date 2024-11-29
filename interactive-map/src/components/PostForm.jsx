@@ -1,10 +1,11 @@
 //게시글 작성 폼
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useStore from "../store/store"; // Import Zustand store
+import { TextInput, Textarea, Button, Title, Stack } from '@mantine/core';
 
 const PostForm = ({ post, onSubmit, onClose }) => {
-  const { currentUser, setCurrentUser } = useStore();
+  const { setCurrentUser } = useStore();
   
   const [title, setTitle] = useState(post?.title || "");
   const [content, setContent] = useState(post?.content || "");
@@ -19,32 +20,41 @@ const PostForm = ({ post, onSubmit, onClose }) => {
   }
 
   return (
-    <div>
-      <h2>{post ? "글 수정" : "글 작성"}</h2>
-      <input
-        type='text'
+    <Stack spacing="md" shadow="md" m="md" style={{ padding:"12px" }}>
+      <Title order={3}>{post ? "글 수정" : "글 작성"}</Title>
+
+      <TextInput
         placeholder='작성자 이름'
         value={author}
         onChange={(e) => {
           setAuthor(e.target.value)
           setCurrentUser(e.target.value)
         }}
+        label="작성자"
+        required
       />
-      <input
-        type='text'
+      <TextInput
         placeholder='제목'
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        label="제목"
+        required
       />
-      <textarea
+      <Textarea
         placeholder='내용'
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        label="내용"
+        required
       />
 
-      <button onClick={handleSubmit}>{post ? "수정" : "작성"}</button>
-      <button onClick={onClose}>취소</button>
-    </div>
+      <Stack spacing="xs" mb="4vh">
+        <Button onClick={handleSubmit} color="blue">{post ? "수정" : "작성"}</Button>
+        <Button onClick={onClose} variant="outline" color="red">취소</Button>
+
+      </Stack>
+
+    </Stack>
   )
 }
 

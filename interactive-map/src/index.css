@@ -1,14 +1,14 @@
-body {
+/* #root {
+  background-color: rgb(209, 229, 242);
+} */
 
-}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-/* login page form */
+/* login page form login button*/
 .login-btn.mantine-Button-root {
-  /* background-color: blue; */
+
 }

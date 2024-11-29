@@ -36,7 +36,7 @@ const Map = () => {
     <MapContainer
       center={campusCoordinates}
       zoom={zoomLevel}
-      style={{ height: "90dvh", width: "100%" }}
+      style={{ height: "calc(100dvh - 48px)", width: "100%" }}
     >
       {/* TileLayer: sets the map's look by fetching tiles from OpenStreetMap. */}
       <TileLayer

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
-import useStore from "../store/store"; // Import Zustand store
+import { Button, Container, Group, Title } from '@mantine/core';
+import '../index.css'
 
 const ForumPage = () => {
   const [posts, setPosts] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
-  const [role, setRole] = useState("user"); // role to toggle between "user" and "admin"
-  const { currentUser, setCurrentUser } = useStore();
+  const [role, setRole] = useState("user"); // toggle between "user" and "admin"
 
   useEffect(() => {
     fetch("./src/mock/mockPosts.json")
@@ -50,21 +50,15 @@ const ForumPage = () => {
     );
   };
 
-  const handleStartCreating = () => {
-    const userName = prompt("Enter your name to create a post:");
-    if (userName) {
-      setCurrentUser(userName);
-      setIsCreating(true);
-    }
-  };
-
   return (
-    <div>
-      <h1>게시판</h1>
-      <button onClick={() => setIsCreating(true)}>글 작성</button>
-      <button onClick={() => setRole(role === "user" ? "admin" : "user")}>
-        {role === "admin" ? "관리자 모드 OFF" : "관리자 모드 ON"}
-      </button>
+    <Container w="100%" h="100vh">
+      <Title order={1} align="center" mb="lg" pt="xl">게시판</Title>
+      <Group position="center" mb="sm">
+        <Button onClick={() => setIsCreating(true)} variant="filled" fz="md">글 작성</Button>
+        <Button onClick={() => setRole(role === "user" ? "admin" : "user")} variant="outline" fz="md">
+          {role === "admin" ? "관리자 모드 OFF" : "관리자 모드 ON"}
+        </Button>
+      </Group>
 
       <PostList
         posts={posts}
@@ -80,7 +74,7 @@ const ForumPage = () => {
           onClose={() => setIsCreating(false)}
         />
       )}
-    </div>
+    </Container>
   );
 };
 

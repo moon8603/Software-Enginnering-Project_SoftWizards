@@ -1,35 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReplyForm from "./ReplyForm";
 import useStore from "../store/store"; // Import Zustand store
+import { Button, Card, Container, Group, Text, Title } from '@mantine/core';
 
 const PostList = ({ posts, role, onUpdate, onDelete, onReply }) => {
   const { currentUser } = useStore(); // Get currentUser from Zustand
   const [replyingPostId, setReplyingPostId] = useState(null);
 
   return (
-    <ul>
+    <Container>
       {posts.map((post) => (
-        <li key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <p>작성자: {post.author}</p>
+        <Card key={post.id} shadow="md" padding="lg" mb="md" bg="gray.1">
+          <Title order={3}style={{ overflowWrap:"break-word" }}>{post.title}</Title>
+          <Text size="sm" color="dimmed" mb="xs" fw="bold" style={{ overflowWrap:"break-word" }}>작성자: {post.author}</Text>
+          <Text mb="md" lineClamp={4} style={{ overflowWrap:"break-word", borderRadius:"4px", padding:"12px" }} bg="white">{post.content}</Text>
 
-          {/* User can edit/delete their own posts */}
-          {post.author === currentUser && (
-            <>
-              <button onClick={() => onUpdate(post)}>수정</button>
-              <button onClick={() => onDelete(post.id)}>삭제</button>
-            </>
-          )}
+          <Group position="apart" mb="sm">
+            {/* User can edit/delete their own posts */}
+            {post.author === currentUser && (
+              <Group>
+                <Button onClick={() => onUpdate(post)} variant="light">수정</Button>
+                <Button onClick={() => onDelete(post.id)} color="red" variant="light">삭제</Button>
+              </Group>
+            )}
+          </Group>
 
           {/* Admin can delete and reply to posts */}
           {role === "admin" && (
-            <>
-              <button onClick={() => onDelete(post.id)}>삭제 (Admin)</button>
-              <button onClick={() => setReplyingPostId(post.id)}>
+            <Group>
+              <Button onClick={() => onDelete(post.id)} color="red" variant="light">삭제 (Admin)</Button>
+              <Button onClick={() => setReplyingPostId(post.id)} variant="light">
                 {replyingPostId === post.id ? "댓글 취소" : "댓글 추가"}
-              </button>
-            </>
+              </Button>
+            </Group>
           )}
 
           {/* ReplyForm is conditionally rendered when admin is replying */}
@@ -43,18 +46,18 @@ const PostList = ({ posts, role, onUpdate, onDelete, onReply }) => {
           )}
 
           {/* Display replies */}
-          <h3>댓글</h3>
+          <Title order={4} mt="xs">댓글</Title>
           <ul>
             {post.replies.map((reply) => (
-              <li key={reply.id}>
-                <p>{reply.content}</p>
-                <p>작성자: {reply.author}</p>
-              </li>
+              <Card key={reply.id} shadow="xs" padding="sm" mt="sm">
+                <Text style={{ overflowWrap:"break-word" }}>{reply.content}</Text>
+                <Text size="xs" color="dimmed">작성자: {reply.author}</Text>
+              </Card>
             ))}
           </ul>
-        </li>
+        </Card>
       ))}
-    </ul>
+    </Container>
   );
 };
 
