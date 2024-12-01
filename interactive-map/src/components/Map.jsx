@@ -21,7 +21,7 @@ const Map = () => {
         }
         return response.json();
       })
-      .then((data) => setFacilities(data))
+      .then((data) => setFacilities(data));
   }, []);
 
   // Define a custom icon for facilities
@@ -36,13 +36,14 @@ const Map = () => {
     <MapContainer
       center={campusCoordinates}
       zoom={zoomLevel}
-      style={{ height: "90dvh", width: "100%" }}
+      style={{ height: "calc(100dvh - 48px)", width: "100%" }}
     >
       {/* TileLayer: sets the map's look by fetching tiles from OpenStreetMap. */}
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         maxNativeZoom={20}
+        minZoom={17}
         maxZoom={20}
       />
 

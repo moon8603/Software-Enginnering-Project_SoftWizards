@@ -1,22 +1,22 @@
 [
   {
     "id": 1,
-    "title": "Facility A is missing information",
-    "content": "I couldn't find details about Facility A. Please update.",
+    "title": "제목1",
+    "content": "내용1",
     "author": "User1",
-    "comments": [
+    "replies": [
       {
         "id": 1,
-        "content": "Thanks for the feedback. We'll update soon!",
+        "content": "댓글1",
         "author": "Admin"
       }
     ]
   },
   {
     "id": 2,
-    "title": "The map is too slow to load",
-    "content": "The map takes too long to load on mobile.",
+    "title": "제목2",
+    "content": "내용2",
     "author": "User2",
-    "comments": []
+    "replies": []
   }
 ]
