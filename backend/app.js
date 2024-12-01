@@ -1,15 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+//require('dotenv').config();
+const createError = require('http-errors');
+const express = require('express');
+const bodyPasrser = require('body-parser');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 // 라우터 분리 수정해야 함
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const amenitiesRouter = require('./routes/amenities');
 const db = require("./models");
 
-var app = express();
+const app = express();
 // cors
 //const server = createServer(app);
 const cors = require('cors');
@@ -26,7 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 수정
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/loginpage', usersRouter);
+app.use('/main', amenitiesRouter);
 
 // cors
 app.use(cors());
