@@ -34,6 +34,11 @@
 
 .postline-title {
   cursor: pointer;
+  word-break: break-word;
+  margin-bottom: 12px;
+}
+.postline-title:hover {
+  color: #228be6;
 }
 .postline-button {
   margin-bottom: 20px;
@@ -47,4 +52,8 @@
 }
 .postline-date {
   margin-right: 20px;
+}
+
+.postdetail-title, .postdetail-content, .postdetail-comment {
+  word-break: break-word;
 }

@@ -14,6 +14,8 @@ import {
   TextInput,
 } from "@mantine/core";
 import useStore from "../store/store";
+import { MdDeleteForever } from "react-icons/md";
+
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
@@ -172,16 +174,7 @@ const PostLine = () => {
                   </div>
                   <Group>
                     {post.author === currentUser && (
-                      <img
-                        src="./src/images/red-icon.png"
-                        alt="Icon"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handleDeletePost(post.id)}
-                      />
+                      <MdDeleteForever onClick={() => handleDeletePost(post.id)} size="1.5em" color= "#228be6" cursor="pointer"/>
                     )}
                   </Group>
                 </Group>

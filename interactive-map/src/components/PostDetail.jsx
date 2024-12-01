@@ -14,10 +14,10 @@ const PostDetail = ({ props }) => {
             <strong>{props.author}</strong>
           </Text>
         </Group>
-        <Title order={2} mt="md">
+        <Title order={2} mt="md" className="postdetail-title">
           {props.title}
         </Title>
-        <Text mt="xs" fz="lg">
+        <Text mt="xs" fz="lg" className="postdetail-content" c="gray.5">
           {props.content}
         </Text>
       </Card>
@@ -36,7 +36,7 @@ const PostDetail = ({ props }) => {
             withBorder
             style={{ marginTop: "10px", padding: "20px" }}
           >
-            <Text fw={600} fz="h4">
+            <Text fw={600} fz="h4" className="postdetail-comment">
               {reply.content}
             </Text>
 

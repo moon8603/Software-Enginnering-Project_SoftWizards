@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "title": "제목1",
-    "content": "내용1",
+    "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio. Etiam porttitor ante non nunc rhoncus efficitur et vitae ipsum. Proin iaculis fringilla elit, sed dignissim tellus aliquam vel. In porta turpis porttitor dignissim mollis.",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio. Etiam porttitor ante non nunc rhoncus efficitur et vitae ipsum. Proin iaculis fringilla elit, sed dignissim tellus aliquam vel. In porta turpis porttitor dignissim mollis.",
     "author": "User1",
     "createTime": "2024-12-1",
     "replies": [
@@ -14,7 +14,7 @@
       },
       {
         "id": 2,
-        "content": "댓글 내용2",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio.",
         "author": "Admin",
         "createTime": "2024-12-3"
       }
