@@ -12,6 +12,9 @@
   `npm start`
 
 - npm start 하고 나서
-Local: http://localhost:3000/loginpage/{id} (ex http://localhost:3000/loginpage/1)
+Local: http://localhost:3000/loginpage/{id}
+(ex http://localhost:3000/loginpage/1)
+
+OR http://localhost:3000/main/listAll
 
 링크를 누르면 웹페이지로 리디렉팅 될 것이다.
