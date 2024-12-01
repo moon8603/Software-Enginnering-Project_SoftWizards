@@ -4,11 +4,19 @@
     "title": "제목1",
     "content": "내용1",
     "author": "User1",
+    "createTime": "2024-12-1",
     "replies": [
       {
         "id": 1,
-        "content": "댓글1",
-        "author": "Admin"
+        "content": "댓글 내용1",
+        "author": "Admin",
+        "createTime": "2024-12-1"
+      },
+      {
+        "id": 2,
+        "content": "댓글 내용2",
+        "author": "Admin",
+        "createTime": "2024-12-3"
       }
     ]
   },
@@ -17,6 +25,7 @@
     "title": "제목2",
     "content": "내용2",
     "author": "User2",
+    "createTime": "2024-11-22",
     "replies": []
   }
 ]

@@ -1,6 +1,4 @@
-/* #root {
-  background-color: rgb(209, 229, 242);
-} */
+
 
 * {
   margin: 0;
@@ -8,7 +6,45 @@
   box-sizing: border-box;
 }
 
+.main-page {
+  display: flex;
+}
+.main-page-button {
+  display: flex;
+  margin: 0 10px;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.no-post-text {
+  padding: 20px;
+}
+
+.mantine-focus-auto.forum-main-page{
+  color: #228be6;
+}
 /* login page form login button*/
 .login-btn.mantine-Button-root {
 
+}
+
+.postline-card-group {
+  /* display: flex; */
+}
+
+.postline-title {
+  cursor: pointer;
+}
+.postline-button {
+  margin-bottom: 20px;
+}
+.postline-group-div {
+  margin-right: auto;
+}
+.postline-info-author-time-text {
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+.postline-date {
+  margin-right: 20px;
 }
