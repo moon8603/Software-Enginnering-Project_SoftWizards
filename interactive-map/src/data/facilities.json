@@ -14,5 +14,14 @@
     "description": "Student Hall",
     "workingHour": "0:00 ~ 23:59",
     "type": ["건물", "학생"]
+  },
+  {
+    "id": 3,
+    "name": "프리존",
+    "coordinates": [37.5825874, 127.0595008],
+    "description": "Cafe",
+    "workingHour": "8:00 ~ 19:00",
+    "type": ["시설", "카페"],
+    "link": "https://luy5762.github.io/Luy5762-github.io/"
   }
 ]
