@@ -17,11 +17,14 @@ function MyRoute() {
       <Route
         path="/main"
         element={
-          <div>
+          <div className="main-page">
             <Map />
-            <LoginBtn />
-            <Filter />
-            <ForumBtn />
+
+            <div className="main-page-button">
+              <LoginBtn />
+              <Filter />
+              <ForumBtn />
+            </div>
           </div>
         }
       />
