@@ -3,8 +3,10 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 
 // Import the icons
-import blueIconUrl from "../images/blue-icon.png";
 import redIconUrl from "../images/red-icon.png";
+import greenIconUrl from "../images/green-icon.png";
+import blueIconUrl from "../images/blue-icon.png";
+import orangeIconUrl from "../images/orange-icon.png";
 import greyIconUrl from "../images/grey-icon.png";
 import "leaflet/dist/leaflet.css";
 
@@ -26,26 +28,38 @@ const Map = () => {
   }, []);
 
   // Define custom icons
-  const blueIcon = new L.Icon({
-    iconUrl: blueIconUrl,
-    iconSize: [36, 36],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
-
-  const redIcon = new L.Icon({
-    iconUrl: redIconUrl,
-    iconSize: [36, 36],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
-
-  const greyIcon = new L.Icon({
-    iconUrl: greyIconUrl,
-    iconSize: [36, 36],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
+  const icons = {
+    red: new L.Icon({
+      iconUrl: redIconUrl,
+      iconSize: [36, 36],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    }),
+    green: new L.Icon({
+      iconUrl: greenIconUrl,
+      iconSize: [36, 36],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    }),
+    blue: new L.Icon({
+      iconUrl: blueIconUrl,
+      iconSize: [36, 36],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    }),
+    orange: new L.Icon({
+      iconUrl: orangeIconUrl,
+      iconSize: [36, 36],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    }),
+    grey: new L.Icon({
+      iconUrl: greyIconUrl,
+      iconSize: [36, 36],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    }),
+  };
 
   // Function to check if current time is within working hours
   const isWithinWorkingHours = (workingHour) => {
@@ -61,30 +75,28 @@ const Map = () => {
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
     if (!isWithinWorkingHours(facility.workingHour)) {
-      return greyIcon; // Outside working hours
+      return icons.grey; // Outside working hours
     }
-    if (facility.type.includes("건물")) {
-      return redIcon; // Building type
+
+    switch (facility.type[0]) {
+      case "기본 편의 시설":
+        return icons.red;
+      case "휴식 및 복지 편의 시설":
+        return icons.green;
+      case "스포츠 편의 시설":
+        return icons.blue;
+      case "기타 시설":
+        return icons.orange;
+      default:
+        return icons.grey; // Default fallback
     }
-    if (facility.type.includes("시설")) {
-      return blueIcon; // Facility type
-    }
-    return greyIcon; // Default fallback
   };
 
-  // Function to get the image path based on facility ID
-  const getImageForFacility = (id) => {
-    // Assuming all image files follow the "info_n.jpeg" naming format
-    const imageFiles = ["building_1.jpeg", "cafe_3.jpeg"]; // Example list from the provided folder
-
-    // Find the file where the number after "_" matches the facility ID
-    const matchedFile = imageFiles.find((file) => {
-      const [, number] = file.split("_"); // Split by "_"
-      const [n] = number.split("."); // Extract the number part before "."
-      return parseInt(n, 10) === id; // Match with the facility ID
-    });
-
-    return matchedFile ? `./src/images/${matchedFile}` : null; // Return the full path or null if not found
+  // Function to get the image path based on facility name and ID
+  const getImageForFacility = (name) => {
+    // File format: name_0.jpeg
+    const fileName = `${name}_0.jpeg`;
+    return `./src/images/${fileName}`;
   };
 
   return (
@@ -111,15 +123,16 @@ const Map = () => {
             <h3>{facility.name}</h3>
             <p>{facility.description}</p>
             <p>Working Hours: {facility.workingHour}</p>
-            {/* ID와 매칭된 이미지 */}
-            {getImageForFacility(facility.id) && (
+            {/* Match and display the image */}
+            {getImageForFacility(facility.name) && (
               <img
-                src={getImageForFacility(facility.id)}
+                src={getImageForFacility(facility.name)}
                 alt={facility.name}
                 style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
               />
             )}
-            {/* 링크 표시 */}
+            {/* Display link as URL */}
             {facility.link && (
               <p>
                 <a
@@ -128,11 +141,12 @@ const Map = () => {
                   rel="noopener noreferrer"
                   style={{ color: "blue", textDecoration: "underline" }}
                 >
-                  자세히 보기
+                  {facility.link}
                 </a>
               </p>
             )}
           </Popup>
+
         </Marker>
       ))}
     </MapContainer>
