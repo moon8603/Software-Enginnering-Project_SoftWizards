@@ -32,8 +32,15 @@ app.use('/', indexRouter);
 app.use('/loginpage', usersRouter);
 app.use('/main', amenitiesRouter);
 
-// cors
-app.use(cors());
+// CORS 설정
+const corsOptions = {
+  origin: 'http://localhost:5173',  // 프론트엔드 주소
+  methods: 'GET,POST,PUT,DELETE',  // 허용할 HTTP 메소드
+  credentials: true,               // 쿠키를 포함한 요청을 허용
+};
+
+// CORS 미들웨어 적용
+app.use(cors(corsOptions));
 
 // db 연결
 db.sequelize
