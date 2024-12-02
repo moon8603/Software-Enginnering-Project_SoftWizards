@@ -1,22 +1,31 @@
 [
   {
     "id": 1,
-    "title": "Facility A is missing information",
-    "content": "I couldn't find details about Facility A. Please update.",
+    "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio. Etiam porttitor ante non nunc rhoncus efficitur et vitae ipsum. Proin iaculis fringilla elit, sed dignissim tellus aliquam vel. In porta turpis porttitor dignissim mollis.",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio. Etiam porttitor ante non nunc rhoncus efficitur et vitae ipsum. Proin iaculis fringilla elit, sed dignissim tellus aliquam vel. In porta turpis porttitor dignissim mollis.",
     "author": "User1",
-    "comments": [
+    "createTime": "2024-12-1",
+    "replies": [
       {
         "id": 1,
-        "content": "Thanks for the feedback. We'll update soon!",
-        "author": "Admin"
+        "content": "댓글 내용1",
+        "author": "Admin",
+        "createTime": "2024-12-1"
+      },
+      {
+        "id": 2,
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum metus faucibus diam mollis consequat. Aliquam erat volutpat. Morbi vitae nisi pharetra, vehicula ex in, semper odio.",
+        "author": "Admin",
+        "createTime": "2024-12-3"
       }
     ]
   },
   {
     "id": 2,
-    "title": "The map is too slow to load",
-    "content": "The map takes too long to load on mobile.",
+    "title": "제목2",
+    "content": "내용2",
     "author": "User2",
-    "comments": []
+    "createTime": "2024-11-22",
+    "replies": []
   }
 ]
