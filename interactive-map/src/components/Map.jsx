@@ -12,16 +12,22 @@ const Map = () => {
   const campusCoordinates = [37.583804, 127.058934];
   const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
 
-  // facilities 데이터 가져오기
   useEffect(() => {
-    fetch("./src/data/facilities.json") //index.html 기준의 path
-      .then((response) => {
+    const fetchFacilities = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/main");
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
-        return response.json();
-      })
-      .then((data) => setFacilities(data));
+        const result = await response.json();
+        console.log("Facilities data:", result);
+        setFacilities(result.data); // Extract the data array
+      } catch (error) {
+        console.error("Error fetching facilities data:", error);
+      }
+    };
+
+    fetchFacilities();
   }, []);
 
   // Define a custom icon for facilities
@@ -48,21 +54,20 @@ const Map = () => {
       />
 
       {/* Render markers only when facilities data is loaded */}
-      {facilities.map((facility) => (
-        <Marker
-          key={facility.id}
-          position={facility.coordinates}
-          icon={customIcon}
-        >
-          {/* 상세정보 */}
-          <Popup>
-            <h3>{facility.name}</h3>
-            <p>{facility.description}</p>
-            <p>Working Hours: {facility.workingHour}</p>
-            {/* <img src="./src/images/red-icon.png" alt="" style={{ width: "100px", height: "100px" }}/> */}
-          </Popup>
-        </Marker>
-      ))}
+      {Array.isArray(facilities) &&
+        facilities.map((facility) => (
+          <Marker
+            key={facility.id}
+            position={facility.coordinates.map((coord) => parseFloat(coord))} // Convert to numbers
+            icon={customIcon}
+          >
+            <Popup>
+              <h3>{facility.name}</h3>
+              <p>{facility.description}</p>
+              <p>Working Hours: {facility.workingHour}</p>
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 };
