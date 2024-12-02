@@ -61,7 +61,6 @@ const Map = () => {
     }),
   };
 
-  // Function to check if current time is within working hours
   const isWithinWorkingHours = (workingHour) => {
     const [start, end] = workingHour.split(" ~ ").map((time) => {
       const [hours, minutes] = time.split(":").map(Number);
@@ -75,7 +74,7 @@ const Map = () => {
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
     if (!isWithinWorkingHours(facility.workingHour)) {
-      return icons.grey; // Outside working hours
+      return icons.grey;
     }
 
     switch (facility.type[0]) {
@@ -92,11 +91,29 @@ const Map = () => {
     }
   };
 
-  // Function to get the image path based on facility name and ID
+  // 시설과 이름이 같고 일련번호가 0번인 사진을 가져옴
   const getImageForFacility = (name) => {
     // File format: name_0.jpeg
     const fileName = `${name}_0.jpeg`;
     return `./src/images/${fileName}`;
+  };
+
+  // Function to validate a URL
+  const isValidUrl = (url) => {
+    try {
+      new URL(url); // Throws if invalid
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  // Handle link click
+  const handleLinkClick = (event, url) => {
+    if (!isValidUrl(url)) {
+      event.preventDefault(); // Prevent navigation
+      alert("Invalid Link"); // Show error message
+    }
   };
 
   return (
@@ -109,6 +126,7 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         maxNativeZoom={20}
+        minZoom={17}
         maxZoom={20}
       />
 
@@ -140,13 +158,13 @@ const Map = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: "blue", textDecoration: "underline" }}
+                  onClick={(e) => handleLinkClick(e, facility.link)} // Handle link click
                 >
                   {facility.link}
                 </a>
               </p>
             )}
           </Popup>
-
         </Marker>
       ))}
     </MapContainer>

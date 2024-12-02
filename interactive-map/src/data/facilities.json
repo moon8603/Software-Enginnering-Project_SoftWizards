@@ -6,7 +6,7 @@
     "description": "1F: 전농관 카페, 2F: 입학처",
     "workingHour": "카페: 09:00 ~ 18:30",
     "type": ["기본 편의 시설", "강의실", "카페"],
-    "link": "https://luy5762.github.io/Luy5762-github.io/"
+    "link": "https://github.com/moon8603/Software-Enginnering-Project_SoftWizards"
   },
   {
     "id": 2,
@@ -79,7 +79,7 @@
     "description": "B1F: 서점, 편의점, 복사실, 동아리방, 1F: 카페, 구내 식당, 2F: 양식당",
     "workingHour": "구내 식당: 08:30 ~ 18:30, 카페: 09:00 ~ 18:30",
     "type": ["기본 편의 시설", "학생회관", "카페", "편의점", "서점", "복사실", "동아리방", "구내 식당"],
-    "link": "https://invaildLink"
+    "link": "http://notReal.link"
   },
   {
     "id": 11,
@@ -167,7 +167,8 @@
     "coordinates": [37.583039, 127.059696],
     "description": "각종 행사 진행 장소",
     "workingHour": "9:00 ~ 18:00",
-    "type": ["휴식 및 복지 편의 시설", "대강당"]
+    "type": ["휴식 및 복지 편의 시설", "대강당"],
+    "link": "invaild link"
   },
   {
     "id": 22,
