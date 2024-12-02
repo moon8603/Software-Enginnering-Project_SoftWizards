@@ -31,45 +31,64 @@ const Map = () => {
   const icons = {
     red: new L.Icon({
       iconUrl: redIconUrl,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
+      iconSize: [60, 60],
+      iconAnchor: [30, 60],
       popupAnchor: [0, -32],
     }),
     green: new L.Icon({
       iconUrl: greenIconUrl,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
+      iconSize: [60, 60],
+      iconAnchor: [30, 60],
       popupAnchor: [0, -32],
     }),
     blue: new L.Icon({
       iconUrl: blueIconUrl,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
+      iconSize: [60, 60],
+      iconAnchor: [30, 60],
       popupAnchor: [0, -32],
     }),
     orange: new L.Icon({
       iconUrl: orangeIconUrl,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
+      iconSize: [60, 60],
+      iconAnchor: [30, 60],
       popupAnchor: [0, -32],
     }),
     grey: new L.Icon({
       iconUrl: greyIconUrl,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
+      iconSize: [60, 60],
+      iconAnchor: [30, 60],
       popupAnchor: [0, -32],
     }),
   };
 
-  const isWithinWorkingHours = (workingHour) => {
-    const [start, end] = workingHour.split(" ~ ").map((time) => {
-      const [hours, minutes] = time.split(":").map(Number);
-      return new Date().setHours(hours, minutes, 0);
-    });
-
-    const now = new Date().getTime();
-    return now >= start && now <= end;
+  const isWithinWorkingHours = (workingHours) => {
+    const now = new Date();
+  
+    // Split workingHours string into multiple time ranges
+    const timeRanges = workingHours
+      .split(", ") // 여러 시간 범위를 분리
+      .map((range) => {
+        // 시간 정보만 추출 (예: "카페: 09:00 ~ 18:30" → "09:00 ~ 18:30")
+        const match = range.match(/(\d{1,2}:\d{2}) ~ (\d{1,2}:\d{2})/); // 운영 시간 추출
+        if (!match) return null; // 유효하지 않은 형식은 무시
+  
+        const [start, end] = match.slice(1).map((time) => {
+          const [hours, minutes] = time.split(":").map(Number);
+          const date = new Date();
+          date.setHours(hours, minutes, 0);
+          return date.getTime();
+        });
+  
+        return { start, end };
+      })
+      .filter(Boolean);
+  
+    // 두 개의 운영 시간 중 하나만 만족해도 됨
+    return timeRanges.some(
+      ({ start, end }) => now.getTime() >= start && now.getTime() <= end
+    );
   };
+  
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
@@ -87,7 +106,7 @@ const Map = () => {
       case "기타 시설":
         return icons.orange;
       default:
-        return icons.grey; // Default fallback
+        return icons.grey; // Default
     }
   };
 
