@@ -36,8 +36,8 @@ router.get('/', async(req, res, next) => {
     const amenitiesData = (amenities || []).map(item => {
       return {
         ...item.dataValues,
-        coordinates: item.coordinates.split(' '),
-        type: item.type.split(' ')
+        coordinates: item.coordinates.split(' ').map(parseFloat),
+        type: item.type.split(' '),
       };
     });
 

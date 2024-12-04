@@ -18,14 +18,22 @@ const Map = () => {
 
   // Load facilities data
   useEffect(() => {
-    fetch("./src/data/facilities.json")
-      .then((response) => {
+    const fetchFacilities = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/main");
+        console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
-        return response.json();
-      })
-      .then((data) => setFacilities(data));
+        const result = await response.json();
+        console.log("Facilities data:", result);
+        setFacilities(result.data); // Extract the data array
+      } catch (error) {
+        console.error("Error fetching facilities data:", error);
+      }
+    };
+
+    fetchFacilities();
   }, []);
 
   // Define custom icons
@@ -94,19 +102,25 @@ const Map = () => {
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
     if (!isWithinWorkingHours(facility.workingHour)) {
+      console.log("not working grey");
       return icons.grey;
     }
 
     switch (facility.type[0]) {
       case "기본 편의 시설":
+        console.log("red");
         return icons.red;
       case "휴식 및 복지 편의 시설":
+        console.log("green");
         return icons.green;
       case "스포츠 편의 시설":
+        console.log("blue");
         return icons.blue;
       case "기타 시설":
+        console.log("orange");
         return icons.orange;
       default:
+        console.log("grey");
         return icons.grey; // Default
     }
   };
@@ -151,7 +165,8 @@ const Map = () => {
       />
 
       {/* Render markers */}
-      {facilities.map((facility) => (
+      {Array.isArray(facilities) &&
+       facilities.map((facility) => (
         <Marker
           key={facility.id}
           position={facility.coordinates}
