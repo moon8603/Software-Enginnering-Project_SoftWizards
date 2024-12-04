@@ -10,6 +10,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const amenitiesRouter = require('./routes/amenities');
+const postRouter = require('./routes/post');
 const db = require("./models");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/loginpage', usersRouter);
 app.use('/main', amenitiesRouter);
+app.use('/forumpage',postRouter);
 
 // cors
 app.use(cors());
