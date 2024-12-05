@@ -10,6 +10,9 @@
   display: flex;
 }
 .main-page-button {
+  display: grid;
+}
+.routes-buttons {
   display: flex;
   margin: 0 10px;
   gap: 20px;
@@ -22,14 +25,6 @@
 
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
-}
-/* login page form login button*/
-.login-btn.mantine-Button-root {
-
-}
-
-.postline-card-group {
-  /* display: flex; */
 }
 
 .postline-title {

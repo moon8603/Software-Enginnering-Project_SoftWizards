@@ -1,5 +1,4 @@
-import { Button } from '@mantine/core'
-
+import { Button } from '@mantine/core';
 
 const Filter = () => {
   return (
