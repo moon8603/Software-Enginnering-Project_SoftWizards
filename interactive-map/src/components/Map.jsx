@@ -94,7 +94,6 @@ const Map = () => {
       })
       .filter(Boolean);
 
-
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
