@@ -18,14 +18,21 @@ const Map = () => {
 
   // Load facilities data
   useEffect(() => {
-    fetch("./src/data/facilities.json")
-      .then((response) => {
+    const fetchFacilities = async () => {
+      try {
+        // const response = await fetch("http://localhost:3000/main");
+        const response = await fetch("./src/data/facilities.json");
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
-        return response.json();
-      })
-      .then((data) => setFacilities(data));
+        const result = await response.json();
+        // console.log("Facilities data:", result); for debugging
+        setFacilities(result.data); // Extract the data array
+      } catch (error) {
+        console.error("Error fetching facilities data:", error);
+      }
+    };
+    fetchFacilities();
   }, []);
 
   // Define custom icons
@@ -64,7 +71,7 @@ const Map = () => {
 
   const isWithinWorkingHours = (workingHours) => {
     const now = new Date();
-  
+
     // Split workingHours string into multiple time ranges
     const timeRanges = workingHours
       .split(", ") // 여러 시간 범위를 분리
@@ -72,24 +79,23 @@ const Map = () => {
         // 시간 정보만 추출 (예: "카페: 09:00 ~ 18:30" → "09:00 ~ 18:30")
         const match = range.match(/(\d{1,2}:\d{2}) ~ (\d{1,2}:\d{2})/); // 운영 시간 추출
         if (!match) return null; // 유효하지 않은 형식은 무시
-  
+
         const [start, end] = match.slice(1).map((time) => {
           const [hours, minutes] = time.split(":").map(Number);
           const date = new Date();
           date.setHours(hours, minutes, 0);
           return date.getTime();
         });
-  
+
         return { start, end };
       })
       .filter(Boolean);
-  
+
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
     );
   };
-  
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
@@ -151,43 +157,45 @@ const Map = () => {
       />
 
       {/* Render markers */}
-      {facilities.map((facility) => (
-        <Marker
-          key={facility.id}
-          position={facility.coordinates}
-          icon={getIconForFacility(facility)}
-        >
-          <Popup>
-            <h3>{facility.name}</h3>
-            <p>{facility.description}</p>
-            <p>Working Hours: {facility.workingHour}</p>
-            {/* <img src="./src/images/red-icon.png" alt="" style={{ width: "100px", height: "100px" }}/> */}
-            {/* Match and display the image */}
-            {getImageForFacility(facility.name) && (
-              <img
-                src={getImageForFacility(facility.name)}
-                alt={facility.name}
-                style={{ width: "100%", height: "auto", marginTop: "10px" }}
-                onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
-              />
-            )}
-            {/* Display link as URL */}
-            {facility.link && (
-              <p>
-                <a
-                  href={facility.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "blue", textDecoration: "underline" }}
-                  onClick={(e) => handleLinkClick(e, facility.link)} // Handle link click
-                >
-                  {facility.link}
-                </a>
-              </p>
-            )}
-          </Popup>
-        </Marker>
-      ))}
+      {Array.isArray(facilities) &&
+        facilities.map((facility) => (
+          <Marker
+            key={facility.id}
+            position={facility.coordinates.map((coord) => parseFloat(coord))}
+            icon={getIconForFacility(facility)}
+          >
+            <Popup>
+              <h3>{facility.name}</h3>
+              <p>{facility.description}</p>
+              {/* 이 주석의 다음 코드는 json파일의 시설들의 description부분을 다 배열을 만들고 나서 사용할 거임. */}
+              {/* {facility.description.map((descript) => (
+                <p key={descript}>{descript}</p>
+              ))} */}
+              <p>Working Hours: {facility.workingHour}</p>
+              {getImageForFacility(facility.name) && (
+                <img
+                  src={getImageForFacility(facility.name)}
+                  alt={facility.name}
+                  style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              )}
+              {facility.link && (
+                <p>
+                  <a
+                    href={facility.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "blue", textDecoration: "underline" }}
+                    onClick={(e) => handleLinkClick(e, facility.link)}
+                  >
+                    {facility.link}
+                  </a>
+                </p>
+              )}
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 };
