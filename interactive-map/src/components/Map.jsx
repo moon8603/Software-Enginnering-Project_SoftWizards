@@ -1,8 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useState } from "react";
+import AmenityList from "./AmenityList";
+// import "../App.css";
 
-// Import the icons
+// Import the icons, may add more icon later
 import redIconUrl from "../images/red-icon.png";
 import greenIconUrl from "../images/green-icon.png";
 import blueIconUrl from "../images/blue-icon.png";
@@ -28,13 +30,15 @@ const Map = () => {
       .then((data) => setFacilities(data));
   }, []);
 
+  // Define a custom icon for facilities
+  // -->
   // Define custom icons
   const icons = {
     red: new L.Icon({
       iconUrl: redIconUrl,
       iconSize: [60, 60],
-      iconAnchor: [30, 60],
-      popupAnchor: [0, -32],
+      iconAnchor: [30, 60], //The coordinates of the "tip" of the icon (relative to its top left corner)
+      popupAnchor: [0, -32], //The coordinates of the point from which popups will "open", relative to the icon anchor
     }),
     green: new L.Icon({
       iconUrl: greenIconUrl,
@@ -137,58 +141,64 @@ const Map = () => {
   };
 
   return (
-    <MapContainer
-      center={campusCoordinates}
-      zoom={zoomLevel}
-      style={{ height: "100dvh", width: "calc(100dvw - 15dvw)" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        maxNativeZoom={20}
-        minZoom={17}
-        maxZoom={20}
-      />
+    <div className="map-container">
+      {/* 시설 목록을 우측 탭에 표시 */}
+      <AmenityList facilities={facilities} />
 
-      {/* Render markers */}
-      {facilities.map((facility) => (
-        <Marker
-          key={facility.id}
-          position={facility.coordinates}
-          icon={getIconForFacility(facility)}
-        >
-          <Popup>
-            <h3>{facility.name}</h3>
-            <p>{facility.description}</p>
-            <p>Working Hours: {facility.workingHour}</p>
-            {/* <img src="./src/images/red-icon.png" alt="" style={{ width: "100px", height: "100px" }}/> */}
-            {/* Match and display the image */}
-            {getImageForFacility(facility.name) && (
-              <img
-                src={getImageForFacility(facility.name)}
-                alt={facility.name}
-                style={{ width: "100%", height: "auto", marginTop: "10px" }}
-                onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
-              />
-            )}
-            {/* Display link as URL */}
-            {facility.link && (
-              <p>
-                <a
-                  href={facility.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "blue", textDecoration: "underline" }}
-                  onClick={(e) => handleLinkClick(e, facility.link)} // Handle link click
-                >
-                  {facility.link}
-                </a>
-              </p>
-            )}
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+      <MapContainer
+        center={campusCoordinates}
+        zoom={zoomLevel}
+        style={{ height: "100dvh", width: "100%" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          maxNativeZoom={20}
+          minZoom={17}
+          maxZoom={20}
+        />
+
+        {/* 시설 목록을 마커로 표시 */}
+        {facilities.map((facility) => (
+          <Marker
+            key={facility.id}
+            position={facility.coordinates}
+            icon={getIconForFacility(facility)}
+          >
+            <Popup>
+              <h3>{facility.name}</h3>
+              <p>{facility.description}</p>
+              <p>Working Hours: {facility.workingHour}</p>
+
+              {/* 시설 이미지 */}
+              {getImageForFacility(facility.name) && (
+                <img
+                  src={getImageForFacility(facility.name)}
+                  alt={facility.name}
+                  style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                  onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
+                />
+              )}
+
+              {/* 링크 */}
+              {facility.link && (
+                <p>
+                  <a
+                    href={facility.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "blue", textDecoration: "underline" }}
+                    onClick={(e) => handleLinkClick(e, facility.link)} // 링크 클릭 시 처리
+                  >
+                    {facility.link}
+                  </a>
+                </p>
+              )}
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 };
 
