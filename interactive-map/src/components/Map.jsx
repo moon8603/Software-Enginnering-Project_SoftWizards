@@ -20,6 +20,7 @@ const Map = () => {
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
+        //const response = await fetch("./src/data/facilities.json");
         const response = await fetch("http://localhost:3000/main");
         console.log(response);
         if (!response.ok) {
@@ -83,8 +84,10 @@ const Map = () => {
   
         const [start, end] = match.slice(1).map((time) => {
           const [hours, minutes] = time.split(":").map(Number);
+          
           const date = new Date();
           date.setHours(hours, minutes, 0);
+          
           return date.getTime();
         });
   
@@ -92,6 +95,7 @@ const Map = () => {
       })
       .filter(Boolean);
   
+    
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
@@ -101,26 +105,21 @@ const Map = () => {
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
+    console.log("facility type: ", facility.type[0]);
     if (!isWithinWorkingHours(facility.workingHour)) {
-      console.log("not working grey");
       return icons.grey;
     }
 
     switch (facility.type[0]) {
       case "기본 편의 시설":
-        console.log("red");
         return icons.red;
       case "휴식 및 복지 편의 시설":
-        console.log("green");
         return icons.green;
       case "스포츠 편의 시설":
-        console.log("blue");
         return icons.blue;
       case "기타 시설":
-        console.log("orange");
         return icons.orange;
       default:
-        console.log("grey");
         return icons.grey; // Default
     }
   };

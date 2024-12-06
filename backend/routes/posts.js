@@ -28,7 +28,8 @@ router.get('/', async(req, res, next) => {
     } else {
       // Post id 없는 경우
       posts = await db.Post.findAll({
-        attributes: { exclude: ['updatedAt'] }
+        attributes: { exclude: ['password', 'updatedAt'] },
+        order: [['createdAt', 'DESC']],
       });
     }
     
@@ -56,6 +57,22 @@ router.get('/', async(req, res, next) => {
       message: "Failed to fetch posts",
       error: error.message,
     });
+  }
+});
+
+
+// 게시글 생성
+router.post('/create', async (req, res) => {
+  try {
+      const { author, title, content, password } = req.body;
+      if (!author || !title || !content || !password) {
+          return res.status(400).json({ success: false, message: 'All fields are required' });
+      }
+      const post = await db.Post.create({ author, title, content, password });
+      res.status(201).json({ success: true, data: post });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Failed to create post' });
   }
 });
 
