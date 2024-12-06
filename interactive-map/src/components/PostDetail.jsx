@@ -164,7 +164,6 @@ const PostDetail = ({ props }) => {
                         color="red"
                         size="lg"
                         variant="transparent"
-                        className="post-detail-paper-group-group-actionicon"
                       >
                         <MdDeleteForever size={28} />
                       </ActionIcon>

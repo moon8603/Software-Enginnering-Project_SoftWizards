@@ -20,7 +20,7 @@ const Map = () => {
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
-        //const response = await fetch("./src/data/facilities.json");
+        // const response = await fetch("./src/data/facilities.json");
         const response = await fetch("http://localhost:3000/main");
         console.log(response);
         if (!response.ok) {
