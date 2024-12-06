@@ -8,7 +8,6 @@ import {
   Center,
 } from "@mantine/core";
 
-
 const LoginPage = () => {
   const form = useForm({
     initialValues: {
@@ -21,6 +20,31 @@ const LoginPage = () => {
     },
   });
 
+  // 백엔드 연동 part
+  const handleClick = async (values) => {
+    try {
+      const response = await fetch("http://localhost:3000/loginpage/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Login successful!");
+        console.log("User info:", data);
+        // 추후 토큰 저장 등
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <Center w="100%" h="100vh">
       <Box
@@ -30,7 +54,7 @@ const LoginPage = () => {
         <Title ta="center" order={1}>
           로그인
         </Title>
-        <form onSubmit={form.onSubmit()}>
+        <form onSubmit={form.onSubmit(handleClick)}>
           <TextInput
             label="아이디"
             placeholder="아이디"
@@ -49,14 +73,19 @@ const LoginPage = () => {
             {...form.getInputProps("password")}
             required
           />
-          <Button type="submit" fullWidth mt="xl" size="xl" className="login-btn">
+          <Button
+            type="submit"
+            fullWidth
+            mt="xl"
+            size="xl"
+            className="login-btn"
+          >
             로그인
           </Button>
         </form>
       </Box>
     </Center>
   );
-}
+};
 
-export default LoginPage
-
+export default LoginPage;
