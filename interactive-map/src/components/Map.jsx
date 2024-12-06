@@ -20,20 +20,19 @@ const Map = () => {
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
-        //const response = await fetch("./src/data/facilities.json");
+        // const response = await fetch("./src/data/facilities.json");
         const response = await fetch("http://localhost:3000/main");
         console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
         const result = await response.json();
-        console.log("Facilities data:", result);
+        // console.log("Facilities data:", result); for debugging
         setFacilities(result.data); // Extract the data array
       } catch (error) {
         console.error("Error fetching facilities data:", error);
       }
     };
-
     fetchFacilities();
   }, []);
 
@@ -73,7 +72,7 @@ const Map = () => {
 
   const isWithinWorkingHours = (workingHours) => {
     const now = new Date();
-  
+
     // Split workingHours string into multiple time ranges
     const timeRanges = workingHours
       .split(", ") // 여러 시간 범위를 분리
@@ -81,7 +80,7 @@ const Map = () => {
         // 시간 정보만 추출 (예: "카페: 09:00 ~ 18:30" → "09:00 ~ 18:30")
         const match = range.match(/(\d{1,2}:\d{2}) ~ (\d{1,2}:\d{2})/); // 운영 시간 추출
         if (!match) return null; // 유효하지 않은 형식은 무시
-  
+
         const [start, end] = match.slice(1).map((time) => {
           const [hours, minutes] = time.split(":").map(Number);
           
@@ -90,7 +89,7 @@ const Map = () => {
           
           return date.getTime();
         });
-  
+
         return { start, end };
       })
       .filter(Boolean);
@@ -101,7 +100,6 @@ const Map = () => {
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
     );
   };
-  
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
@@ -174,6 +172,10 @@ const Map = () => {
           <Popup>
             <h3>{facility.name}</h3>
             <p>{facility.description}</p>
+            {/* 이 주석의 다음 코드는 json파일의 시설들의 description부분을 다 배열을 만들고 나서 사용할 거임. */}
+            {/* {facility.description.map((descript) => (
+              <p key={descript}>{descript}</p>
+            ))} */}
             <p>Working Hours: {facility.workingHour}</p>
             {/* <img src="./src/images/red-icon.png" alt="" style={{ width: "100px", height: "100px" }}/> */}
             {/* Match and display the image */}
