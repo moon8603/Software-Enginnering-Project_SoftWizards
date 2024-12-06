@@ -8,7 +8,6 @@ import {
   Center,
 } from "@mantine/core";
 
-
 const LoginPage = () => {
   const form = useForm({
     initialValues: {
@@ -31,7 +30,6 @@ const LoginPage = () => {
         },
         body: JSON.stringify(values),
       });
-  
       const data = await response.json();
       if (response.ok) {
         alert("Login successful!");
@@ -45,7 +43,6 @@ const LoginPage = () => {
       alert("An error occurred. Please try again.");
     }
   };
-  
 
   return (
     <Center w="100%" h="100vh">
@@ -56,7 +53,6 @@ const LoginPage = () => {
         <Title ta="center" order={1}>
           로그인
         </Title>
-        
         <form onSubmit={form.onSubmit(handleClick)}>
           <TextInput
             label="아이디"

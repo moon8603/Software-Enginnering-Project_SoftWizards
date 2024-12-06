@@ -4,7 +4,6 @@ import {
   Card,
   Text,
   Title,
-  Group,
   Container,
   Stack,
   Center,
@@ -12,10 +11,10 @@ import {
   Modal,
   Textarea,
   TextInput,
+  ActionIcon,
 } from "@mantine/core";
 import useStore from "../store/store";
 import { MdDeleteForever } from "react-icons/md";
-
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
@@ -71,7 +70,7 @@ const PostLine = () => {
 
   // Render post list or post detail
   return (
-    <Container size="md" padding="lg">
+    <Container size="md" mb={60}>
       {/* Modal for creating a new post */}
       <Modal
         opened={modalOpen}
@@ -152,8 +151,14 @@ const PostLine = () => {
           </Button>
           <Stack spacing="md">
             {posts.map((post) => (
-              <Card key={post.id} shadow="sm" padding="lg" radius="md" withBorder>
-                <Group position="apart" className="postline-card-group">
+              <Card
+                key={post.id}
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                withBorder
+              >
+                <div>
                   <div className="postline-group-div">
                     <Title
                       order={4}
@@ -162,26 +167,37 @@ const PostLine = () => {
                     >
                       {post.title}
                     </Title>
+                    <div className="postline-container-stack-card-div">
+                      <Text
+                        size="md"
+                        color="dimmed"
+                        className="postline-info-author-time-text"
+                      >
+                        <span>
+                          작성날짜: <strong>{post.createTime}</strong>
+                        </span>
+                        <span>
+                          작성자: <strong>{post.author}</strong>
+                        </span>
+                      </Text>
 
-                    <Text size="sm" color="dimmed" className="postline-info-author-time-text">
-                      <span className="postline-date">
-                        작성날짜: <strong>{post.createTime}</strong>
-                      </span>{" "}
-                      <span>
-                        작성자: <strong>{post.author}</strong>
-                      </span>
-                    </Text>
+                      {post.author === currentUser && (
+                        <ActionIcon
+                          onClick={() => handleDeletePost(post.id)}
+                          color="red"
+                          size="lg"
+                          variant="transparent"
+                          className="post-detail-paper-div-stack-div"
+                        >
+                          <MdDeleteForever size={28} />
+                        </ActionIcon>
+                      )}
+                    </div>
                   </div>
-                  <Group>
-                    {post.author === currentUser && (
-                      <MdDeleteForever onClick={() => handleDeletePost(post.id)} size="1.5em" color= "#228be6" cursor="pointer"/>
-                    )}
-                  </Group>
-                </Group>
+                </div>
               </Card>
             ))}
           </Stack>
-        
         </>
       )}
     </Container>
