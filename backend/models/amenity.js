@@ -37,9 +37,8 @@ module.exports = (sequelize, DataTypes)=>{
 
     },{
         sequelize,
-        // createdAt, updatedAt, deletedAt
+        // createdAt, updatedAt
         timestamps: false,
-        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci' 
     });

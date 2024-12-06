@@ -21,9 +21,11 @@ function MyRoute() {
             <Map />
 
             <div className="main-page-button">
-              <LoginBtn />
-              <Filter />
-              <ForumBtn />
+              <div className="routes-buttons">
+                <LoginBtn />
+                <Filter />
+                <ForumBtn />
+              </div>
             </div>
           </div>
         }

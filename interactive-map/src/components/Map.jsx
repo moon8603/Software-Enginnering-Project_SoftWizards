@@ -18,14 +18,23 @@ const Map = () => {
 
   // Load facilities data
   useEffect(() => {
-    fetch("./src/data/facilities.json")
-      .then((response) => {
+    const fetchFacilities = async () => {
+      try {
+        //const response = await fetch("./src/data/facilities.json");
+        const response = await fetch("http://localhost:3000/main");
+        console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
-        return response.json();
-      })
-      .then((data) => setFacilities(data));
+        const result = await response.json();
+        console.log("Facilities data:", result);
+        setFacilities(result.data); // Extract the data array
+      } catch (error) {
+        console.error("Error fetching facilities data:", error);
+      }
+    };
+
+    fetchFacilities();
   }, []);
 
   // Define custom icons
@@ -75,8 +84,10 @@ const Map = () => {
   
         const [start, end] = match.slice(1).map((time) => {
           const [hours, minutes] = time.split(":").map(Number);
+          
           const date = new Date();
           date.setHours(hours, minutes, 0);
+          
           return date.getTime();
         });
   
@@ -84,6 +95,7 @@ const Map = () => {
       })
       .filter(Boolean);
   
+    
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
@@ -93,6 +105,7 @@ const Map = () => {
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
+    console.log("facility type: ", facility.type[0]);
     if (!isWithinWorkingHours(facility.workingHour)) {
       return icons.grey;
     }
@@ -151,7 +164,8 @@ const Map = () => {
       />
 
       {/* Render markers */}
-      {facilities.map((facility) => (
+      {Array.isArray(facilities) &&
+       facilities.map((facility) => (
         <Marker
           key={facility.id}
           position={facility.coordinates}
