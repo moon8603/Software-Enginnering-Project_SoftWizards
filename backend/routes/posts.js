@@ -11,7 +11,7 @@ router.get('/', async(req, res, next) => {
     // Post id 있는 경우
     if (id) {
       // 유효한 Post id
-      posts = await db.posts.findOne({
+      posts = await db.Post.findOne({
         where: { id },
         attributes: { exclude: ['updatedAt'] }
       });
@@ -29,7 +29,7 @@ router.get('/', async(req, res, next) => {
       // Post id 없는 경우
       posts = await db.Post.findAll({
         attributes: { exclude: ['password', 'updatedAt'] },
-        order: [['createdAt', 'DESC']],
+        order: [['id', 'DESC']],
       });
     }
     

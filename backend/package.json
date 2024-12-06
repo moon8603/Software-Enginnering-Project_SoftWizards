@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "backend": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -20,6 +20,9 @@
     "nodemon": "^3.1.7",
     "pug": "2.0.0-beta11",
     "sequelize": "^6.37.5",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

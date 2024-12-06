@@ -62,13 +62,14 @@ router.get('/', async(req, res, next) => {
 router.post('/create', async (req, res) => {
   try {
       // 클라이언트가 보낸 JSON 데이터 추출
-      const { name, coordinates, type } = req.body;
+      const { name, coordinates, description, workingHour, type } = req.body;
 
       // 유효성 검사
+      // working Hour 등 설계에 대한 논의 필요
       if (!name || !coordinates || !type) {
           return res.status(400).json({
               success: false,
-              message: "Name, coordinates, and type are required.",
+              message: "name, coordinates, and type are required.",
           });
       }
 
@@ -76,6 +77,8 @@ router.post('/create', async (req, res) => {
       const newAmenity = await db.Amenity.create({
           name,
           coordinates: Array.isArray(coordinates) ? coordinates.join(' ') : coordinates,
+          description,
+          workingHour,
           type: Array.isArray(type) ? type.join(' ') : type,
       });
 
