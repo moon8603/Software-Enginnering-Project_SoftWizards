@@ -27,7 +27,7 @@ const Map = () => {
           throw new Error("Failed to fetch facilities data");
         }
         const result = await response.json();
-        console.log("Facilities data:", result);
+        // console.log("Facilities data:", result); for debugging
         setFacilities(result.data); // Extract the data array
       } catch (error) {
         console.error("Error fetching facilities data:", error);
