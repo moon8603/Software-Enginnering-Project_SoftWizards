@@ -68,6 +68,8 @@ const LoginPage = () => {
         <Title ta="center" order={1} mb={40}>
           로그인
         </Title>
+        {/* <Text c="dimmed" mb={4}>관리자만 로그인할 수 있습니다</Text> */}
+        
         <form onSubmit={form.onSubmit(handleClick)}>
           <TextInput
             label="아이디"
