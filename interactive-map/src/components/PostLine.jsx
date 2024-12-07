@@ -133,7 +133,7 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          <Text size="xl" color="dimmed" ml={5}>
+          <Text size="xl" color="dimmed" className="postline-no-post-text">
             게시물 없음
           </Text>
         </Center>

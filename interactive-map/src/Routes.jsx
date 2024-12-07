@@ -5,6 +5,7 @@ import LoginBtn from "./components/LoginBtn";
 import LoginPage from "./pages/LoginPage";
 import ForumBtn from "./components/ForumBtn";
 import ForumPage from "./pages/ForumPage";
+// import PostDetail from "./components/PostDetail";
 
 function MyRoute() {
   return (
@@ -34,6 +35,7 @@ function MyRoute() {
       
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/forumpage" element={<ForumPage />} />
+      {/* <Route path="/forumpage/:postId" element={<PostDetail />} /> */}
     </Routes>
   );
 }
