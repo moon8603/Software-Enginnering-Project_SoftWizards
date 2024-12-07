@@ -36,8 +36,8 @@ router.get('/', async(req, res, next) => {
     const amenitiesData = (amenities || []).map(item => {
       return {
         ...item.dataValues,
-        coordinates: item.coordinates.split(' '),
-        type: item.type.split(' ')
+        coordinates: item.coordinates.split(' ').map(parseFloat),
+        type: item.type.split(' '),
       };
     });
 
@@ -55,6 +55,48 @@ router.get('/', async(req, res, next) => {
       message: "Failed to fetch amenities",
       error: error.message,
     });
+  }
+});
+
+/* amenity 추가 */
+router.post('/create', async (req, res) => {
+  try {
+      // 클라이언트가 보낸 JSON 데이터 추출
+      const { name, coordinates, description, workingHour, type } = req.body;
+
+      // 유효성 검사
+      // working Hour 등 설계에 대한 논의 필요
+      if (!name || !coordinates || !type) {
+          return res.status(400).json({
+              success: false,
+              message: "name, coordinates, and type are required.",
+          });
+      }
+
+      // 새 Amenity 생성
+      const newAmenity = await db.Amenity.create({
+          name,
+          coordinates: Array.isArray(coordinates) ? coordinates.join(' ') : coordinates,
+          description,
+          workingHour,
+          type: Array.isArray(type) ? type.join(' ') : type,
+      });
+
+      // 성공 응답
+      res.status(201).json({
+          success: true,
+          message: "Amenity created successfully.",
+          data: newAmenity,
+      });
+  } catch (error) {
+      console.error("Error creating Amenity:", error);
+
+      // 에러 발생 시 응답
+      res.status(500).json({
+          success: false,
+          message: "Failed to create Amenity.",
+          error: error.message,
+      });
   }
 });
 

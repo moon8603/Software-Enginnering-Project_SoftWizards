@@ -1,11 +1,10 @@
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* main page's styling */
 .main-page {
   display: flex;
 }
@@ -15,23 +14,18 @@
   gap: 20px;
   margin-top: 20px;
 }
-
 .no-post-text {
   padding: 20px;
 }
 
+
+/* forum page styling */
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
-/* login page form login button*/
-.login-btn.mantine-Button-root {
 
-}
 
-.postline-card-group {
-  /* display: flex; */
-}
-
+/* PostLine.jsx file's styling */
 .postline-title {
   cursor: pointer;
   word-break: break-word;
@@ -46,14 +40,25 @@
 .postline-group-div {
   margin-right: auto;
 }
-.postline-info-author-time-text {
+.postline-info-author-time-text, .postdetail-container-stack-card-group-text {
   display: grid;
   grid-template-columns: 200px auto;
 }
-.postline-date {
-  margin-right: 20px;
-}
 
-.postdetail-title, .postdetail-content, .postdetail-comment {
+
+/* PostDetail.jsx's styling */
+.postdetail-title, .postdetail-content, .postdetail-paper-group-text {
   word-break: break-word;
+}
+.postdetail-paper-group-text {
+  width: 100%;
+}
+.postdetail-paper-div-stack-div, .postline-container-stack-card-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.postdetail-container-stack-text {
+  margin-top: 10px;
+  font-size: 14px;
 }
