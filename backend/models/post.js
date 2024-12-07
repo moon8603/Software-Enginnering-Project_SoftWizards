@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.TEXT,
             allowNull:false,
         },
-        password: {
-            type:DataTypes.STRING(100),
-            allowNull: false,
-        },
+        // password: {
+        //     type:DataTypes.STRING(100),
+        //     allowNull: false,
+        // },
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: sequelize.fn('CURRENT_TIMESTAMP'),
