@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import AmenityList from "./AmenityList";
-// import "../App.css";
+import CategoryList from "./CategoryList";
 
 // Import the icons, may add more icon later
 import redIconUrl from "../images/red-icon.png";
@@ -14,6 +14,7 @@ import "leaflet/dist/leaflet.css";
 
 const Map = () => {
   const [facilities, setFacilities] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
   // Set initial position to be centered on campus
   const campusCoordinates = [37.583804, 127.058934];
   const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
@@ -141,9 +142,14 @@ const Map = () => {
   };
 
   return (
-    <div className="map-container">
+    <>
       {/* 시설 목록을 우측 탭에 표시 */}
       <AmenityList facilities={facilities} />
+      <CategoryList 
+        facilities={facilities} 
+        activeCategory={activeCategory}
+        onCategorySelect={setActiveCategory}
+      />
 
       <MapContainer
         center={campusCoordinates}
@@ -198,7 +204,7 @@ const Map = () => {
           </Marker>
         ))}
       </MapContainer>
-    </div>
+    </>
   );
 };
 

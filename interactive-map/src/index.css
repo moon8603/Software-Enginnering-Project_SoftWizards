@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+/* main page's styling */
 .main-page {
   display: flex;
 }
@@ -15,11 +16,12 @@
   gap: 20px;
   margin-top: 20px;
 }
-
 .no-post-text {
   padding: 20px;
 }
 
+
+/* forum page styling */
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
@@ -58,31 +60,38 @@
   word-break: break-word;
 }
 
-/* 지도 관련 스타일 */
-.map-container {
-  position: relative;
-  /* bottom: 0; */
-  width: 100%;
-  height: 100%;
+.category-list-container {
+  position: fixed;
+  top: 7vh;
+  right: 0;
+  width: 300px;
+  height: 28vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
 
 /* 시설 목록 컨테이너 스타일 (우측 탭) */
 .facility-list-container {
   position: fixed;
-  top: 40vh;
+  top: 35vh;
   right: 0;
   width: 300px;
-  height: 60vh;
+  height: 65vh;
   background-color: #f8f9fa;
   padding: 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-sizing: border-box;
 }
   
 .facility-list {
-  max-height: 98%;
+  margin-top: 10px;
+  max-height: 97%;
   overflow-y: auto;
   padding-right: 10px;
 }
