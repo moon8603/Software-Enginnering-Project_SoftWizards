@@ -1,4 +1,5 @@
 import { hasLength, isEmail, useForm } from "@mantine/form";
+import {  useNavigate  } from 'react-router-dom'
 import {
   TextInput,
   PasswordInput,
@@ -6,9 +7,14 @@ import {
   Box,
   Title,
   Center,
+  Text,
+  ActionIcon
 } from "@mantine/core";
+import { RiCloseLargeLine } from "react-icons/ri";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -44,13 +50,22 @@ const LoginPage = () => {
     }
   };
 
+  const handleCloseButton = () => {
+    navigate("/main");
+  }
+
   return (
     <Center w="100%" h="100vh">
       <Box
         w={{ base: "90%", sm: 500, lg: 600 }}
         py={{ base: "xs", sm: "md", lg: "xl" }}
       >
-        <Title ta="center" order={1}>
+        <div className="loginpage-center-box-div">
+          <ActionIcon onClick={() => handleCloseButton()} size="lg" variant="outline">
+            <RiCloseLargeLine size={28}/>
+          </ActionIcon>
+        </div>
+        <Title ta="center" order={1} mb={40}>
           로그인
         </Title>
         <form onSubmit={form.onSubmit(handleClick)}>
@@ -71,6 +86,7 @@ const LoginPage = () => {
             {...form.getInputProps("password")}
             required
           />
+          <Text c="dimmed" mt="xs">관리자만 로그인할 수 있습니다</Text>
           <Button
             type="submit"
             fullWidth

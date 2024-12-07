@@ -10,7 +10,7 @@ const LoginBtn = () => {
   }
 
   return (
-    <Button onClick={handleClick} style={{width: "80px"}}>
+    <Button onClick={handleClick}>
       로그인
     </Button>
   )
