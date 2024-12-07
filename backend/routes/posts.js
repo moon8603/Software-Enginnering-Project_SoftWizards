@@ -5,15 +5,22 @@ var db = require("../models/index");
 /* GET posts listing. */
 router.get('/', async(req, res, next) => {
   try {
-    let posts;
+    let posts, comments;
     const { id } = req.query;
 
     // Post id 있는 경우
     if (id) {
-      // 유효한 Post id
+      // 유효한 Post id - post
       posts = await db.Post.findOne({
         where: { id },
         attributes: { exclude: ['updatedAt'] }
+      });
+
+      // 유효한 Post id - comments
+      comments = await db.Comment.findAll({
+        where: { postId: id },
+        attributes: { exclude: ['updatedAt'] },
+        order: [['id', 'DESC']],
       });
 
       // 유효하지 않은 Post id
@@ -25,6 +32,7 @@ router.get('/', async(req, res, next) => {
       }
 
       posts = [posts];
+      
     } else {
       // Post id 없는 경우
       posts = await db.Post.findAll({
@@ -33,9 +41,18 @@ router.get('/', async(req, res, next) => {
       });
     }
     
-    // 가공된 데이터
+    // 가공된 posts 데이터
     const postsData = (posts || []).map(item => {
-      console.log(item.createdAt);
+      //console.log(item.createdAt);
+      return {
+        ...item.dataValues,
+        // 작성날짜형식 0000-00-00
+        createdAt: item.createdAt.toISOString().split('T')[0],
+      };
+    });
+
+    // 가공된 comments 데이터
+    const commentsData = (comments || []).map(item => {
       return {
         ...item.dataValues,
         // 작성날짜형식 0000-00-00
@@ -46,7 +63,7 @@ router.get('/', async(req, res, next) => {
     // JSON 형식으로 응답
     res.json({
       // success: true,
-      data: postsData,
+      data: { postsData, commentsData },
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -75,5 +92,11 @@ router.post('/create', async (req, res) => {
       res.status(500).json({ success: false, message: 'Failed to create post' });
   }
 });
+
+// 게시글 수정
+
+// 게시글 삭제
+
+// 게시글 비번 확인
 
 module.exports = router;
