@@ -6,7 +6,6 @@ import {
   Title,
   Container,
   Stack,
-  Center,
   Button,
   Modal,
   Textarea,
@@ -124,7 +123,7 @@ const PostLine = () => {
         <PostDetail props={selectedPost} />
       ) : posts.length === 0 ? (
         // Display message if no posts
-        <Center>
+        <div>
           <Button
             className="postline-button"
             fz="h4"
@@ -133,10 +132,10 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          <Text size="xl" color="dimmed" className="postline-no-post-text">
+          <Text size="xl" color="dimmed">
             게시물 없음
           </Text>
-        </Center>
+        </div>
       ) : (
         // Render the list of posts
         <>

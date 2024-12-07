@@ -8,7 +8,6 @@ import {
   Button,
   Textarea,
   ActionIcon,
-  Container,
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
@@ -50,8 +49,8 @@ const PostDetail = ({ props }) => {
   };
 
   return (
-    <Container size="md" mb={60}>
-      <Stack spacing="md">
+    <div>
+      <Stack>
         <Group spacing="sm">
           <Button onClick={toggleAdminMode} fz="md">
             {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
@@ -183,7 +182,7 @@ const PostDetail = ({ props }) => {
           </Text>
         )}
       </Stack>
-    </Container>
+    </div>
   );
 };
 
