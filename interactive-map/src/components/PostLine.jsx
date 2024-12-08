@@ -28,14 +28,16 @@ const PostLine = () => {
 
   // Fetch posts from mock data
   useEffect(() => {
-    fetch("./src/mock/mockPosts.json")
+    fetch("http://localhost:3000/forumpage")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch posts data");
         }
         return response.json();
       })
-      .then((data) => setPosts(data))
+      .then((data) => {
+        setPosts(data.data.postsData || []);
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -48,23 +50,39 @@ const PostLine = () => {
   const handleNewPostSubmit = () => {
     if (newPostTitle.trim() && newPostContent.trim() && newPostAuthor.trim()) {
       const newPost = {
-        id: posts.length + 1,
+        //id: posts.length + 1,
         title: newPostTitle,
         content: newPostContent,
         author: newPostAuthor,
-        createTime: new Date().toISOString().split("T")[0],
+        //createdAt: new Date().toISOString().split("T")[0],
       };
-      setPosts([newPost, ...posts]); // Add the new post to the list
-      // Clear modal inputs
-      setNewPostAuthor("");
-      setNewPostTitle("");
-      setNewPostContent("");
-      setModalOpen(false);
+
+      fetch("http://localhost:3000/forumpage/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPost),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to create post");
+          }
+          return response.json();
+        })
+        .then(() => {
+          setNewPostAuthor("");
+          setNewPostTitle("");
+          setNewPostContent("");
+          setModalOpen(false); // Close the modal
+          window.location.reload(); // 새로고침 이 방법밖에 없는지?
+        })
+        .catch((error) => console.error("Error creating post:", error));
     }
   };
 
   const handleDeletePost = (id) => {
-    setPosts(posts.filter((post) => post.id !== id));
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
   };
 
   // Render post list or post detail
@@ -148,8 +166,11 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          <Stack spacing="md">
+          {
+          
+           <Stack spacing="md">
             {posts.map((post) => (
+              //console.log(post.id);
               <Card
                 key={post.id}
                 shadow="sm"
@@ -173,7 +194,7 @@ const PostLine = () => {
                         className="postline-info-author-time-text"
                       >
                         <span>
-                          작성날짜: <strong>{post.createTime}</strong>
+                          작성날짜: <strong>{post.createdAt}</strong>
                         </span>
                         <span>
                           작성자: <strong>{post.author}</strong>
@@ -196,7 +217,7 @@ const PostLine = () => {
                 </div>
               </Card>
             ))}
-          </Stack>
+          </Stack> }
         </>
       )}
     </Container>
