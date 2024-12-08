@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import editIcon from '../images/edit-icon.png';
 
-const AmenityList = ({ facilities }) => {
+
+const AmenityList = ({ facilities, onEditFacility }) => {
   const [imageSrcs, setImageSrcs] = useState({});
 
   const isWithinWorkingHours = (workingHours) => {
@@ -85,16 +87,24 @@ const AmenityList = ({ facilities }) => {
                   onError={(e) => e.target.style.display = 'none'}
                 />
               )}
-              <div>
+              <div className="text-content">
                 <h4>
                   <span>{facility.name}&nbsp;</span>
-                  <span style={{ color: isOpen ? "green" : "red"}}>
+                  <span style={{ color: isOpen ? "green" : "red" }}>
                     ({isOpen ? "open" : "closed"})
                   </span>
                 </h4>
                 <p>{facility.type[0]}</p>
                 <p>{facility.type[1]}</p>
               </div>
+              {editIcon && (
+                <img 
+                  src={editIcon} 
+                  alt="edit" 
+                  style={{ width: '20px', height: '20px', cursor: 'pointer' }} 
+                  onClick={() => onEditFacility(facility)} 
+                />
+              )}
             </div>
           );
         })}

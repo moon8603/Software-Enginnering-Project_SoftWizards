@@ -3,6 +3,8 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import AmenityList from "./AmenityList";
 import CategoryList from "./CategoryList";
+import EditModal from './EditModal';
+import DetailedInfo from './DetailedInfo';
 
 // Import the icons, may add more icon later
 import redIconUrl from "../images/red-icon.png";
@@ -15,6 +17,8 @@ import "leaflet/dist/leaflet.css";
 const Map = () => {
   const [facilities, setFacilities] = useState([]);
   const [filteredFacilities, setFilteredFacilities] = useState([]);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // const [selectedCategories, setSelectedCategories] = useState([]);
   // Set initial position to be centered on campus
   const campusCoordinates = [37.583804, 127.058934];
@@ -71,6 +75,19 @@ const Map = () => {
     }),
   };
 
+  const updateFacility = (updatedFacility) => {
+    setFacilities(prevFacilities => 
+      prevFacilities.map(facility => 
+        facility.id === updatedFacility.id ? updatedFacility : facility
+      )
+    );
+    setFilteredFacilities(prevFiltered =>
+      prevFiltered.map(facility => 
+        facility.id === updatedFacility.id ? updatedFacility : facility
+      )
+    );
+  };
+
   const isWithinWorkingHours = (workingHours) => {
     const now = new Date();
   
@@ -113,35 +130,10 @@ const Map = () => {
         return icons.green;
       case "스포츠 편의 시설":
         return icons.blue;
-      case "기타 시설":
+      case "기타 편의 시설":
         return icons.orange;
       default:
         return icons.grey; // Default
-    }
-  };
-
-  // 시설과 이름이 같고 일련번호가 0번인 사진을 가져옴
-  const getImageForFacility = (name) => {
-    // File format: name_0.jpeg
-    const fileName = `${name}_0.jpeg`;
-    return `./src/images/${fileName}`;
-  };
-
-  // Function to validate a URL
-  const isValidUrl = (url) => {
-    try {
-      new URL(url); // Throws if invalid
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
-  // Handle link click
-  const handleLinkClick = (event, url) => {
-    if (!isValidUrl(url)) {
-      event.preventDefault(); // Prevent navigation
-      alert("Invalid Link"); // Show error message
     }
   };
 
@@ -159,13 +151,36 @@ const Map = () => {
 
   return (
     <>
-      <AmenityList facilities={filteredFacilities} />
+      <AmenityList 
+        facilities={filteredFacilities} 
+        onEditFacility={(facility) => {
+          setSelectedFacility(facility);
+          setIsModalOpen(true);
+        }}
+        updateFacility={updateFacility}
+      />
       <CategoryList 
         facilities={facilities} 
         // activeCategory={activeCategory}
         // onCategorySelect={setActiveCategory}
         onCategoryFilter={handleCategoryFilter}
       />
+
+      {isModalOpen && (
+        <EditModal 
+          facility={selectedFacility} 
+          onClose={() => setIsModalOpen(false)} 
+          onApply={(updatedFacility) => {
+            updateFacility(updatedFacility);
+            setIsModalOpen(false);
+          }} 
+          onDelete={(facilityId) => {
+            setFacilities(prev => prev.filter(facility => facility.id !== facilityId));
+            setFilteredFacilities(prev => prev.filter(facility => facility.id !== facilityId));
+            setIsModalOpen(false);
+          }} 
+        />
+      )}
 
       <MapContainer
         center={campusCoordinates}
@@ -188,34 +203,13 @@ const Map = () => {
             icon={getIconForFacility(facility)}
           >
             <Popup>
-              <h3>{facility.name}</h3>
-              <p>{facility.description}</p>
-              <p>Working Hours: {facility.workingHour}</p>
-
-              {/* 시설 이미지 */}
-              {getImageForFacility(facility.name) && (
-                <img
-                  src={getImageForFacility(facility.name)}
-                  alt={facility.name}
-                  style={{ width: "100%", height: "auto", marginTop: "10px" }}
-                  onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
-                />
-              )}
-
-              {/* 링크 */}
-              {facility.link && (
-                <p>
-                  <a
-                    href={facility.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "blue", textDecoration: "underline" }}
-                    onClick={(e) => handleLinkClick(e, facility.link)} // 링크 클릭 시 처리
-                  >
-                    {facility.link}
-                  </a>
-                </p>
-              )}
+              <DetailedInfo 
+                facility={facility} 
+                onEdit={() => {
+                  setSelectedFacility(facility);
+                  setIsModalOpen(true);
+                }}
+              />
             </Popup>
           </Marker>
         ))}
