@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Map from "./components/Map";
-import Filter from "./components/Filter";
+// import Filter from "./components/Filter";
 import LoginBtn from "./components/LoginBtn";
 import LoginPage from "./pages/LoginPage";
 import ForumBtn from "./components/ForumBtn";
@@ -22,7 +22,7 @@ function MyRoute() {
 
             <div className="main-page-button">
               <LoginBtn />
-              <Filter />
+              {/* <Filter /> */}
               <ForumBtn />
             </div>
           </div>

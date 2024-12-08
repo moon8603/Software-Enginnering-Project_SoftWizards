@@ -10,7 +10,7 @@ const ForumBtn = () => {
   }
 
   return (
-    <Button onClick={handleClick} style={{width: "80px"}}>
+    <Button onClick={handleClick} style={{width: "120px"}}>
       게시판
     </Button>
   )

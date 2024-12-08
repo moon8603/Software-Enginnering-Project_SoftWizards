@@ -14,7 +14,8 @@ import "leaflet/dist/leaflet.css";
 
 const Map = () => {
   const [facilities, setFacilities] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [filteredFacilities, setFilteredFacilities] = useState([]);
+  // const [selectedCategories, setSelectedCategories] = useState([]);
   // Set initial position to be centered on campus
   const campusCoordinates = [37.583804, 127.058934];
   const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
@@ -28,7 +29,10 @@ const Map = () => {
         }
         return response.json();
       })
-      .then((data) => setFacilities(data));
+      .then((data) => {
+        setFacilities(data);
+        setFilteredFacilities(data); // 초기 상태는 모든 시설 표시
+      });
   }, []);
 
   // Define a custom icon for facilities
@@ -141,14 +145,26 @@ const Map = () => {
     }
   };
 
+  // Filter facilities by selected categories
+  const handleCategoryFilter = (categories) => {
+    // setSelectedCategories(categories);
+    if (categories.length === 0) {
+      setFilteredFacilities(facilities); // No filter, show all facilities
+    } else {
+      setFilteredFacilities(
+        facilities.filter((facility) => categories.includes(facility.type[0]))
+      );
+    }
+  };
+
   return (
     <>
-      {/* 시설 목록을 우측 탭에 표시 */}
-      <AmenityList facilities={facilities} />
+      <AmenityList facilities={filteredFacilities} />
       <CategoryList 
         facilities={facilities} 
-        activeCategory={activeCategory}
-        onCategorySelect={setActiveCategory}
+        // activeCategory={activeCategory}
+        // onCategorySelect={setActiveCategory}
+        onCategoryFilter={handleCategoryFilter}
       />
 
       <MapContainer
@@ -165,7 +181,7 @@ const Map = () => {
         />
 
         {/* 시설 목록을 마커로 표시 */}
-        {facilities.map((facility) => (
+        {filteredFacilities.map((facility) => (
           <Marker
             key={facility.id}
             position={facility.coordinates}

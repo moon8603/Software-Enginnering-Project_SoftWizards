@@ -1,9 +1,13 @@
+// 현재 코드에서는 사용 안 함
 import { Button } from '@mantine/core'
 
 
-const Filter = () => {
+const Filter = ({onFilter}) => {
   return (
-    <Button style={{width: "80px"}}>
+    <Button 
+      style={{width: "120px"}}
+      onClick={onFilter}  
+    >
       필터
     </Button>
   )
