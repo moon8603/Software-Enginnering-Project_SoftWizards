@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import PostDetail from "./PostDetail";
-import { useNavigate } from "react-router-dom";
 import {
   Card,
   Text,
@@ -13,12 +12,13 @@ import {
   TextInput,
   ActionIcon,
 } from "@mantine/core";
+import useStore from "../store/forumStore";
 import { MdDeleteForever } from "react-icons/md";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
-  // const { currentUser, setCurrentUser } = useStore();
-  // const [selectedPost, setSelectedPost] = useState(null);
+  //const { currentUser, setCurrentUser } = useStore();
+  const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   // States for user input in the modal
@@ -30,7 +30,6 @@ const PostLine = () => {
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
 
-  const navigate = useNavigate();
 
   // Fetch posts from mock data
   useEffect(() => {
@@ -92,9 +91,9 @@ const PostLine = () => {
     }
   };
 
-  // const handleDeletePost = (id) => {
-  //   setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-  // };
+  const handleDeletePost = (id) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  };
 
   // Render post list or post detail
   return (
