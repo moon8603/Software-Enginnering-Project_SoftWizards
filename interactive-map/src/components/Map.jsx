@@ -3,8 +3,8 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import AmenityList from "./AmenityList";
 import CategoryList from "./CategoryList";
-import EditModal from './EditModal';
-import DetailedInfo from './DetailedInfo';
+import EditModal from "./EditModal";
+import DetailedInfo from "./DetailedInfo";
 
 // Import the icons
 import redIconUrl from "../images/red-icon.png";
@@ -13,6 +13,8 @@ import blueIconUrl from "../images/blue-icon.png";
 import orangeIconUrl from "../images/orange-icon.png";
 import greyIconUrl from "../images/grey-icon.png";
 import "leaflet/dist/leaflet.css";
+import LoginBtn from "./LoginBtn";
+import ForumBtn from "./ForumBtn";
 
 const Map = () => {
   const [facilities, setFacilities] = useState([]);
@@ -161,37 +163,6 @@ const Map = () => {
 
   return (
     <>
-      <AmenityList 
-        facilities={filteredFacilities} 
-        onEditFacility={(facility) => {
-          setSelectedFacility(facility);
-          setIsModalOpen(true);
-        }}
-        updateFacility={updateFacility}
-      />
-      <CategoryList 
-        facilities={facilities} 
-        // activeCategory={activeCategory}
-        // onCategorySelect={setActiveCategory}
-        onCategoryFilter={handleCategoryFilter}
-      />
-
-      {isModalOpen && (
-        <EditModal 
-          facility={selectedFacility} 
-          onClose={() => setIsModalOpen(false)} 
-          onApply={(updatedFacility) => {
-            updateFacility(updatedFacility);
-            setIsModalOpen(false);
-          }} 
-          onDelete={(facilityId) => {
-            setFacilities(prev => prev.filter(facility => facility.id !== facilityId));
-            setFilteredFacilities(prev => prev.filter(facility => facility.id !== facilityId));
-            setIsModalOpen(false);
-          }} 
-        />
-      )}
-
       <MapContainer
         center={campusCoordinates}
         zoom={zoomLevel}
@@ -224,92 +195,49 @@ const Map = () => {
           </Marker>
         ))}
       </MapContainer>
+      <div className="main-page-button">
+        <div className="buttons">
+          <LoginBtn />
+          <ForumBtn />
+        </div>
+        
+        <CategoryList
+          facilities={facilities}
+          // activeCategory={activeCategory}
+          // onCategorySelect={setActiveCategory}
+          onCategoryFilter={handleCategoryFilter}
+        />
+        <AmenityList
+          facilities={filteredFacilities}
+          onEditFacility={(facility) => {
+            setSelectedFacility(facility);
+            setIsModalOpen(true);
+          }}
+          updateFacility={updateFacility}
+        />
+      </div>
+
+      {isModalOpen && (
+        <EditModal
+          facility={selectedFacility}
+          onClose={() => setIsModalOpen(false)}
+          onApply={(updatedFacility) => {
+            updateFacility(updatedFacility);
+            setIsModalOpen(false);
+          }}
+          onDelete={(facilityId) => {
+            setFacilities((prev) =>
+              prev.filter((facility) => facility.id !== facilityId)
+            );
+            setFilteredFacilities((prev) =>
+              prev.filter((facility) => facility.id !== facilityId)
+            );
+            setIsModalOpen(false);
+          }}
+        />
+      )}
     </>
   );
-
-  // // 시설과 이름이 같고 일련번호가 0번인 사진을 가져옴
-  // const getImageForFacility = (name) => {
-  //   // File format: name_0.jpeg
-  //   const fileName = `${name}_0.jpeg`;
-  //   return `./src/images/${fileName}`;
-  // };
-
-  // // Function to validate a URL
-  // const isValidUrl = (url) => {
-  //   try {
-  //     new URL(url); // Throws if invalid
-  //     return true;
-  //   } catch {
-  //     return false;
-  //   }
-  // };
-
-  // // Handle link click
-  // const handleLinkClick = (event, url) => {
-  //   if (!isValidUrl(url)) {
-  //     event.preventDefault(); // Prevent navigation
-  //     alert("Invalid Link"); // Show error message
-  //   }
-  // };
-
-  // return (
-  //   <MapContainer
-  //     center={campusCoordinates}
-  //     zoom={zoomLevel}
-  //     style={{ height: "100dvh", width: "calc(100dvw - 60px)" }}
-  //   >
-  //     <TileLayer
-  //       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  //       maxNativeZoom={20}
-  //       minZoom={17}
-  //       maxZoom={20}
-  //     />
-
-  //     {/* Render markers */}
-  //     {Array.isArray(facilities) &&
-  //       facilities.map((facility) => (
-  //         <Marker
-  //           key={facility.id}
-  //           position={facility.coordinates}
-  //           icon={getIconForFacility(facility)}
-  //         >
-  //           <Popup>
-  //             <h3>{facility.name}</h3>
-  //             <p>{facility.description}</p>
-  //             {/* 이 주석의 다음 코드는 json파일의 시설들의 description부분을 다 배열을 만들고 나서 사용할 거임. */}
-  //             {/* {facility.description.map((descript) => (
-  //             <p key={descript}>{descript}</p>
-  //           ))} */}
-  //             <p>Working Hours: {facility.workingHour}</p>
-  //             {/* Match and display the image */}
-  //             {getImageForFacility(facility.name) && (
-  //               <img
-  //                 src={getImageForFacility(facility.name)}
-  //                 alt={facility.name}
-  //                 style={{ width: "100%", height: "auto", marginTop: "10px" }}
-  //                 onError={(e) => (e.target.style.display = "none")} // 이미지 로드 실패 시 숨기기
-  //               />
-  //             )}
-  //             {/* Display link as URL */}
-  //             {facility.link && (
-  //               <p>
-  //                 <a
-  //                   href={facility.link}
-  //                   target="_blank"
-  //                   rel="noopener noreferrer"
-  //                   style={{ color: "blue", textDecoration: "underline" }}
-  //                   onClick={(e) => handleLinkClick(e, facility.link)} // Handle link click
-  //                 >
-  //                   {facility.link}
-  //                 </a>
-  //               </p>
-  //             )}
-  //           </Popup>
-  //         </Marker>
-  //       ))}
-  //   </MapContainer>
-  // );
 };
 
 export default Map;

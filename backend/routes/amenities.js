@@ -119,7 +119,7 @@ router.get('/set', async (req, res) => {
     await db.Amenity.destroy({
       where: {},  // 조건 없이 모든 데이터 삭제
     });
-    
+
     const result = await db.Amenity.bulkCreate(amenitiesFromFile, {
       ignoreDuplicates: true
     });
@@ -210,7 +210,7 @@ router.post('/create', async (req, res) => {
 router.put('/update', async (req, res) => {
   const { id } = req.query;
   const updatedFacility = req.body;
-  console.log (updatedFacility);
+  //console.log (updatedFacility);
   try {
     const amenity = await db.Amenity.findByPk(id);
     if (!amenity) {
@@ -221,10 +221,10 @@ router.put('/update', async (req, res) => {
     // DB에서 시설 정보 업데이트
     await amenity.update({
       name: updatedFacility.name,
-      coordinates: updatedFacility.coordinates,  // ','로 구분된 좌표를 그대로 DB에 저장
+      coordinates: Array.isArray(updatedFacility.coordinates) ? updatedFacility.coordinates.join(' ') : updatedFacility.coordinates,
       description: updatedFacility.description,
       workingHour: updatedFacility.workingHour,
-      type: updatedFacility.type,  // ','로 구분된 타입을 그대로 DB에 저장
+      type: Array.isArray(updatedFacility.type) ? updatedFacility.type.join(', ') : updatedFacility.type,
     });
 
     // facilities.json에서 해당 시설 업데이트
