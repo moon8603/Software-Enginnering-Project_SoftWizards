@@ -1,9 +1,44 @@
 var express = require('express');
 var router = express.Router();
 const fs = require("fs");
+const path = require('path');
 var db = require("../models/index");
 
-/* GET amenities listing. */
+// facilities.json 위치
+const facilitiesFilePath = path.join(__dirname, '../../interactive-map/src/data/facilities.json');
+
+// facilities.json 파일을 읽어오는 함수
+const getFacilitiesFromFile = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(facilitiesFilePath, "utf8", (err, data) => {
+      if (err) {
+        reject("Error reading file: " + err);
+      } else {
+        const amenities = JSON.parse(data).data;
+        const setAmenities = amenities.map(item => {
+          return item;
+        });
+        
+        resolve(setAmenities);
+      }
+    });
+  });
+};
+
+// facilities.json 파일에 데이터를 저장하는 함수
+const saveFacilitiesToFile = (facilities) => {
+  fs.writeFileSync(facilitiesFilePath, JSON.stringify({ data: facilities }, null, 2));
+};
+
+
+
+
+
+
+
+
+
+/* AMENITY LIST 조회 */
 router.get('/', async(req, res, next) => {
   try {
     let amenities;
@@ -59,37 +94,29 @@ router.get('/', async(req, res, next) => {
   }
 });
 
+
+
+
+
+
+
+
+
 /* 초기 amenity 다량 추가 API */
 // facilities.json을 받아서 DB에 저장하는 API
 router.get('/set', async (req, res) => {
-  fs.readFile("../interactive-map/src/data/facilities.json", "utf8", async (err, data) => {
-    if (err) {
-      console.error("Error reading file:", err);
-      return;
-    }
-    const amenities = JSON.parse(data).data;
-
-
-    const setAmenities = amenities.map(item => {
-      return {
-        ...item,
-        coordinates: item.coordinates.join(' '),
-        type: item.type.join(', ')
-      }
+  try {
+    //console.log(getFacilitiesFromFile());
+    const amenitiesFromFile = await getFacilitiesFromFile();
+    const result = await db.Amenity.bulkCreate(amenitiesFromFile, {
+      ignoreDuplicates: true
     });
-    //console.log(setAmenities);
-
-    try {
-      const result = await db.Amenity.bulkCreate(setAmenities, {
-        ignoreDuplicates: true
-      });
-      console.log("DB SETTING 완료");
-      res.status(200).json({ message: "DB SETTING 완료" });
-    } catch (error) {
-      console.error("Error inserting data:", error);
-      res.status(500).json({ message: "Error inserting data" });
-    }
-  });
+    console.log("DB SETTING 완료");
+    res.status(200).json({ message: "DB SETTING 완료" });
+  } catch (error) {
+    console.error("Error inserting data:", error);
+    res.status(500).json({ message: "Error inserting data" });
+  }
   
 });
 
@@ -127,6 +154,24 @@ router.post('/create', async (req, res) => {
           type: Array.isArray(type) ? type.join(' ') : type,
       });
 
+      // facilities.json 파일에서 기존 시설 데이터를 읽어옴
+      const facilitiesFromFile = await getFacilitiesFromFile();
+
+      // 새로 추가한 시설을 facilities.json 데이터에 추가
+      const newFacility = {
+        id: newAmenity.id,
+        name: newAmenity.name,
+        coordinates: coordinates,
+        description: newAmenity.description,
+        workingHour: newAmenity.workingHour,
+        type: type,
+      };
+
+      facilitiesFromFile.push(newFacility);
+        
+      // facilities.json 파일에 새로운 데이터 저장
+      saveFacilitiesToFile(facilitiesFromFile);
+
       // 성공 응답
       res.status(201).json({
           success: true,
@@ -142,6 +187,71 @@ router.post('/create', async (req, res) => {
           message: "Failed to create Amenity.",
           error: error.message,
       });
+  }
+});
+
+
+
+
+
+// 수정
+router.put('/update', async (req, res) => {
+  const { id } = req.query;
+  const updatedFacility = req.body;
+  console.log (updatedFacility);
+  try {
+    const amenity = await db.Amenity.findByPk(id);
+    if (!amenity) {
+      return res.status(404).json({ message: '시설을 찾을 수 없습니다.' });
+    }
+
+    // front에서 넘겨줄 때 정보가 비워지는 일이 없도록 하자.
+    // DB에서 시설 정보 업데이트
+    await amenity.update({
+      name: updatedFacility.name,
+      coordinates: updatedFacility.coordinates,  // ','로 구분된 좌표를 그대로 DB에 저장
+      description: updatedFacility.description,
+      workingHour: updatedFacility.workingHour,
+      type: updatedFacility.type,  // ','로 구분된 타입을 그대로 DB에 저장
+    });
+
+    // facilities.json에서 해당 시설 업데이트
+    const facilitiesFromFile = await getFacilitiesFromFile();
+    const updatedFacilities = facilitiesFromFile.map(facility =>
+      facility.id === parseInt(id) ? { ...facility, ...updatedFacility } : facility
+    );
+    saveFacilitiesToFile(updatedFacilities);
+
+    res.json(amenity);
+  } catch (error) {
+    console.error("Error updating Amenity:", error);
+    res.status(500).json({ message: "Failed to update Amenity", error: error.message });
+  }
+});
+
+
+// 삭제
+router.delete('/delete', async (req, res) => {
+  const { id } = req.query;
+
+  try {
+    const amenity = await db.Amenity.findByPk(id);
+    if (!amenity) {
+      return res.status(404).json({ message: '시설을 찾을 수 없습니다.' });
+    }
+
+    // DB에서 시설 삭제
+    await amenity.destroy();
+
+    // facilities.json에서 해당 시설 삭제
+    const facilitiesFromFile = await getFacilitiesFromFile();
+    const updatedFacilities = facilitiesFromFile.filter(facility => facility.id !== parseInt(id));
+    saveFacilitiesToFile(updatedFacilities);
+
+    res.json({ message: '시설이 삭제되었습니다.' });
+  } catch (error) {
+    console.error("Error deleting Amenity:", error);
+    res.status(500).json({ message: "Failed to delete Amenity", error: error.message });
   }
 });
 
