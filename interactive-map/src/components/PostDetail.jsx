@@ -10,51 +10,116 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import useStore from "../store/forumStore";
 
+
+
+
+
+
+
 const PostDetail = ({ props }) => {
+  const { id } = useParams(); // Get post ID from route params
   const [isCommenting, setIsCommenting] = useState(false); // State to show/hide comment input area
   const [commentText, setCommentText] = useState(""); // State to hold the comment text
-  const [replies, setReplies] = useState(props.replies || []); // State for replies/comments
+  const [replies, setReplies] = useState([]);
+  //const [replies, setReplies] = useState(props.replies || []); // State for replies/comments
 
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
-  const setAdmin = useStore((state) => state.setAdmin);
+  // const setAdmin = useStore((state) => state.setAdmin);
 
-  // Toggle admin mode for testing
-  const toggleAdminMode = () => {
-    setAdmin(!isAdmin);
-  };
+  // // Toggle admin mode for testing
+  // const toggleAdminMode = () => {
+  //   setAdmin(!isAdmin);
+  // };
+
+  // Fetch comments from mock data
+useEffect(() => {
+  fetch(`http://localhost:3000/forumpage?id=${ props.id }`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch post data");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setReplies(data.data.commentsData || []);
+    })
+    .catch((error) => console.error(error));
+}, []);
 
   // Handle comment submission
   const handleCommentSubmit = () => {
     if (commentText.trim()) {
-      const newReply = {
-        id: replies.length + 1,
+      const newComment = {
+        //id: replies.length + 1,
         content: commentText,
-        author: "Admin",
-        createTime: new Date().toISOString().split("T")[0],
+        //author: "Admin",
+        authorId: 1,
+        postId: props.id,
+        //createdAt: new Date().toISOString().split("T")[0],
       };
 
-      setReplies([newReply, ...replies]);
-      setCommentText(""); // Clear the text area
-      setIsCommenting(false); // Hide the comment input area
+      fetch("http://localhost:3000/forumpage/comment/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newComment),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to create comment");
+          }
+          return response.json();
+        })
+        .then(() => {
+          //setReplies([newReply, ...replies]);
+          setCommentText(""); // Clear the text area
+          setIsCommenting(false); // Hide the comment input area
+          
+          window.location.reload(); // 새로고침 이 방법밖에 없는지?
+        })
+        .catch((error) => console.error("Error creating comment:", error));
+      
     }
   };
 
   // Handle comment deletion
   const handleDeleteComment = (id) => {
-    setReplies(replies.filter((reply) => reply.id !== id));
+    //setReplies(replies.filter((reply) => reply.id !== id));
+    console.log("commentID: ", id);
+    fetch(`http://localhost:3000/forumpage/comment/delete?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete post");
+        }
+        return response.json();
+      })
+      .then(() => {
+        // 성공적으로 삭제 후 comments 상태 갱신
+        setReplies(replies.filter((reply) => reply.id !== id));
+      })
+      .catch((error) => console.error("Error deleting post:", error));
+
   };
 
   return (
     <div>
       <Stack>
-        <Group spacing="sm">
+        {/* <Group spacing="sm">
           <Button onClick={toggleAdminMode} fz="md">
             {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button>
+          </Button> */}
+          <Group>
           {isAdmin && (
             <Button onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
@@ -71,7 +136,7 @@ const PostDetail = ({ props }) => {
               className="postdetail-container-stack-card-group-text"
             >
               <span>
-                작성날짜: <strong>{props.createTime}</strong>
+                작성날짜: <strong>{props.createdAt}</strong>
               </span>{" "}
               <span>
                 작성자: <strong>{props.author}</strong>
@@ -150,10 +215,10 @@ const PostDetail = ({ props }) => {
                       className="postdetail-container-stack-card-group-text"
                     >
                       <span>
-                        작성날짜: <strong>{reply.createTime}</strong>
+                        작성날짜: <strong>{reply.createdAt}</strong>
                       </span>{" "}
                       <span>
-                        작성자: <strong>{reply.author}</strong>
+                        작성자: <strong>{reply.authorId}</strong>
                       </span>
                     </Text>
 

@@ -12,12 +12,12 @@ import {
   TextInput,
   ActionIcon,
 } from "@mantine/core";
-import useStore from "../store/store";
+import useStore from "../store/forumStore";
 import { MdDeleteForever } from "react-icons/md";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
-  const { currentUser, setCurrentUser } = useStore();
+  //const { currentUser, setCurrentUser } = useStore();
   const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -26,18 +26,30 @@ const PostLine = () => {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
 
+
+  const isAdmin = useStore((state) => state.isAdmin);
+  const setAdmin = useStore((state) => state.setAdmin);
+
+
   // Fetch posts from mock data
   useEffect(() => {
-    fetch("./src/mock/mockPosts.json")
+    fetch("http://localhost:3000/forumpage")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch posts data");
         }
         return response.json();
       })
-      .then((data) => setPosts(data))
+      .then((data) => {
+        setPosts(data.data.postsData || []);
+      })
       .catch((error) => console.error(error));
   }, []);
+
+  // Toggle admin mode for testing
+  const toggleAdminMode = () => {
+    setAdmin(!isAdmin);
+  };
 
   // Handle title click
   const handleTitleClick = (post) => {
@@ -48,23 +60,39 @@ const PostLine = () => {
   const handleNewPostSubmit = () => {
     if (newPostTitle.trim() && newPostContent.trim() && newPostAuthor.trim()) {
       const newPost = {
-        id: posts.length + 1,
+        //id: posts.length + 1,
         title: newPostTitle,
         content: newPostContent,
         author: newPostAuthor,
-        createTime: new Date().toISOString().split("T")[0],
+        //createdAt: new Date().toISOString().split("T")[0],
       };
-      setPosts([newPost, ...posts]); // Add the new post to the list
-      // Clear modal inputs
-      setNewPostAuthor("");
-      setNewPostTitle("");
-      setNewPostContent("");
-      setModalOpen(false);
+
+      fetch("http://localhost:3000/forumpage/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPost),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to create post");
+          }
+          return response.json();
+        })
+        .then(() => {
+          setNewPostAuthor("");
+          setNewPostTitle("");
+          setNewPostContent("");
+          setModalOpen(false); // Close the modal
+          window.location.reload(); // 새로고침 이 방법밖에 없는지?
+        })
+        .catch((error) => console.error("Error creating post:", error));
     }
   };
 
   const handleDeletePost = (id) => {
-    setPosts(posts.filter((post) => post.id !== id));
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
   };
 
   // Render post list or post detail
@@ -83,7 +111,7 @@ const PostLine = () => {
           value={newPostAuthor}
           onChange={(event) => {
             setNewPostAuthor(event.target.value);
-            setCurrentUser(event.target.value);
+            //setCurrentUser(event.target.value);
           }}
           required
           mb="sm"
@@ -132,6 +160,10 @@ const PostLine = () => {
           >
             글 작성
           </Button>
+
+          <Button onClick={toggleAdminMode} fz="md">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
           <Text size="xl" color="dimmed">
             게시물 없음
           </Text>
@@ -148,8 +180,14 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          <Stack spacing="md">
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
+          
+           
+           <Stack spacing="md">
             {posts.map((post) => (
+              //console.log(post.id);
               <Card
                 key={post.id}
                 shadow="sm"
@@ -173,14 +211,14 @@ const PostLine = () => {
                         className="postline-info-author-time-text"
                       >
                         <span>
-                          작성날짜: <strong>{post.createTime}</strong>
+                          작성날짜: <strong>{post.createdAt}</strong>
                         </span>
                         <span>
                           작성자: <strong>{post.author}</strong>
                         </span>
                       </Text>
 
-                      {post.author === currentUser && (
+                      {isAdmin && (
                         <ActionIcon
                           onClick={() => handleDeletePost(post.id)}
                           color="red"
@@ -196,7 +234,7 @@ const PostLine = () => {
                 </div>
               </Card>
             ))}
-          </Stack>
+          </Stack> 
         </>
       )}
     </Container>

@@ -1,11 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Map from "./components/Map";
-import Filter from "./components/Filter";
+// import Filter from "./components/Filter";    // CategoryList로 통합, map.jsx에서 import
 import LoginBtn from "./components/LoginBtn";
 import LoginPage from "./pages/LoginPage";
 import ForumBtn from "./components/ForumBtn";
 import ForumPage from "./pages/ForumPage";
-// import PostDetail from "./components/PostDetail";
 
 function MyRoute() {
   return (
@@ -21,13 +20,11 @@ function MyRoute() {
           <div className="main-page">
             <Map />
 
-            <div className="main-page-button">
-              <div className="routes-buttons">
-                <LoginBtn />
-                <Filter />
-                <ForumBtn />
-              </div>
-            </div>
+            {/* <div className="main-page-button">
+              <LoginBtn />
+
+              <ForumBtn />
+            </div> */}
           </div>
         }
       />
@@ -35,7 +32,6 @@ function MyRoute() {
       
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/forumpage" element={<ForumPage />} />
-      {/* <Route path="/forumpage/:postId" element={<PostDetail />} /> */}
     </Routes>
   );
 }

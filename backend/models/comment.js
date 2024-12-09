@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes)=>{
-    const Post = sequelize.define('Post', {
-        author: {
-            type: DataTypes.STRING(100),
+    const Comment = sequelize.define('Comment', {
+        authorId: {
+            type: DataTypes.INTEGER,
             allowNull:false,
         },
-        title: {
-            type: DataTypes.STRING(500),
+        postId: {
+            type: DataTypes.INTEGER,
             allowNull:false,
         },
         content: {
@@ -32,6 +32,6 @@ module.exports = (sequelize, DataTypes)=>{
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
     });
-    Post.associate = (db) => {};
-    return Post;
+    Comment.associate = (db) => {};
+    return Comment;
 }
