@@ -1,3 +1,5 @@
+
+
 * {
   margin: 0;
   padding: 0;
@@ -9,24 +11,14 @@
   display: flex;
 }
 .main-page-button {
+  height: 60px;
   display: flex;
-  margin: 1rem;
-  margin-inline: auto;
-  padding: 0 10px;
+  margin: 0 20px;
+  gap: 20px;
+  margin-top: 10px;
 }
-.routes-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-
-
-/* login page styling */
-.loginpage-center-box-div{
-  display: flex;
-  justify-content: end;
-  position: relative;
-  bottom: 2rem;
+.no-post-text {
+  padding: 20px;
 }
 
 
@@ -34,16 +26,15 @@
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
+/* login page form login button*/
+.login-btn.mantine-Button-root {
 
-
-/* PostLine.jsx file's styling */
-.forumpage-container-box-div {
-  display: flex;
-  justify-content: end;
-  position: relative;
-  right: 1rem;
-  top: 3rem;
 }
+
+.postline-card-group {
+  /* display: flex; */
+}
+
 .postline-title {
   cursor: pointer;
   word-break: break-word;
@@ -52,34 +43,149 @@
 .postline-title:hover {
   color: #228be6;
 }
-.postline-button, .postline-button-admin {
+.postline-button {
   margin-bottom: 20px;
-}
-.postline-button-admin {
-  margin-left: 1rem;
 }
 .postline-group-div {
   margin-right: auto;
 }
-.postline-info-author-time-text, .postdetail-container-stack-card-group-text {
+.postline-info-author-time-text {
   display: grid;
   grid-template-columns: 200px auto;
 }
+.postline-date {
+  margin-right: 20px;
+}
 
-
-/* PostDetail.jsx's styling */
-.postdetail-title, .postdetail-content, .postdetail-paper-group-text {
+.postdetail-title, .postdetail-content, .postdetail-comment {
   word-break: break-word;
 }
-.postdetail-paper-group-text {
-  width: 100%;
+
+.category-list-container {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 300px;
+  height: 40vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
-.postdetail-paper-div-stack-div, .postline-container-stack-card-div {
+
+/* 시설 목록 컨테이너 스타일 (우측 탭) */
+.facility-list-container {
+  position: fixed;
+  top: 45vh;
+  right: 0;
+  width: 300px;
+  height: 55vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+  
+.facility-list {
+  /* margin-top: 10px; */
+  max-height: 97%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+  
+.facility-item {
+  display: flex;
+  width: 260px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+  
+.facility-item h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.facility-item p {
+  font-size: 14px;
+  color: #666;
+}
+
+.facility-item .edit-button {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto; /* 버튼을 우측 정렬 */
+}
+
+.facility-item .text-content {
+  flex: 1; /* 텍스트가 버튼과 이미지를 제외한 공간을 차지 */
+  text-align: left; /* 텍스트를 좌측 정렬 */
+}
+
+/* modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 가장 위에 표시되도록 설정 */
+}
+
+/* modal content */
+.modal-content {
+  background-color: #ffffff;
+  width: 400px; 
+  max-width: 90%; /* 작은 화면에선 최대 너비를 90%로 제한 */
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10000; /* 오버레이 위에 표시 */
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-buttons {
   display: flex;
   justify-content: space-between;
-  align-items: center
 }
-.postdetail-container-stack-text {
-  margin-top: 10px;
-  font-size: 14px;
+
+.modal-buttons button {
+  width: 30%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons button:hover {
+  background-color: #f0f0f0;
 }
