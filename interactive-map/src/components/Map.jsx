@@ -28,7 +28,11 @@ const Map = () => {
         }
         const result = await response.json();
         // console.log("Facilities data:", result); for debugging
-        setFacilities(result.data); // Extract the data array
+        // type이 parsing 될 때 띄어쓰기를 기준으로 잘못 분리되는 현상 수정
+        setFacilities(result.data.map((facility) => {
+          const parsedType = facility.type.join(' ').split(',');
+          return { ...facility, type: parsedType };
+        })); // Extract the data array
       } catch (error) {
         console.error("Error fetching facilities data:", error);
       }
@@ -103,7 +107,8 @@ const Map = () => {
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
-    // console.log("facility type: ", facility.type[0]); 
+     console.log("facility type: ", facility.type[0]);
+    
     if (!isWithinWorkingHours(facility.workingHour)) {
       return icons.grey;
     }

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const fs = require("fs");
 var db = require("../models/index");
 
 /* GET amenities listing. */
@@ -58,7 +59,51 @@ router.get('/', async(req, res, next) => {
   }
 });
 
-/* amenity 추가 */
+/* 초기 amenity 다량 추가 API */
+// facilities.json을 받아서 DB에 저장하는 API
+router.get('/set', async (req, res) => {
+  fs.readFile("../interactive-map/src/data/facilities.json", "utf8", async (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return;
+    }
+    const amenities = JSON.parse(data).data;
+
+
+    const setAmenities = amenities.map(item => {
+      return {
+        ...item,
+        coordinates: item.coordinates.join(' '),
+        type: item.type.join(', ')
+      }
+    });
+    //console.log(setAmenities);
+
+    try {
+      const result = await db.Amenity.bulkCreate(setAmenities, {
+        ignoreDuplicates: true
+      });
+      console.log("DB SETTING 완료");
+      res.status(200).json({ message: "DB SETTING 완료" });
+    } catch (error) {
+      console.error("Error inserting data:", error);
+      res.status(500).json({ message: "Error inserting data" });
+    }
+  });
+  
+});
+
+
+
+
+
+
+
+
+
+
+
+/* 개별 amenity 추가 */
 router.post('/create', async (req, res) => {
   try {
       // 클라이언트가 보낸 JSON 데이터 추출
