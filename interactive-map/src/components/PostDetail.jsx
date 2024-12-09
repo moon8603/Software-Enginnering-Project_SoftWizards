@@ -115,11 +115,8 @@ useEffect(() => {
   return (
     <div>
       <Stack>
-        {/* <Group spacing="sm">
-          <Button onClick={toggleAdminMode} fz="md">
-            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button> */}
-          <Group>
+        <Group>
+          
           {isAdmin && (
             <Button onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
