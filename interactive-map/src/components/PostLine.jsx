@@ -52,6 +52,11 @@ const PostLine = () => {
     setAdmin(!isAdmin);
   };
 
+  // Toggle admin mode for testing
+  const toggleAdminMode = () => {
+    setAdmin(!isAdmin);
+  };
+
   // Handle title click
   const handleTitleClick = (post) => {
     setSelectedPost(post); // Set the selected post for detail view
@@ -184,9 +189,7 @@ const PostLine = () => {
           <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
             {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
           </Button>
-          
-           
-           <Stack spacing="md">
+          <Stack spacing="md">
             {posts.map((post) => (
               //console.log(post.id);
               <Card
