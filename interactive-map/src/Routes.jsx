@@ -11,8 +11,7 @@ function MyRoute() {
     <Routes>
       {/* Route to redirect from "/" to "/main" */}
       <Route path="/" element={<Navigate to="/main" />} />
-      
-      
+
       {/* Route to the main page with Map, Filter, etc. */}
       <Route
         path="/main"
@@ -29,7 +28,6 @@ function MyRoute() {
         }
       />
 
-      
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/forumpage" element={<ForumPage />} />
     </Routes>
