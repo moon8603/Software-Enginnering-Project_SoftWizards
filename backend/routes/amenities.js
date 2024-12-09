@@ -7,6 +7,8 @@ var db = require("../models/index");
 // facilities.json 위치
 const facilitiesFilePath = path.join(__dirname, '../../interactive-map/src/data/facilities.json');
 
+
+
 // facilities.json 파일을 읽어오는 함수
 const getFacilitiesFromFile = () => {
   return new Promise((resolve, reject) => {
@@ -16,7 +18,11 @@ const getFacilitiesFromFile = () => {
       } else {
         const amenities = JSON.parse(data).data;
         const setAmenities = amenities.map(item => {
-          return item;
+          return {
+            ...item,
+            coordinates: Array.isArray(item.coordinates) ? item.coordinates.join(' ') : item.coordinates, // 배열이면 join, 아니면 그대로
+            type: Array.isArray(item.type) ? item.type.join(', ') : item.type // 배열이면 join, 아니면 그대로
+          };
         });
         
         resolve(setAmenities);
@@ -108,6 +114,12 @@ router.get('/set', async (req, res) => {
   try {
     //console.log(getFacilitiesFromFile());
     const amenitiesFromFile = await getFacilitiesFromFile();
+
+    // DB의 기존 데이터를 모두 삭제
+    await db.Amenity.destroy({
+      where: {},  // 조건 없이 모든 데이터 삭제
+    });
+    
     const result = await db.Amenity.bulkCreate(amenitiesFromFile, {
       ignoreDuplicates: true
     });
