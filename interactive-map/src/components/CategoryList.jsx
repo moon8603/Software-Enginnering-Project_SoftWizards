@@ -66,10 +66,10 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
               display: 'flex', // flex를 사용하여 이미지와 텍스트 정렬
               alignItems: 'center',
               cursor: "pointer",
-              padding: "10px",
+              padding: "4px",
               background: selectedCategories.includes(category) ? "#ddd" : "#fff",
               border: "1px solid #ccc",
-              marginBottom: "5px",
+              //marginBottom: "5px",
               borderRadius: "4px",
             }}
           >
@@ -77,7 +77,7 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
               <img 
                 src={imageSrcs[category]} 
                 alt={category} 
-                style={{ width: '40px', height: '40px', marginRight: '10px' }} 
+                style={{ width: '20px', height: '20px', marginRight: '10px' }} 
                 onError={(e) => e.target.style.display = 'none'}
               />
             )}
@@ -89,13 +89,14 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
         onClick={() => onCategoryFilter(selectedCategories)}
         style={{
           marginTop: "10px",
-          width: "260px",
+          width: "100%",
           padding: "8px 16px",
           cursor: "pointer",
           backgroundColor: "#007bff",
           color: "white",
           border: "none",
           borderRadius: "4px",
+          fontSize: "16px",
         }}
       >
         필터 적용
