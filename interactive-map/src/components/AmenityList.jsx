@@ -83,7 +83,7 @@ const AmenityList = ({ facilities, onEditFacility }) => {
                 <img 
                   src={imageSrc} 
                   alt={facility.name} 
-                  style={{ width: '24px', height: '24px', marginRight: '10px' }} 
+                  style={{ width: '50px', height: '50px', marginRight: '10px' }} 
                   onError={(e) => e.target.style.display = 'none'}
                 />
               )}

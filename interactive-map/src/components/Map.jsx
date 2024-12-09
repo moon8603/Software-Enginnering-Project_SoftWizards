@@ -40,7 +40,11 @@ const Map = () => {
         // console.log("Facilities data:", result); for debugging
         // type이 parsing 될 때 띄어쓰기를 기준으로 잘못 분리되는 현상 수정
         const finalData = result.data.map((facility) => {
-          const parsedType = facility.type.join(' ').split(',');
+          const parsedType = facility.type
+          .join(' ') // 공백으로 합친 뒤
+          .split(',') // 콤마 기준으로 분리
+          .map(type => type.trim()) // 각 항목의 앞뒤 공백 제거
+          .filter(type => type); // 빈 문자열 제거
           return { ...facility, type: parsedType };
         });
         setFacilities(finalData); // Extract the data array
