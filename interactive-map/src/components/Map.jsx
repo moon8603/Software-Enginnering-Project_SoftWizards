@@ -20,8 +20,8 @@ const Map = () => {
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
-        // const response = await fetch("./src/data/facilities.json");
-        const response = await fetch("http://localhost:3000/main");
+        const response = await fetch("./src/data/facilities.json");
+        // const response = await fetch("http://localhost:3000/main");
         // console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
@@ -150,7 +150,7 @@ const Map = () => {
     <MapContainer
       center={campusCoordinates}
       zoom={zoomLevel}
-      style={{ height: "100dvh", width: "calc(100dvw - 15dvw)" }}
+      style={{ height: "100dvh", width: "calc(100dvw - 60px)" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -12,12 +12,11 @@ import {
   TextInput,
   ActionIcon,
 } from "@mantine/core";
-import useStore from "../store/store";
 import { MdDeleteForever } from "react-icons/md";
+import useStore from "../store/forumStore";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
-  const { currentUser, setCurrentUser } = useStore();
   const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,6 +24,8 @@ const PostLine = () => {
   const [newPostAuthor, setNewPostAuthor] = useState("");
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
+
+  const isAdmin = useStore((state) => state.isAdmin);
 
   // Fetch posts from mock data
   useEffect(() => {
@@ -38,6 +39,7 @@ const PostLine = () => {
       .then((data) => setPosts(data))
       .catch((error) => console.error(error));
   }, []);
+
 
   // Handle title click
   const handleTitleClick = (post) => {
@@ -83,7 +85,7 @@ const PostLine = () => {
           value={newPostAuthor}
           onChange={(event) => {
             setNewPostAuthor(event.target.value);
-            setCurrentUser(event.target.value);
+            // setCurrentUser(event.target.value);
           }}
           required
           mb="sm"
@@ -180,7 +182,7 @@ const PostLine = () => {
                         </span>
                       </Text>
 
-                      {post.author === currentUser && (
+                      {isAdmin && (
                         <ActionIcon
                           onClick={() => handleDeletePost(post.id)}
                           color="red"
