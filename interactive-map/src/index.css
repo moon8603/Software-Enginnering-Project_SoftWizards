@@ -29,20 +29,26 @@
   padding: 20px;
 }
 
+/* login page styling */
+.loginpage-center-box-div{
+  display: flex;
+  justify-content: end;
+  position: relative;
+  bottom: 2rem;
+}
 
 /* forum page styling */
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
-/* login page form login button*/
-.login-btn.mantine-Button-root {
 
+.forumpage-container-box-div {
+  display: flex;
+  justify-content: end;
+  position: relative;
+  right: 1rem;
+  top: 3rem;
 }
-
-.postline-card-group {
-  /* display: flex; */
-}
-
 .postline-title {
   cursor: pointer;
   word-break: break-word;
@@ -51,22 +57,36 @@
 .postline-title:hover {
   color: #228be6;
 }
-.postline-button {
+.postline-button, .postline-button-admin {
   margin-bottom: 20px;
+}
+.postline-button-admin {
+  margin-left: 1rem;
 }
 .postline-group-div {
   margin-right: auto;
 }
-.postline-info-author-time-text {
+.postline-info-author-time-text, .postdetail-container-stack-card-group-text {
   display: grid;
   grid-template-columns: 200px auto;
 }
-.postline-date {
-  margin-right: 20px;
-}
 
-.postdetail-title, .postdetail-content, .postdetail-comment {
+
+/* PostDetail.jsx's styling */
+.postdetail-title, .postdetail-content, .postdetail-paper-group-text {
   word-break: break-word;
+}
+.postdetail-paper-group-text {
+  width: 100%;
+}
+.postdetail-paper-div-stack-div, .postline-container-stack-card-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.postdetail-container-stack-text {
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .category-list-container {

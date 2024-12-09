@@ -17,6 +17,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
+  //const { currentUser, setCurrentUser } = useStore();
   const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -90,9 +91,25 @@ const PostLine = () => {
     }
   };
 
+
+  //아영님거
+  // const handleDeletePost = (id) => {
+  //   setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  // };
+
+  //gpt거
   const handleDeletePost = (id) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    fetch(`http://localhost:3000/forumpage/delete?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to delete post");
+        return response.json();
+      })
+      .then(() => setPosts(posts.filter((post) => post.id !== id)))
+      .catch((error) => console.error("Error deleting post:", error));
   };
+
 
   // Render post list or post detail
   return (
@@ -182,7 +199,9 @@ const PostLine = () => {
           <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
             {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
           </Button>
-          <Stack spacing="md">
+          
+           
+           <Stack spacing="md">
             {posts.map((post) => (
               //console.log(post.id);
               <Card

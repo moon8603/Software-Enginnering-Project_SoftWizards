@@ -25,8 +25,8 @@ const LoginPage = () => {
       password: "",
     },
     validate: {
-      email: isEmail("Invalid email"),
-      password: hasLength({ min: 8 }, "Password must be at least 8 characters"),
+      email: isEmail("유효하지 않은 이메일입니다"),
+      password: hasLength({ min: 8 }, "비밀번호가 최소 8글자입니다"),
     },
   });
 
