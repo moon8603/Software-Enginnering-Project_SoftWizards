@@ -11,15 +11,11 @@ import {
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import useStore from "../store/forumStore";
 
-
-
-
-
-
-
 const PostDetail = ({ props }) => {
+  const { id } = useParams(); // Get post ID from route params
   const [isCommenting, setIsCommenting] = useState(false); // State to show/hide comment input area
   const [commentText, setCommentText] = useState(""); // State to hold the comment text
   const [replies, setReplies] = useState([]);
@@ -34,34 +30,20 @@ const PostDetail = ({ props }) => {
   //   setAdmin(!isAdmin);
   // };
 
-
-
-
-
-
-
-
-
   // Fetch comments from mock data
-useEffect(() => {
-  fetch(`http://localhost:3000/forumpage?id=${ props.id }`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch post data");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setReplies(data.data.commentsData || []);
-    })
-    .catch((error) => console.error(error));
-}, []);
-
-
-
-
-
-
+  useEffect(() => {
+    fetch(`http://localhost:3000/forumpage?id=${props.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch post data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setReplies(data.data.commentsData || []);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   // Handle comment submission
   const handleCommentSubmit = () => {
@@ -89,15 +71,13 @@ useEffect(() => {
           return response.json();
         })
         .then(() => {
-          
           //setReplies([newReply, ...replies]);
           setCommentText(""); // Clear the text area
           setIsCommenting(false); // Hide the comment input area
-          
+
           window.location.reload(); // 새로고침 이 방법밖에 없는지?
         })
         .catch((error) => console.error("Error creating comment:", error));
-      
     }
   };
 
@@ -122,21 +102,18 @@ useEffect(() => {
         setReplies(replies.filter((reply) => reply.id !== id));
       })
       .catch((error) => console.error("Error deleting post:", error));
-
   };
 
   return (
     <div>
       <Stack>
         <Group>
-          
           {isAdmin && (
             <Button onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
             </Button>
           )}
         </Group>
-
         {/* Post details */}
         <Card shadow="md" padding="lg" radius="md" withBorder>
           <Group position="apart">
