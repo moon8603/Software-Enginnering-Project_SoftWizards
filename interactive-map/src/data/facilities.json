@@ -289,7 +289,7 @@
     },
     {
       "id": 36,
-      "name": "흡연 부스",
+      "name": "흡연 부스1",
       "coordinates": [37.583075, 127.060820],
       "description": "",
       "workingHour": "0:00 ~ 23:59",
@@ -297,7 +297,7 @@
     },
     {
       "id": 37,
-      "name": "흡연 부스",
+      "name": "흡연 부스2",
       "coordinates": [37.583621, 127.060661],
       "description": "",
       "workingHour": "0:00 ~ 23:59",
@@ -305,11 +305,19 @@
     },
     {
       "id": 38,
-      "name": "흡연 부스",
+      "name": "흡연 부스3",
       "coordinates": [37.583139, 127.058225],
       "description": "",
       "workingHour": "0:00 ~ 23:59",
       "type": ["휴식 및 복지 편의 시설", "흡연 부스"]
+    },
+    {
+      "id": 39,
+      "name": "test",
+      "coordinates": [37.58313, 127.058225],
+      "description": "test",
+      "workingHour": "0:00 ~ 23:59",
+      "type": ["test", "휴식 및 복지 편의 시설", "흡연 부스"]
     }
   ]
 }
