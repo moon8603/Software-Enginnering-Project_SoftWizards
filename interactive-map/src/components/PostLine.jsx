@@ -91,9 +91,25 @@ const PostLine = () => {
     }
   };
 
+
+  //아영님거
+  // const handleDeletePost = (id) => {
+  //   setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  // };
+
+  //gpt거
   const handleDeletePost = (id) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    fetch(`http://localhost:3000/forumpage/delete?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to delete post");
+        return response.json();
+      })
+      .then(() => setPosts(posts.filter((post) => post.id !== id)))
+      .catch((error) => console.error("Error deleting post:", error));
   };
+
 
   // Render post list or post detail
   return (
@@ -161,7 +177,7 @@ const PostLine = () => {
             글 작성
           </Button>
 
-          <Button onClick={toggleAdminMode} fz="md">
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
             {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
           </Button>
           <Text size="xl" color="dimmed">

@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import editIcon from '../images/edit-icon.png';
+import useStore from '../store/forumStore';
 
 
 const AmenityList = ({ facilities, onEditFacility }) => {
   const [imageSrcs, setImageSrcs] = useState({});
+
+  const isAdmin = useStore((state) => state.isAdmin);
+
 
   const isWithinWorkingHours = (workingHours) => {
     if (!workingHours) return false;
@@ -97,14 +101,24 @@ const AmenityList = ({ facilities, onEditFacility }) => {
                 <p>{facility.type[0]}</p>
                 <p>{facility.type[1]}</p>
               </div>
-              {editIcon && (
+              {isAdmin && (
+                editIcon && (
+                  <img 
+                  src={editIcon} 
+                  alt="edit" 
+                  style={{ width: '20px', height: '20px', cursor: 'pointer' }} 
+                  onClick={() => onEditFacility(facility)} 
+                />
+                )
+              )}
+              {/* {editIcon && (
                 <img 
                   src={editIcon} 
                   alt="edit" 
                   style={{ width: '20px', height: '20px', cursor: 'pointer' }} 
                   onClick={() => onEditFacility(facility)} 
                 />
-              )}
+              )} */}
             </div>
           );
         })}
