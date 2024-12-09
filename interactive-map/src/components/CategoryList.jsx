@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Button } from "@mantine/core";
 
 const CategoryList = ({ facilities, onCategoryFilter }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -77,7 +78,7 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
               <img 
                 src={imageSrcs[category]} 
                 alt={category} 
-                style={{ width: '20px', height: '20px', marginRight: '10px' }} 
+                style={{ width: '24px', height: '24px', marginRight: '10px' }} 
                 onError={(e) => e.target.style.display = 'none'}
               />
             )}
@@ -85,22 +86,14 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
           </li>
         ))}
       </ul>
-      <button
+      <Button
         onClick={() => onCategoryFilter(selectedCategories)}
-        style={{
-          marginTop: "10px",
-          width: "100%",
-          padding: "8px 16px",
-          cursor: "pointer",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          fontSize: "16px",
-        }}
+        fullWidth
+        mt="sm"
+        variant="outline"
       >
         필터 적용
-      </button>
+      </Button>
     </div>
   );
 };

@@ -1,7 +1,12 @@
 :root {
+  /* a = category-height + facility-height
+  /* category/facility-height = 40/60 */
+  /* 36px: buttons' height*/
+  /* 20px: total gap between div */
+  /* 20px: margin top + bottom */
   --a: calc(100dvh - 36px - 20px - 20px);
-  --x: calc(var(--a) / 2.5);
-  --y: calc(var(--x) * 1.5);
+  --category-height: calc(var(--a) / 2.5);
+  --facility-height: calc(var(--category-height) * 1.5);
 }
 
 * {
@@ -17,16 +22,13 @@
 .main-page-button {
   /* height: 60px; */
   display: flex;
-  /* margin: 0 20px;
-  gap: 20px; */
   flex-direction: column;
   gap: 10px;
-  margin-top: 10px;
+  margin: 10px 0;
 }
 .buttons {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 .no-post-text {
@@ -77,29 +79,40 @@
 }
 
 .category-list-container {
-  height: var(--x);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: var(--category-height);
   background-color: #f8f9fa;
-  padding: 20px;
+  padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  box-sizing: border-box;
+  ul {
+    /* 100%: category-list-container's height */
+    /* 30px: heading */
+    /* 36px: button's height */
+    /* 12px: button's margin top */
+    /* 10px: martine button animation */
+    height: calc(100% - 30px - 36px - 12px - 10px);
+    li {
+      margin-bottom: 2px;
+    }
+  }
 }
 
 /* 시설 목록 컨테이너 스타일 (우측 탭) */
 .facility-list-container {
-  height: var(--y);
+  height: var(--facility-height);
   background-color: #f8f9fa;
-  padding: 20px;
+  padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   box-sizing: border-box;
 }
   
 .facility-list {
-  /* margin-top: 10px;
-  max-height: 97%;
-  overflow-y: auto;
-  padding-right: 10px; */
+  height: calc(100% - 30px);
+  overflow: auto;
 }
   
 .facility-item {
