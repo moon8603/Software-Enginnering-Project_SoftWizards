@@ -103,7 +103,26 @@ useEffect(() => {
 
   // Handle comment deletion
   const handleDeleteComment = (id) => {
-    setReplies(replies.filter((reply) => reply.id !== id));
+    //setReplies(replies.filter((reply) => reply.id !== id));
+    console.log("commentID: ", id);
+    fetch(`http://localhost:3000/forumpage/comment/delete?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete post");
+        }
+        return response.json();
+      })
+      .then(() => {
+        // 성공적으로 삭제 후 posts 상태 갱신
+        setReplies(replies.filter((reply) => reply.id !== id));
+      })
+      .catch((error) => console.error("Error deleting post:", error));
+
   };
 
   return (
