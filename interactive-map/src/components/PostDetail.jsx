@@ -11,11 +11,9 @@ import {
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import useStore from "../store/forumStore";
 
 const PostDetail = ({ props }) => {
-  const { id } = useParams(); // Get post ID from route params
   const [isCommenting, setIsCommenting] = useState(false); // State to show/hide comment input area
   const [commentText, setCommentText] = useState(""); // State to hold the comment text
   const [replies, setReplies] = useState([]);
@@ -154,7 +152,10 @@ useEffect(() => {
               </Button>
               <Button
                 color="red"
-                onClick={() => {setIsCommenting(false); setCommentText("")}}
+                onClick={() => {
+                  setIsCommenting(false);
+                  setCommentText("");
+                }}
                 variant="light"
               >
                 취소

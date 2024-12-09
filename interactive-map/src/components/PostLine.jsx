@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-// import PostDetail from "./PostDetail";
+import PostDetail from "./PostDetail";
 import {
   Card,
   Text,
@@ -19,7 +18,7 @@ import { MdDeleteForever } from "react-icons/md";
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
   //const { currentUser, setCurrentUser } = useStore();
-  // const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   // States for user input in the modal
@@ -27,14 +26,15 @@ const PostLine = () => {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
 
+
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
 
-  const navigate = useNavigate();
 
   // Fetch posts from mock data
   useEffect(() => {
     fetch("http://localhost:3000/forumpage")
+    // fetch("./src/mock/mockPosts.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch posts data");
@@ -44,14 +44,19 @@ const PostLine = () => {
       .then((data) => {
         setPosts(data.data.postsData || []);
       })
+      // .then((data) => setPosts(data))
       .catch((error) => console.error(error));
   }, []);
 
+  // Toggle admin mode for testing
+  const toggleAdminMode = () => {
+    setAdmin(!isAdmin);
+  };
 
   // Handle title click
-  // const handleTitleClick = (post) => {
-  //   setSelectedPost(post);
-  // };
+  const handleTitleClick = (post) => {
+    setSelectedPost(post); // Set the selected post for detail view
+  };
 
   // Handle "글 작성" button click
   const handleNewPostSubmit = () => {
@@ -88,26 +93,8 @@ const PostLine = () => {
     }
   };
 
-  //아영님거
-  // const handleDeletePost = (id) => {
-  //   setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-  // };
-
-  //gpt거
   const handleDeletePost = (id) => {
-    fetch(`http://localhost:3000/forumpage/delete?id=${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to delete post");
-        return response.json();
-      })
-      .then(() => setPosts(posts.filter((post) => post.id !== id)))
-      .catch((error) => console.error("Error deleting post:", error));
-  };
-
-  const navigateToPostDetail = (id) => {
-    navigate(`/forumpage/${id}`);
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
   };
 
   // Render post list or post detail
@@ -160,65 +147,96 @@ const PostLine = () => {
           제출
         </Button>
       </Modal>
-      <Button
-        fz="h4"
-        size="sm"
-        className="postline-button"
-        onClick={() => setModalOpen(true)}
-        fullWidth={false}
-      >
-        글 작성
-      </Button>
-      <Button onClick={() => setAdmin(!isAdmin)} className="postline-button-admin">
-        {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-      </Button>
 
+      {selectedPost ? (
+        // Render PostDetail component if a post is selected
+        <PostDetail props={selectedPost} />
+      ) : posts.length === 0 ? (
+        // Display message if no posts
+        <div>
+          <Button
+            className="postline-button"
+            fz="h4"
+            size="sm"
+            onClick={() => setModalOpen(true)}
+          >
+            글 작성
+          </Button>
 
-      <Stack spacing="md">
-        {posts.map((post) => (
-          //console.log(post.id);
-          <Card key={post.id} shadow="sm" padding="lg" radius="md" withBorder>
-            <div>
-              <div className="postline-group-div">
-                <Title
-                  order={4}
-                  className="postline-title"
-                  // onClick={() => handleTitleClick(post)}
-                  onClick={() => navigateToPostDetail(post.id)}
-                >
-                  {post.title}
-                </Title>
-                <div className="postline-container-stack-card-div">
-                  <Text
-                    size="md"
-                    color="dimmed"
-                    className="postline-info-author-time-text"
-                  >
-                    <span>
-                      작성날짜: <strong>{post.createdAt}</strong>
-                    </span>
-                    <span>
-                      작성자: <strong>{post.author}</strong>
-                    </span>
-                  </Text>
-
-                  {isAdmin && (
-                    <ActionIcon
-                      onClick={() => handleDeletePost(post.id)}
-                      color="red"
-                      size="lg"
-                      variant="transparent"
-                      className="post-detail-paper-div-stack-div"
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
+          <Text size="xl" color="dimmed">
+            게시물 없음
+          </Text>
+        </div>
+      ) : (
+        // Render the list of posts
+        <>
+          <Button
+            fz="h4"
+            size="sm"
+            className="postline-button"
+            onClick={() => setModalOpen(true)}
+            fullWidth={false}
+          >
+            글 작성
+          </Button>
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
+          <Stack spacing="md">
+            {posts.map((post) => (
+              //console.log(post.id);
+              <Card
+                key={post.id}
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                withBorder
+              >
+                <div>
+                  <div className="postline-group-div">
+                    <Title
+                      order={4}
+                      className="postline-title"
+                      onClick={() => handleTitleClick(post)}
                     >
-                      <MdDeleteForever size={28} />
-                    </ActionIcon>
-                  )}
+                      {post.title}
+                    </Title>
+                    <div className="postline-container-stack-card-div">
+                      <Text
+                        size="md"
+                        color="dimmed"
+                        className="postline-info-author-time-text"
+                      >
+                        <span>
+                          작성날짜: <strong>{post.createdAt}</strong>
+                        </span>
+                        <span>
+                          작성자: <strong>{post.author}</strong>
+                        </span>
+                      </Text>
+
+                      {isAdmin && (
+                        <ActionIcon
+                          onClick={() => handleDeletePost(post.id)}
+                          color="red"
+                          size="lg"
+                          variant="transparent"
+                          className="post-detail-paper-div-stack-div"
+                        >
+                          <MdDeleteForever size={28} />
+                        </ActionIcon>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </Stack>
+              </Card>
+            ))}
+          </Stack> 
+        </>
+      )}
     </Container>
   );
 };

@@ -5,13 +5,15 @@ import LoginBtn from "./components/LoginBtn";
 import LoginPage from "./pages/LoginPage";
 import ForumBtn from "./components/ForumBtn";
 import ForumPage from "./pages/ForumPage";
+// import PostDetail from "./components/PostDetail";
 
 function MyRoute() {
   return (
     <Routes>
       {/* Route to redirect from "/" to "/main" */}
       <Route path="/" element={<Navigate to="/main" />} />
-
+      
+      
       {/* Route to the main page with Map, Filter, etc. */}
       <Route
         path="/main"
@@ -28,8 +30,12 @@ function MyRoute() {
         }
       />
 
+      
       <Route path="/loginpage" element={<LoginPage />} />
-      <Route path="/forumpage" element={<ForumPage />} />
+      <Route path="/forumpage" element={<ForumPage />}>
+        {/* Post Detail Page as a nested route */}
+        {/* <Route path=":postId" element={<PostDetail />} /> */}
+      </Route>
     </Routes>
   );
 }
