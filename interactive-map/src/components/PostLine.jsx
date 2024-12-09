@@ -26,6 +26,8 @@ const PostLine = () => {
   const [newPostContent, setNewPostContent] = useState("");
 
   const isAdmin = useStore((state) => state.isAdmin);
+  const setAdmin = useStore((state) => state.setAdmin);
+
 
   // Fetch posts from mock data
   useEffect(() => {
@@ -40,6 +42,11 @@ const PostLine = () => {
       .catch((error) => console.error(error));
   }, []);
 
+
+  // Toggle admin mode for testing
+  const toggleAdminMode = () => {
+    setAdmin(!isAdmin);
+  };
 
   // Handle title click
   const handleTitleClick = (post) => {
@@ -134,6 +141,10 @@ const PostLine = () => {
           >
             글 작성
           </Button>
+
+          <Button onClick={toggleAdminMode} fz="md">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
           <Text size="xl" color="dimmed">
             게시물 없음
           </Text>
@@ -149,6 +160,9 @@ const PostLine = () => {
             fullWidth={false}
           >
             글 작성
+          </Button>
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
           </Button>
           <Stack spacing="md">
             {posts.map((post) => (

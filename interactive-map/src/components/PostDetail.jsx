@@ -20,12 +20,6 @@ const PostDetail = ({ props }) => {
 
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
-  const setAdmin = useStore((state) => state.setAdmin);
-
-  // Toggle admin mode for testing
-  const toggleAdminMode = () => {
-    setAdmin(!isAdmin);
-  };
 
   // Handle comment submission
   const handleCommentSubmit = () => {
@@ -51,10 +45,8 @@ const PostDetail = ({ props }) => {
   return (
     <div>
       <Stack>
-        <Group spacing="sm">
-          <Button onClick={toggleAdminMode} fz="md">
-            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button>
+        <Group>
+          
           {isAdmin && (
             <Button onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
