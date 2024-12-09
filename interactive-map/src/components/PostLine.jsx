@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import useStore from "../store/forumStore";
 import { MdDeleteForever } from "react-icons/md";
+import useStore from "../store/forumStore";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
