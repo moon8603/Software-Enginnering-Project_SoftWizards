@@ -106,9 +106,6 @@ const PostLine = () => {
       .catch((error) => console.error("Error deleting post:", error));
   };
 
-  const navigateToPostDetail = (id) => {
-    navigate(`/forumpage/${id}`);
-  };
 
   // Render post list or post detail
   return (

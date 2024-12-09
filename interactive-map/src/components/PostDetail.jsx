@@ -11,11 +11,11 @@ import {
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import useStore from "../store/forumStore";
 
 const PostDetail = ({ props }) => {
-  const { id } = useParams(); // Get post ID from route params
+  // const { id } = useParams();
   const [isCommenting, setIsCommenting] = useState(false); // State to show/hide comment input area
   const [commentText, setCommentText] = useState(""); // State to hold the comment text
   const [replies, setReplies] = useState([]);
@@ -23,12 +23,8 @@ const PostDetail = ({ props }) => {
 
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
-  // const setAdmin = useStore((state) => state.setAdmin);
 
-  // // Toggle admin mode for testing
-  // const toggleAdminMode = () => {
-  //   setAdmin(!isAdmin);
-  // };
+  const [error, setError] = useState(null);
 
   // Fetch comments from mock data
   useEffect(() => {
@@ -42,7 +38,10 @@ const PostDetail = ({ props }) => {
       .then((data) => {
         setReplies(data.data.commentsData || []);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setError("에러, 어게인");
+      });
   }, []);
 
   // Handle comment submission
@@ -98,7 +97,7 @@ const PostDetail = ({ props }) => {
         return response.json();
       })
       .then(() => {
-        // 성공적으로 삭제 후 posts 상태 갱신
+        // 성공적으로 삭제 후 comments 상태 갱신
         setReplies(replies.filter((reply) => reply.id !== id));
       })
       .catch((error) => console.error("Error deleting post:", error));
@@ -154,7 +153,10 @@ const PostDetail = ({ props }) => {
               </Button>
               <Button
                 color="red"
-                onClick={() => {setIsCommenting(false); setCommentText("")}}
+                onClick={() => {
+                  setIsCommenting(false);
+                  setCommentText("");
+                }}
                 variant="light"
               >
                 취소

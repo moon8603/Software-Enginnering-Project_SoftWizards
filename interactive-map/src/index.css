@@ -1,3 +1,9 @@
+:root {
+  --a: calc(100dvh - 36px - 20px - 20px);
+  --x: calc(var(--a) / 2.5);
+  --y: calc(var(--x) * 1.5);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,16 +16,18 @@
 }
 .main-page-button {
   display: flex;
-  margin: 1rem;
-  margin-inline: auto;
-  padding: 0 10px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }
-.routes-buttons {
+.buttons {
   display: flex;
-  gap: 8px;
+  justify-content: space-around;
+  align-items: center;
 }
-
-
+.no-post-text {
+  padding: 20px;
+}
 
 /* login page styling */
 .loginpage-center-box-div{
@@ -29,14 +37,11 @@
   bottom: 2rem;
 }
 
-
 /* forum page styling */
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
 
-
-/* PostLine.jsx file's styling */
 .forumpage-container-box-div {
   display: flex;
   justify-content: end;
@@ -82,4 +87,123 @@
 .postdetail-container-stack-text {
   margin-top: 10px;
   font-size: 14px;
+}
+
+.category-list-container {
+  height: var(--x);
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* 시설 목록 컨테이너 스타일 (우측 탭) */
+.facility-list-container {
+  height: var(--y);
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+  
+.facility-list {
+  /* margin-top: 10px; */
+  /* max-height: 97%; */
+  /* overflow-y: auto; */
+  /* padding-right: 10px; */
+}
+  
+.facility-item {
+  display: flex;
+  width: 260px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+  
+.facility-item h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.facility-item p {
+  font-size: 14px;
+  color: #666;
+}
+
+.facility-item .edit-button {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto; /* 버튼을 우측 정렬 */
+}
+
+.facility-item .text-content {
+  flex: 1; /* 텍스트가 버튼과 이미지를 제외한 공간을 차지 */
+  text-align: left; /* 텍스트를 좌측 정렬 */
+}
+
+/* modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 가장 위에 표시되도록 설정 */
+}
+
+/* modal content */
+.modal-content {
+  background-color: #ffffff;
+  width: 400px; 
+  max-width: 90%; /* 작은 화면에선 최대 너비를 90%로 제한 */
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10000; /* 오버레이 위에 표시 */
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  width: 30%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons button:hover {
+  background-color: #f0f0f0;
 }
