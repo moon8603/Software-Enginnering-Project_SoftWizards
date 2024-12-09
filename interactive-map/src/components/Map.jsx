@@ -17,6 +17,8 @@ import LoginBtn from "./LoginBtn";
 import ForumBtn from "./ForumBtn";
 
 const Map = () => {
+  const [error, setError] = useState(null);
+
   const [facilities, setFacilities] = useState([]);
   const [filteredFacilities, setFilteredFacilities] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState(null);
@@ -44,8 +46,10 @@ const Map = () => {
         });
         setFacilities(finalData); // Extract the data array
         setFilteredFacilities(finalData);
+        setError(null);
       } catch (error) {
         console.error("Error fetching facilities data:", error);
+        setError("오류 발생했습니다. 다시 시도해주세요."); // Set error message
       }
     };
     fetchFacilities();
@@ -164,6 +168,10 @@ const Map = () => {
 
   return (
     <>
+    {error && <div style={{ color: "red", fontSize: "2rem" }}>{error}</div>} {/* Display error */}
+    {!error && (
+      <>
+    
       <MapContainer
         center={campusCoordinates}
         zoom={zoomLevel}
@@ -178,24 +186,43 @@ const Map = () => {
         />
 
         {/* 시설 목록을 마커로 표시 */}
+        {!filteredFacilities ? (
+          <div style={{position:"relative", fontSize:"40px", color:"blue", zIndex:"100000"}}>서비스에 오류가 발생했습니다. 다시 접속해주세요</div>
+        ) : (
+          <div>goodbye</div>
+        )}
+        
         {filteredFacilities.map((facility) => (
-          <Marker
-            key={facility.id}
-            position={facility.coordinates}
-            icon={getIconForFacility(facility)}
-          >
-            <Popup>
-              <DetailedInfo 
-                facility={facility} 
-                onEdit={() => {
-                  setSelectedFacility(facility);
-                  setIsModalOpen(true);
-                }}
-              />
-            </Popup>
-          </Marker>
+          <>
+          {facility ? (
+            <Marker
+              key={facility.id}
+              position={facility.coordinates}
+              icon={getIconForFacility(facility)}
+            >
+              <Popup>
+                {!facility ? (
+                  <div style={{ color:"red" }}>팝업창을 불러올 수 없습니다</div>
+                ) : (
+                  <DetailedInfo 
+                    facility={facility} 
+                    onEdit={() => {
+                      setSelectedFacility(facility);
+                      setIsModalOpen(true);
+                    }}
+                  />
+                )
+                }
+              </Popup>
+            </Marker>
+
+          ) : (
+            <div style={{position:"relative", fontSize:"40px", color:"red", zIndex:"1000"}}>서비스에 오류가 발생했습니다. 다시 접속해주세요</div>
+          )}
+          </>
         ))}
       </MapContainer>
+      
       <div className="main-page-button">
         <div className="buttons">
           <LoginBtn />
@@ -237,6 +264,8 @@ const Map = () => {
           }}
         />
       )}
+      </>
+    )}
     </>
   );
 };

@@ -1,12 +1,7 @@
 :root {
-  /* a = category-height + facility-height
-  /* category/facility-height = 40/60 */
-  /* 36px: buttons' height*/
-  /* 20px: total gap between div */
-  /* 20px: margin top + bottom */
   --a: calc(100dvh - 36px - 20px - 20px);
-  --category-height: calc(var(--a) / 2.5);
-  --facility-height: calc(var(--category-height) * 1.5);
+  --x: calc(var(--a) / 2.5);
+  --y: calc(var(--x) * 1.5);
 }
 
 * {
@@ -20,28 +15,18 @@
   display: flex;
 }
 .main-page-button {
-  /* height: 60px; */
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  margin: 10px 0;
+  gap: 10px;
+  margin-top: 10px;
 }
 .buttons {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 10px;
 }
 .no-post-text {
   padding: 20px;
-}
-
-/* login page styling */
-.loginpage-center-box-div{
-  display: flex;
-  justify-content: end;
-  position: relative;
-  bottom: 2rem;
 }
 
 
@@ -49,31 +34,9 @@
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
+/* login page form login button*/
+.login-btn.mantine-Button-root {
 
-/* PostLine.jsx file's styling */
-.forumpage-container-box-div {
-  display: flex;
-  justify-content: end;
-  position: relative;
-  right: 1rem;
-  top: 3rem;
-}
-
-/* login page styling */
-.loginpage-center-box-div{
-  display: flex;
-  justify-content: end;
-  position: relative;
-  bottom: 2rem;
-}
-
-/* PostLine.jsx file's styling */
-.forumpage-container-box-div {
-  display: flex;
-  justify-content: end;
-  position: relative;
-  right: 1rem;
-  top: 3rem;
 }
 
 .postline-card-group {
@@ -88,11 +51,8 @@
 .postline-title:hover {
   color: #228be6;
 }
-.postline-button, .postline-button-admin {
+.postline-button {
   margin-bottom: 20px;
-}
-.postline-button-admin {
-  margin-left: 1rem;
 }
 .postline-group-div {
   margin-right: auto;
@@ -110,44 +70,29 @@
 }
 
 .category-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  /* max-height: var(--category-height); */
-  height: 225px;
+  height: var(--x);
   background-color: #f8f9fa;
-  padding: 0 20px;
+  padding: 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  ul {
-    /* 100%: category-list-container's height */
-    /* 30px: heading */
-    /* 36px: button's height */
-    /* 15px: button's margin top */
-    /* 10px: martine button animation */
-    height: calc(100% - 30px - 36px - 15px - 10px);
-    li {
-      margin-bottom: 2px;
-    }
-  }
-  z-index: 10;
+  box-sizing: border-box;
 }
 
 /* 시설 목록 컨테이너 스타일 (우측 탭) */
 .facility-list-container {
-  /* height: var(--facility-height); */
-  height: calc(100dvh - 60px - 225px);
+  height: var(--y);
   background-color: #f8f9fa;
-  padding: 8px 20px;
+  padding: 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  /* overflow-y: auto; */
+  overflow-y: auto;
   box-sizing: border-box;
 }
   
 .facility-list {
-  height: calc(100% - 30px);
-  overflow: auto;
-  margin-top: 5px;
+  /* margin-top: 10px; */
+  /* max-height: 97%; */
+  /* overflow-y: auto; */
+  /* padding-right: 10px; */
 }
   
 .facility-item {

@@ -48,8 +48,17 @@ const DetailedInfo = ({ facility, onEdit }) => {
           />
         )}
       </div>
-      <p>{facility.description}</p>
-      <p>Working Hours: {facility.workingHour}</p>
+      {facility.description ? (
+        <p>{facility.description}</p>
+      ) : (
+        <p>상세정보가 없습니다</p>
+      )}
+      {facility.workingHour ? (
+        <p>Working Hours: {facility.workingHour}</p>
+
+      ) : (
+        <p>이용시간 정보가 없습니다</p>
+      )}
 
       {/* 시설 이미지 */}
       {getImageForFacility(facility.name) && (

@@ -23,27 +23,26 @@ const PostDetail = ({ props }) => {
 
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
-  // const setAdmin = useStore((state) => state.setAdmin);
 
-  // // Toggle admin mode for testing
-  // const toggleAdminMode = () => {
-  //   setAdmin(!isAdmin);
-  // };
+  const [error, setError] = useState(null);
 
   // Fetch comments from mock data
-useEffect(() => {
-  fetch(`http://localhost:3000/forumpage?id=${ props.id }`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch post data");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setReplies(data.data.commentsData || []);
-    })
-    .catch((error) => console.error(error));
-}, []);
+  useEffect(() => {
+    fetch(`http://localhost:3000/forumpage?id=${props.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch post data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setReplies(data.data.commentsData || []);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError("에러, 어게인");
+      });
+  }, []);
 
   // Handle comment submission
   const handleCommentSubmit = () => {

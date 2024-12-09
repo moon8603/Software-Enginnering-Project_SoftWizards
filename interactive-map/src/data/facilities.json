@@ -467,6 +467,14 @@
       "description": "",
       "workingHour": "00:00 ~ 23:59",
       "type": "휴식 및 복지 편의 시설, 주차장"
+    },
+    {
+      "id": 60,
+      "name": "test name",
+      "coordinates": "11.1111 22.2222",
+      "description": "test description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "테스트1, 테스트2, 테스트3"
     }
   ]
 }
