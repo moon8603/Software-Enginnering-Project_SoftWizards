@@ -44,7 +44,27 @@ const saveFacilitiesToFile = (facilities) => {
 
 
 
-/* AMENITY LIST 조회 */
+/**
+ * @swagger
+ * /main:
+ *   get:
+ *     summary: 시설 목록 조회
+ *     description: Amenity id가 없으면 전체 목록을, 있으면 특정 시설을 조회
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 시설 id
+ *         required: false
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 성공적으로 시설 목록을 조회
+ *       404:
+ *         description: 시설을 찾을 수 없음
+ *       500:
+ *         description: 서버 오류
+ */
 router.get('/', async(req, res, next) => {
   try {
     let amenities;
@@ -108,8 +128,18 @@ router.get('/', async(req, res, next) => {
 
 
 
-/* 초기 amenity 다량 추가 API */
-// facilities.json을 받아서 DB에 저장하는 API
+/**
+ * @swagger
+ * /main/set:
+ *   get:
+ *     summary: 초기 시설 데이터 설정
+ *     description: facilities.json 파일의 데이터를 DB에 저장
+ *     responses:
+ *       200:
+ *         description: DB 설정 완료
+ *       500:
+ *         description: 데이터 삽입 중 오류
+ */
 router.get('/set', async (req, res) => {
   try {
     //console.log(getFacilitiesFromFile());
@@ -142,7 +172,41 @@ router.get('/set', async (req, res) => {
 
 
 
-/* 개별 amenity 추가 */
+/**
+ * @swagger
+ * /main/create:
+ *   post:
+ *     summary: 개별 시설 추가
+ *     description: 새로운 Amenity를 추가
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               coordinates:
+ *                 type: array
+ *                 items:
+ *                   type: number
+ *               description:
+ *                 type: string
+ *               workingHour:
+ *                 type: string
+ *               type:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Amenity 생성 성공
+ *       400:
+ *         description: 필수 필드 누락
+ *       500:
+ *         description: 생성 중 오류
+ */
 router.post('/create', async (req, res) => {
   try {
       // 클라이언트가 보낸 JSON 데이터 추출
@@ -206,7 +270,48 @@ router.post('/create', async (req, res) => {
 
 
 
-// 수정
+/**
+ * @swagger
+ * /main/update:
+ *   put:
+ *     summary: 시설 정보 수정
+ *     description: 기존 시설 정보를 수정
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 시설 id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               coordinates:
+ *                 type: array
+ *                 items:
+ *                   type: number
+ *               description:
+ *                 type: string
+ *               workingHour:
+ *                 type: string
+ *               type:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: 시설 정보 수정 완료
+ *       404:
+ *         description: 시설을 찾을 수 없음
+ *       500:
+ *         description: 수정 중 오류
+ */
 router.put('/update', async (req, res) => {
   const { id } = req.query;
   const updatedFacility = req.body;
@@ -242,7 +347,27 @@ router.put('/update', async (req, res) => {
 });
 
 
-// 삭제
+/**
+ * @swagger
+ * /main/delete:
+ *   delete:
+ *     summary: 시설 삭제
+ *     description: 특정 id의 시설을 삭제
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 시설 id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 시설 삭제 완료
+ *       404:
+ *         description: 시설을 찾을 수 없음
+ *       500:
+ *         description: 삭제 중 오류
+ */
 router.delete('/delete', async (req, res) => {
   const { id } = req.query;
 

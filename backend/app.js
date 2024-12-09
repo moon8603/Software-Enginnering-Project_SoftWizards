@@ -5,10 +5,10 @@ const bodyPasrser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swaggerDef');
 
-// 라우터 분리 중...
+// 라우터
 const indexRouter = require('./routes/index');
 const db = require("./models");
 const app = express();
@@ -25,8 +25,8 @@ const cors = require('cors');
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,8 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // CORS 미들웨어 적용
 app.use(cors());
 
-// 라우터 분리중...
+// 페이지 + SWagger 라우팅
 app.use('/', indexRouter);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // db 연결
 db.sequelize
