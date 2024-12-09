@@ -1,6 +1,9 @@
 import editIcon from '../images/edit-icon.png';
+import useStore from '../store/forumStore';
 
 const DetailedInfo = ({ facility, onEdit }) => {
+  const isAdmin = useStore((state) => state.isAdmin);
+
   // 시설과 이름이 같고 일련번호가 0번인 사진을 가져옴
   const getImageForFacility = (name) => {
     // File format: name_0.jpeg
@@ -30,18 +33,20 @@ const DetailedInfo = ({ facility, onEdit }) => {
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         <h3 style={{ margin: 0 }}>{facility.name}</h3>
-        <img
-          src={editIcon}
-          alt="edit"
-          style={{
-            width: "18px",
-            height: "18px",
-            marginLeft: "10px",
-            marginBottom: "2.5px",
-            cursor: "pointer"
-          }}
-          onClick={onEdit}
-        />
+        {isAdmin && (
+          <img
+            src={editIcon}
+            alt="edit"
+            style={{
+              width: "18px",
+              height: "18px",
+              marginLeft: "10px",
+              marginBottom: "2.5px",
+              cursor: "pointer"
+            }}
+            onClick={onEdit}
+          />
+        )}
       </div>
       <p>{facility.description}</p>
       <p>Working Hours: {facility.workingHour}</p>

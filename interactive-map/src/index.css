@@ -36,14 +36,27 @@
   padding: 20px;
 }
 
+/* login page styling */
+.loginpage-center-box-div{
+  display: flex;
+  justify-content: end;
+  position: relative;
+  bottom: 2rem;
+}
+
 
 /* forum page styling */
 .mantine-focus-auto.forum-main-page{
   color: #228be6;
 }
-/* login page form login button*/
-.login-btn.mantine-Button-root {
 
+/* PostLine.jsx file's styling */
+.forumpage-container-box-div {
+  display: flex;
+  justify-content: end;
+  position: relative;
+  right: 1rem;
+  top: 3rem;
 }
 
 /* login page styling */

@@ -17,7 +17,6 @@ import { MdDeleteForever } from "react-icons/md";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
-  //const { currentUser, setCurrentUser } = useStore();
   const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -34,7 +33,6 @@ const PostLine = () => {
   // Fetch posts from mock data
   useEffect(() => {
     fetch("http://localhost:3000/forumpage")
-    // fetch("./src/mock/mockPosts.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch posts data");
@@ -44,7 +42,6 @@ const PostLine = () => {
       .then((data) => {
         setPosts(data.data.postsData || []);
       })
-      // .then((data) => setPosts(data))
       .catch((error) => console.error(error));
   }, []);
 

@@ -11,9 +11,13 @@ import {
   ActionIcon
 } from "@mantine/core";
 import { RiCloseLargeLine } from "react-icons/ri";
+import useStore from "../store/forumStore";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const setAdmin = useStore((state) => state.setAdmin); // Zustand action to set admin state
+  const isAdmin = useStore((state) => state.isAdmin);
+
 
   const form = useForm({
     initialValues: {
@@ -40,13 +44,15 @@ const LoginPage = () => {
       if (response.ok) {
         alert("Login successful!");
         console.log("User info:", data);
+        setAdmin(data.user.isAdmin); // Update Zustand store
+        navigate("/forumpage"); // Navigate to forum page
         // 추후 토큰 저장 등
       } else {
         alert(data.message || "Login failed");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("An error occurred. Please try again.");
+      alert("오류가 발생하였습니다. 다시 시도해주세요");
     }
   };
 
