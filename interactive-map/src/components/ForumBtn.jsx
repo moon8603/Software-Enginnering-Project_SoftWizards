@@ -10,7 +10,7 @@ const ForumBtn = () => {
   }
 
   return (
-    <Button onClick={handleClick} style={{width: "120px"}}>
+    <Button onClick={handleClick} style={{width: "120px"}}> {/* 필터 버튼을 제거함에 따라 크기 수정 80 --> 120 */}
       게시판
     </Button>
   )

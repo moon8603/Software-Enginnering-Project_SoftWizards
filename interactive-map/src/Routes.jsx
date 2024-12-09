@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Map from "./components/Map";
-// import Filter from "./components/Filter";
+// import Filter from "./components/Filter";    // CategoryList로 통합, map.jsx에서 import
 import LoginBtn from "./components/LoginBtn";
 import LoginPage from "./pages/LoginPage";
 import ForumBtn from "./components/ForumBtn";
