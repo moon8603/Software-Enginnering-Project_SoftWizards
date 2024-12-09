@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Button } from "@mantine/core";
 
 const CategoryList = ({ facilities, onCategoryFilter }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -66,40 +67,34 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
               display: 'flex', // flex를 사용하여 이미지와 텍스트 정렬
               alignItems: 'center',
               cursor: "pointer",
-              padding: "10px",
+              padding: "4px",
               background: selectedCategories.includes(category) ? "#ddd" : "#fff",
               border: "1px solid #ccc",
-              marginBottom: "5px",
+              // marginBottom: "5px",
               borderRadius: "4px",
             }}
           >
-            {imageSrcs[category] && (
-              <img 
-                src={imageSrcs[category]} 
-                alt={category} 
-                style={{ width: '40px', height: '40px', marginRight: '10px' }} 
-                onError={(e) => e.target.style.display = 'none'}
-              />
-            )}
-            <span>{category}</span>
+              {imageSrcs[category] && (
+                <img
+                  src={imageSrcs[category]}
+                  alt={category}
+                  style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                  onError={(e) => e.target.style.display = 'none'}
+                />
+              )}
+              <span>{category}</span>
+
           </li>
         ))}
       </ul>
-      <button
+      <Button
         onClick={() => onCategoryFilter(selectedCategories)}
-        style={{
-          marginTop: "10px",
-          width: "260px",
-          padding: "8px 16px",
-          cursor: "pointer",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-        }}
+        fullWidth
+        mt="sm"
+        variant="outline"
       >
         필터 적용
-      </button>
+      </Button>
     </div>
   );
 };

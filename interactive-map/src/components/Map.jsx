@@ -3,8 +3,8 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import AmenityList from "./AmenityList";
 import CategoryList from "./CategoryList";
-import EditModal from './EditModal';
-import DetailedInfo from './DetailedInfo';
+import EditModal from "./EditModal";
+import DetailedInfo from "./DetailedInfo";
 
 // Import the icons, may add more icon later
 import redIconUrl from "../images/red-icon.png";
@@ -13,6 +13,8 @@ import blueIconUrl from "../images/blue-icon.png";
 import orangeIconUrl from "../images/orange-icon.png";
 import greyIconUrl from "../images/grey-icon.png";
 import "leaflet/dist/leaflet.css";
+import LoginBtn from "./LoginBtn";
+import ForumBtn from "./ForumBtn";
 
 const Map = () => {
   const [facilities, setFacilities] = useState([]);
@@ -76,13 +78,13 @@ const Map = () => {
   };
 
   const updateFacility = (updatedFacility) => {
-    setFacilities(prevFacilities => 
-      prevFacilities.map(facility => 
+    setFacilities((prevFacilities) =>
+      prevFacilities.map((facility) =>
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
-    setFilteredFacilities(prevFiltered =>
-      prevFiltered.map(facility => 
+    setFilteredFacilities((prevFiltered) =>
+      prevFiltered.map((facility) =>
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
@@ -90,7 +92,7 @@ const Map = () => {
 
   const isWithinWorkingHours = (workingHours) => {
     const now = new Date();
-  
+
     // Split workingHours string into multiple time ranges
     const timeRanges = workingHours
       .split(", ") // 여러 시간 범위를 분리
@@ -98,24 +100,23 @@ const Map = () => {
         // 시간 정보만 추출 (예: "카페: 09:00 ~ 18:30" → "09:00 ~ 18:30")
         const match = range.match(/(\d{1,2}:\d{2}) ~ (\d{1,2}:\d{2})/); // 운영 시간 추출
         if (!match) return null; // 유효하지 않은 형식은 무시
-  
+
         const [start, end] = match.slice(1).map((time) => {
           const [hours, minutes] = time.split(":").map(Number);
           const date = new Date();
           date.setHours(hours, minutes, 0);
           return date.getTime();
         });
-  
+
         return { start, end };
       })
       .filter(Boolean);
-  
+
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
     );
   };
-  
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
@@ -151,37 +152,6 @@ const Map = () => {
 
   return (
     <>
-      <AmenityList 
-        facilities={filteredFacilities} 
-        onEditFacility={(facility) => {
-          setSelectedFacility(facility);
-          setIsModalOpen(true);
-        }}
-        updateFacility={updateFacility}
-      />
-      <CategoryList 
-        facilities={facilities} 
-        // activeCategory={activeCategory}
-        // onCategorySelect={setActiveCategory}
-        onCategoryFilter={handleCategoryFilter}
-      />
-
-      {isModalOpen && (
-        <EditModal 
-          facility={selectedFacility} 
-          onClose={() => setIsModalOpen(false)} 
-          onApply={(updatedFacility) => {
-            updateFacility(updatedFacility);
-            setIsModalOpen(false);
-          }} 
-          onDelete={(facilityId) => {
-            setFacilities(prev => prev.filter(facility => facility.id !== facilityId));
-            setFilteredFacilities(prev => prev.filter(facility => facility.id !== facilityId));
-            setIsModalOpen(false);
-          }} 
-        />
-      )}
-
       <MapContainer
         center={campusCoordinates}
         zoom={zoomLevel}
@@ -203,8 +173,8 @@ const Map = () => {
             icon={getIconForFacility(facility)}
           >
             <Popup>
-              <DetailedInfo 
-                facility={facility} 
+              <DetailedInfo
+                facility={facility}
                 onEdit={() => {
                   setSelectedFacility(facility);
                   setIsModalOpen(true);
@@ -214,6 +184,47 @@ const Map = () => {
           </Marker>
         ))}
       </MapContainer>
+      <div className="main-page-button">
+        <div className="buttons">
+          <LoginBtn />
+          <ForumBtn />
+        </div>
+        
+        <CategoryList
+          facilities={facilities}
+          // activeCategory={activeCategory}
+          // onCategorySelect={setActiveCategory}
+          onCategoryFilter={handleCategoryFilter}
+        />
+        <AmenityList
+          facilities={filteredFacilities}
+          onEditFacility={(facility) => {
+            setSelectedFacility(facility);
+            setIsModalOpen(true);
+          }}
+          updateFacility={updateFacility}
+        />
+      </div>
+
+      {isModalOpen && (
+        <EditModal
+          facility={selectedFacility}
+          onClose={() => setIsModalOpen(false)}
+          onApply={(updatedFacility) => {
+            updateFacility(updatedFacility);
+            setIsModalOpen(false);
+          }}
+          onDelete={(facilityId) => {
+            setFacilities((prev) =>
+              prev.filter((facility) => facility.id !== facilityId)
+            );
+            setFilteredFacilities((prev) =>
+              prev.filter((facility) => facility.id !== facilityId)
+            );
+            setIsModalOpen(false);
+          }}
+        />
+      )}
     </>
   );
 };
