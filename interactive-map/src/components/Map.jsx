@@ -28,17 +28,28 @@ const Map = () => {
 
   // Load facilities data
   useEffect(() => {
-    fetch("./src/data/facilities.json")
-      .then((response) => {
+    const fetchFacilities = async () => {
+      try {
+        // const response = await fetch("./src/data/facilities.json");
+        const response = await fetch("http://localhost:3000/main");
+        // console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
-        return response.json();
-      })
-      .then((data) => {
-        setFacilities(data);
-        setFilteredFacilities(data); // 초기 상태는 모든 시설 표시
-      });
+        const result = await response.json();
+        // console.log("Facilities data:", result); for debugging
+        // type이 parsing 될 때 띄어쓰기를 기준으로 잘못 분리되는 현상 수정
+        const finalData = result.data.map((facility) => {
+          const parsedType = facility.type.join(' ').split(',');
+          return { ...facility, type: parsedType };
+        });
+        setFacilities(finalData); // Extract the data array
+        setFilteredFacilities(finalData);
+      } catch (error) {
+        console.error("Error fetching facilities data:", error);
+      }
+    };
+    fetchFacilities();
   }, []);
 
   // Define a custom icon for facilities
@@ -78,13 +89,13 @@ const Map = () => {
   };
 
   const updateFacility = (updatedFacility) => {
-    setFacilities((prevFacilities) =>
-      prevFacilities.map((facility) =>
+    setFacilities(prevFacilities => 
+      prevFacilities.map(facility => 
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
-    setFilteredFacilities((prevFiltered) =>
-      prevFiltered.map((facility) =>
+    setFilteredFacilities(prevFiltered =>
+      prevFiltered.map(facility => 
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
@@ -112,6 +123,7 @@ const Map = () => {
       })
       .filter(Boolean);
 
+
     // 두 개의 운영 시간 중 하나만 만족해도 됨
     return timeRanges.some(
       ({ start, end }) => now.getTime() >= start && now.getTime() <= end
@@ -120,6 +132,8 @@ const Map = () => {
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
+     //console.log("facility type: ", facility.type[0]);
+    
     if (!isWithinWorkingHours(facility.workingHour)) {
       return icons.grey;
     }
@@ -138,8 +152,8 @@ const Map = () => {
     }
   };
 
-  // Filter facilities by selected categories
-  const handleCategoryFilter = (categories) => {
+   // Filter facilities by selected categories
+   const handleCategoryFilter = (categories) => {
     // setSelectedCategories(categories);
     if (categories.length === 0) {
       setFilteredFacilities(facilities); // No filter, show all facilities
@@ -173,8 +187,8 @@ const Map = () => {
             icon={getIconForFacility(facility)}
           >
             <Popup>
-              <DetailedInfo
-                facility={facility}
+              <DetailedInfo 
+                facility={facility} 
                 onEdit={() => {
                   setSelectedFacility(facility);
                   setIsModalOpen(true);

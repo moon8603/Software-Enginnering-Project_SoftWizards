@@ -12,9 +12,12 @@
   `npm install`
 
 5. **개발 서버 시작**
-  `npm start`
+  `npm run dev`
 
-- npm start 하고 나서
+  **241207 db - posts table에서 password col 삭제**
+  **npx sequelize-cli db:migrate로 삭제 연산 적용시킨 후 실행하시길 바랍니다.**
+
+- npm run dev 하고 나서
 Local: http://localhost:3000/main OR http://localhost:3000/main/1
 
 링크를 누르면 웹페이지로 리디렉팅 될 것이다.

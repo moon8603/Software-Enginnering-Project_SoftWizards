@@ -1,7 +1,6 @@
 :root {
   /* a = category-height + facility-height
   /* category/facility-height = 40/60 */
-
   /* 36px: buttons' height*/
   /* 20px: total gap between div */
   /* 20px: margin top + bottom */
@@ -21,6 +20,7 @@
   display: flex;
 }
 .main-page-button {
+  /* height: 60px; */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -57,8 +57,11 @@
 .postline-title:hover {
   color: #228be6;
 }
-.postline-button {
+.postline-button, .postline-button-admin {
   margin-bottom: 20px;
+}
+.postline-button-admin {
+  margin-left: 1rem;
 }
 .postline-group-div {
   margin-right: auto;
@@ -84,7 +87,6 @@
   padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-
   ul {
     /* 100%: category-list-container's height */
     /* 30px: heading */

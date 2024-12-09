@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes)=>{
         name: {
             type:DataTypes.STRING(100),
             allowNull: false,   // 필수값
+            unique: true
         },
         coordinates: {
             // 37.584939 127.062061 과 같은 형태로 저장된다.
@@ -20,7 +21,7 @@ module.exports = (sequelize, DataTypes)=>{
             type:DataTypes.STRING(500)
         },
         type: {
-            // 건물 도서관 과 같은 형태로 저장된다.
+            // 건물, 도서관 과 같은 형태로 저장된다.
             type:DataTypes.STRING(1000)
         },
         
@@ -37,9 +38,8 @@ module.exports = (sequelize, DataTypes)=>{
 
     },{
         sequelize,
-        // createdAt, updatedAt, deletedAt
+        // createdAt, updatedAt
         timestamps: false,
-        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci' 
     });

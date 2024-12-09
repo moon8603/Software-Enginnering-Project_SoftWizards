@@ -13,17 +13,58 @@ const EditModal = ({ facility, onClose, onApply, onDelete }) => {
   };
 
   // "적용" 버튼 클릭 시 확인 메시지
-  const handleApplyClick = () => {
+  const handleApplyClick = async () => {
     const confirmApply = window.confirm('정말 적용하시겠습니까?');
     if (confirmApply) {
-      onApply(formData);
+      //onApply(formData);
+      
+      try {
+        // 서버에 수정된 데이터 보내기
+        const response = await fetch(`http://localhost:3000/main/update?id=${facility.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData), // 수정된 데이터
+        });
+
+        if (!response.ok) {
+          throw new Error('시설 수정에 실패했습니다.');
+        }
+
+        const updatedFacility = await response.json();
+        //onApply(updatedFacility);  // 수정된 데이터를 부모 컴포넌트로 전달하여 업데이트
+        alert('시설이 성공적으로 수정되었습니다.');
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        alert('시설 수정에 실패했습니다.');
+      }
+
     }
   };
   // "삭제" 버튼 클릭 시 확인 메시지
-  const handleDeleteClick = () => {
+  const handleDeleteClick = async () => {
     const confirmDelete = window.confirm('정말 삭제하시겠습니까?');
     if (confirmDelete) {
-      onDelete(facility.id);
+      //onDelete(facility.id);
+      try {
+        // 서버에 삭제 요청 보내기
+        const response = await fetch(`http://localhost:3000/main/delete?id=${facility.id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('시설 삭제에 실패했습니다.');
+        }
+
+        //onDelete(facility.id);  // 삭제된 시설 ID를 부모 컴포넌트로 전달하여 목록에서 삭제
+        alert('시설이 성공적으로 삭제되었습니다.');
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        alert('시설 삭제에 실패했습니다.');
+      }
     }
   };
 

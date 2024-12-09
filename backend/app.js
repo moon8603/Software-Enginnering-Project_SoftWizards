@@ -5,17 +5,24 @@ const bodyPasrser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
-// 라우터 분리 수정해야 함
+// 라우터 분리 중...
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const amenitiesRouter = require('./routes/amenities');
 const db = require("./models");
-
 const app = express();
+
 // cors
 //const server = createServer(app);
 const cors = require('cors');
+
+
+
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,13 +34,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 수정
-app.use('/', indexRouter);
-app.use('/loginpage', usersRouter);
-app.use('/main', amenitiesRouter);
-
-// cors
+// CORS 미들웨어 적용
 app.use(cors());
+
+// 라우터 분리중...
+app.use('/', indexRouter);
 
 // db 연결
 db.sequelize
