@@ -52,8 +52,11 @@
 .postline-title:hover {
   color: #228be6;
 }
-.postline-button {
+.postline-button, .postline-button-admin {
   margin-bottom: 20px;
+}
+.postline-button-admin {
+  margin-left: 1rem;
 }
 .postline-group-div {
   margin-right: auto;

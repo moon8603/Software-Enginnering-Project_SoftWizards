@@ -151,7 +151,7 @@ const Map = () => {
     <MapContainer
       center={campusCoordinates}
       zoom={zoomLevel}
-      style={{ height: "100dvh", width: "calc(100dvw - 15dvw)" }}
+      style={{ height: "100dvh", width: "calc(100dvw - 60px)" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

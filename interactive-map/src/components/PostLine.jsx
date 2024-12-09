@@ -12,12 +12,12 @@ import {
   TextInput,
   ActionIcon,
 } from "@mantine/core";
-import useStore from "../store/store";
+import useStore from "../store/forumStore";
 import { MdDeleteForever } from "react-icons/md";
 
 const PostLine = () => {
   const [posts, setPosts] = useState([]); // State for posts
-  const { currentUser, setCurrentUser } = useStore();
+  //const { currentUser, setCurrentUser } = useStore();
   const [selectedPost, setSelectedPost] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,6 +25,11 @@ const PostLine = () => {
   const [newPostAuthor, setNewPostAuthor] = useState("");
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
+
+
+  const isAdmin = useStore((state) => state.isAdmin);
+  const setAdmin = useStore((state) => state.setAdmin);
+
 
   // Fetch posts from mock data
   useEffect(() => {
@@ -40,6 +45,11 @@ const PostLine = () => {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  // Toggle admin mode for testing
+  const toggleAdminMode = () => {
+    setAdmin(!isAdmin);
+  };
 
   // Handle title click
   const handleTitleClick = (post) => {
@@ -101,7 +111,7 @@ const PostLine = () => {
           value={newPostAuthor}
           onChange={(event) => {
             setNewPostAuthor(event.target.value);
-            setCurrentUser(event.target.value);
+            //setCurrentUser(event.target.value);
           }}
           required
           mb="sm"
@@ -150,6 +160,10 @@ const PostLine = () => {
           >
             글 작성
           </Button>
+
+          <Button onClick={toggleAdminMode} fz="md">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
           <Text size="xl" color="dimmed">
             게시물 없음
           </Text>
@@ -166,8 +180,11 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          {
+          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button>
           
+           
            <Stack spacing="md">
             {posts.map((post) => (
               //console.log(post.id);
@@ -201,7 +218,7 @@ const PostLine = () => {
                         </span>
                       </Text>
 
-                      {post.author === currentUser && (
+                      {isAdmin && (
                         <ActionIcon
                           onClick={() => handleDeletePost(post.id)}
                           color="red"
@@ -217,7 +234,7 @@ const PostLine = () => {
                 </div>
               </Card>
             ))}
-          </Stack> }
+          </Stack> 
         </>
       )}
     </Container>
