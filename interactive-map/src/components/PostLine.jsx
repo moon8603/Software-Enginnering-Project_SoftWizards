@@ -177,9 +177,11 @@ const PostLine = () => {
             글 작성
           </Button>
 
-          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
-            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button>
+          {isAdmin && (
+            <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+              {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+            </Button>
+          )}
           <Text size="xl" color="dimmed">
             게시물 없음
           </Text>
@@ -196,9 +198,11 @@ const PostLine = () => {
           >
             글 작성
           </Button>
-          <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
-            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button>
+          {isAdmin && (
+            <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin" bg="green">
+              로그아웃
+            </Button>
+          )}
           
            
            <Stack spacing="md">

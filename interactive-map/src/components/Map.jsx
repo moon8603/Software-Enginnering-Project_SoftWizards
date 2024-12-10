@@ -1,3 +1,4 @@
+import useStore from "../store/forumStore";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import greyIconUrl from "../images/grey-icon.png";
 import "leaflet/dist/leaflet.css";
 import LoginBtn from "./LoginBtn";
 import ForumBtn from "./ForumBtn";
+import LogoutBtn from "./LogoutBtn";
 
 const Map = () => {
   const [error, setError] = useState(null);
@@ -23,6 +25,10 @@ const Map = () => {
   const [filteredFacilities, setFilteredFacilities] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const setAdmin = useStore((state) => state.setAdmin); // Zustand action to set admin state
+  const isAdmin = useStore((state) => state.isAdmin);
+
   // const [selectedCategories, setSelectedCategories] = useState([]);
   // Set initial position to be centered on campus
   const campusCoordinates = [37.583804, 127.058934];
@@ -225,7 +231,8 @@ const Map = () => {
       
       <div className="main-page-button">
         <div className="buttons">
-          <LoginBtn />
+          {isAdmin ? <LogoutBtn /> : <LoginBtn />}
+          
           <ForumBtn />
         </div>
         

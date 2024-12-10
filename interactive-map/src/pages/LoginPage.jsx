@@ -42,10 +42,11 @@ const LoginPage = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert("Login successful!");
+        alert("로그인 성공했습니다!");
         console.log("User info:", data);
-        setAdmin(data.user.isAdmin); // Update Zustand store
-        navigate("/forumpage"); // Navigate to forum page
+        setAdmin(!data.user.isAdmin); // Update Zustand store
+        console.log("isAdmin:",isAdmin);
+        navigate("/main"); // Navigate to forum page
         // 추후 토큰 저장 등
       } else {
         alert(data.message || "Login failed");
