@@ -11,11 +11,23 @@ import {
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import useStore from "../store/forumStore";
+import { jwtDecode } from "jwt-decode";
+import {  useNavigate  } from 'react-router-dom'
+
+
+
 
 const PostDetail = ({ props }) => {
-  const { id } = useParams(); // Get post ID from route params
+  const navigate = useNavigate();
+  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
+
+  console.log("id입니다 ", id);
+  const [posts, setPosts] = useState([]); // State for posts
   const [isCommenting, setIsCommenting] = useState(false); // State to show/hide comment input area
   const [commentText, setCommentText] = useState(""); // State to hold the comment text
   const [replies, setReplies] = useState([]);
@@ -23,27 +35,44 @@ const PostDetail = ({ props }) => {
 
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
-  // const setAdmin = useStore((state) => state.setAdmin);
-
-  // // Toggle admin mode for testing
-  // const toggleAdminMode = () => {
-  //   setAdmin(!isAdmin);
-  // };
+  const setAdmin = useStore((state) => state.setAdmin);
+  const adminEmail = "test@gmail.com";
 
   // Fetch comments from mock data
-useEffect(() => {
-  fetch(`http://localhost:3000/forumpage?id=${ props.id }`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch post data");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setReplies(data.data.commentsData || []);
-    })
-    .catch((error) => console.error(error));
-}, []);
+  useEffect(() => {
+    if (!id) {
+      console.error("Post ID is missing");
+      return;
+    }
+
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken);
+      if (decodedToken.email === adminEmail) {
+        setAdmin(true);
+      }     
+    }
+
+    fetch(`http://localhost:3000/forumpage?id=${ id }`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch post data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched data:", data);
+        setReplies(data.data.commentsData || []);
+        setPosts(data.data.postsData[0]);
+      })
+      .catch((error) => console.error(error));
+}, [id]);
+
+// Toggle admin mode for testing
+const toggleAdminMode = () => {
+  setAdmin(!isAdmin);
+};
 
   // Handle comment submission
   const handleCommentSubmit = () => {
@@ -53,7 +82,7 @@ useEffect(() => {
         content: commentText,
         //author: "Admin",
         authorId: 1,
-        postId: props.id,
+        postId: id,
         //createdAt: new Date().toISOString().split("T")[0],
       };
 
@@ -106,8 +135,26 @@ useEffect(() => {
 
   return (
     <div>
+      
+      {/* <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
+        {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+      </Button> */}
       <Stack>
+        {/* <Group spacing="sm">
+          <Button onClick={toggleAdminMode} fz="md">
+            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
+          </Button> */}
         <Group>
+          <Button
+            className="postline-button"
+            fz="h4"
+            size="sm"
+            onClick={() => navigate('/forumpage')}
+            fullWidth={false}
+          >
+            목록
+          </Button>
+        
           {isAdmin && (
             <Button onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
@@ -123,18 +170,18 @@ useEffect(() => {
               className="postdetail-container-stack-card-group-text"
             >
               <span>
-                작성날짜: <strong>{props.createdAt}</strong>
+                작성날짜: <strong>{posts.createdAt}</strong>
               </span>{" "}
               <span>
-                작성자: <strong>{props.author}</strong>
+                작성자: <strong>{posts.author}</strong>
               </span>
             </Text>
           </Group>
           <Title order={3} mt="md" className="postdetail-title">
-            {props.title}
+            {posts.title}
           </Title>
           <Text mt="xs" fz="lg" className="postdetail-content" c="gray.5">
-            {props.content}
+            {posts.content}
           </Text>
         </Card>
 

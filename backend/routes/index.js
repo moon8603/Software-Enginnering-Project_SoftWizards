@@ -3,20 +3,14 @@ var router = express.Router();
 var db = require("../models/index");
 
 const usersRouter = require('./users');
+const jwtRouter = require('./jwt');
 const amenitiesRouter = require('./amenities');
 const postsRouter = require('./posts');
 const commentsRouter = require('./comments');
 
-router.use('/loginpage', usersRouter);
+router.use('/loginpage', usersRouter, jwtRouter);
 router.use('/main', amenitiesRouter);
 router.use('/forumpage', postsRouter, commentsRouter);
-
-
-/*
-//router.get('/', function(req, res, next) {
-//  res.render('index', { title: 'Express' });
-//});
-*/
 
 router.get('/', (req, res) => {
   try {
@@ -26,6 +20,11 @@ router.get('/', (req, res) => {
               // amenities
               {
                 "method": "GET",
+                "route": "/main/set",
+                "description": "facility.json 파일에 있는 Amenity 정보를 DB에 저장함."
+              },
+              {
+                "method": "GET",
                 "route": "/main",
                 "description": "Amenity id에 따라 amenity 정보를 불러옴."
               },
@@ -33,6 +32,16 @@ router.get('/', (req, res) => {
                 "method": "POST",
                 "route": "/main/create",
                 "description": "Amenity를 추가함."
+              },
+              {
+                "method": "PUT",
+                "route": "/main/update?id=",
+                "description": "Amenity를 수정함."
+              },
+              {
+                "method": "DELETE",
+                "route": "/main/delete?id=",
+                "description": "Amenity를 삭제함."
               },
 
               // posts
@@ -58,7 +67,16 @@ router.get('/', (req, res) => {
                 "route": "/forumpage?id=",
                 "description": "post id에 따라 post와 comment 정보들을 불러옴."
               },
-            
+              {
+                "method": "POST",
+                "route": "/forumpage/comment/create",
+                "description": "comment를 추가함."
+              },
+              {
+                "method": "DELETE",
+                "route": "/forumpage/comment/delete?id=",
+                "description": "comment id에 해당하는 comment를 삭제함."
+              },
 
               // users
               {
@@ -66,10 +84,6 @@ router.get('/', (req, res) => {
                 "route": "/loginpage/login",
                 "description": "로그인 기능"
               },
-              //{ method: 'POST', route: '/users', description: 'Create a new user.' },
-              //{ method: 'GET', route: '/users', description: 'Get all users.' },
-              //{ method: 'PUT', route: '/users/:id', description: 'Update a user by ID.' },
-              //{ method: 'DELETE', route: '/users/:id', description: 'Delete a user by ID.' }
           ]
       });
   } catch (error) {
