@@ -1,6 +1,9 @@
+require('dotenv').config();
+
 var express = require('express');
 var router = express.Router();
 var db = require("../models/index");
+var jwt = require('jsonwebtoken');
 
 /**
  * @swagger
@@ -73,10 +76,18 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "비밀번호가 틀렸습니다." });
     }
 
+    // JWT 토큰 발급
+    const token = jwt.sign(
+      { id: user.id, email: user.email }, // payload: 사용자 정보
+      process.env.JWT_SECRET, // JWT 비밀 키 (환경변수로 관리)
+      { expiresIn: '1h' } // 만료 시간 설정 (1시간)
+    );
+
     // ID O, PW O
     return res.status(200).json({
       // 제대로 연동되었는지 확인하기 위한 임시 return data
-      user: { id: user.id, email: user.email, password: user.password },
+      //user: { id: user.id, email: user.email, password: user.password },
+      token: token,
       message: "Login success",
     });
   } catch (error) {

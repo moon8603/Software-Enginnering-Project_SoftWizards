@@ -1,14 +1,18 @@
 import PostLine from '../components/PostLine';
+import PostDetail from '../components/PostDetail';
 import { Container, Title, Box, ActionIcon} from '@mantine/core';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 
 const ForumPage = () => {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const handleCloseButton = () => {
     navigate("/main");
   };
+
+  const postId = searchParams.get("id");
 
   return (
     <Container size="md" padding="lg">
@@ -31,7 +35,12 @@ const ForumPage = () => {
 
       {/* Posts Section */}
       <Box>
-        <PostLine />
+        {postId ? (
+          < PostDetail postId={postId} /> // Show PostDetail if id is provided in the query string
+          
+        ) : (
+          <PostLine /*posts={posts}*/ /> // Show PostLine if no id is provided
+        )}
       </Box>
     </Container>
   );

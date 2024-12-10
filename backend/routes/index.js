@@ -3,11 +3,12 @@ var router = express.Router();
 var db = require("../models/index");
 
 const usersRouter = require('./users');
+const jwtRouter = require('./jwt');
 const amenitiesRouter = require('./amenities');
 const postsRouter = require('./posts');
 const commentsRouter = require('./comments');
 
-router.use('/loginpage', usersRouter);
+router.use('/loginpage', usersRouter, jwtRouter);
 router.use('/main', amenitiesRouter);
 router.use('/forumpage', postsRouter, commentsRouter);
 
