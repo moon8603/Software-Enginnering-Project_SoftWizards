@@ -45,6 +45,11 @@
 
 }
 
+.login-btn-text {
+  margin: 5px;
+  font-size: 13px;
+}
+
 .postline-card-group {
   /* display: flex; */
 }

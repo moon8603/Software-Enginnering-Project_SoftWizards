@@ -53,9 +53,12 @@ const LoginPage = () => {
       alert("로그인 성공");
       navigate("/main");
     } else {
+      alert("로그인에 실패했습니다. 아이디 등을 다시 점검하세요.");
       console.log("로그인 실패");
     }
   } catch (error) {
+
+    alert("로그인 중 오류가 발생했습니다.");
     console.error("로그인 에러:", error);
   }
 };
