@@ -1,8 +1,47 @@
 import { useEffect, useState } from 'react';
 import editIcon from '../images/edit-icon.png';
+import useStore from "../store/forumStore";
+import { jwtDecode } from "jwt-decode";
 
 
 const AmenityList = ({ facilities, onEditFacility }) => {
+  const isAdmin = useStore((state) => state.isAdmin);
+  const setAdmin = useStore((state) => state.setAdmin);
+
+  const [token, setToken] = useState(null);  // JWT 토큰을 상태로 관리
+  const [decodedToken, setDecodedToken] = useState(null);  // 디코딩된 토큰을 상태로 관리
+
+  const adminEmail = "test@gmail.com";
+  useEffect(() => {
+  const storedToken = localStorage.getItem("jwtToken");
+  if (storedToken) {
+    const decoded = jwtDecode(storedToken);
+    setToken(storedToken);  // 토큰 상태 업데이트
+    setDecodedToken(decoded);  // 디코딩된 토큰 상태 업데이트
+
+    // 관리자 이메일 검증
+    if (decoded.email === adminEmail) {
+      setAdmin(true);
+    }
+  }
+}, [setAdmin]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [imageSrcs, setImageSrcs] = useState({});
 
   const isWithinWorkingHours = (workingHours) => {
@@ -97,7 +136,7 @@ const AmenityList = ({ facilities, onEditFacility }) => {
                 <p>{facility.type[0]}</p>
                 <p>{facility.type[1]}</p>
               </div>
-              {editIcon && (
+              {isAdmin && editIcon && (
                 <img 
                   src={editIcon} 
                   alt="edit" 

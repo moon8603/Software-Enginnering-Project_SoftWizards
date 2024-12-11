@@ -46,6 +46,11 @@
 
 }
 
+/* main page login btn styling */
+.login-btn-text {
+  margin: 5px;
+  font-size: 13px;
+
 /* login page styling */
 .loginpage-center-box-div{
   display: flex;
@@ -68,6 +73,8 @@
 }
 
 .postline-title {
+  text-decoration: none;
+  color: black;
   cursor: pointer;
   word-break: break-word;
   margin-bottom: 12px;
@@ -76,7 +83,7 @@
   color: #228be6;
 }
 .postline-button, .postline-button-admin {
-  margin-bottom: 20px;
+  margin: 20px 10px;
 }
 .postline-button-admin {
   margin-left: 1rem;

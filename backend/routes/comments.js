@@ -2,7 +2,33 @@ var express = require('express');
 var router = express.Router();
 var db = require("../models/index");
 
-// 댓글 작성 API
+/**
+ * @swagger
+ * /forumpage/comment/create:
+ *   post:
+ *     summary: 댓글 생성
+ *     description: 게시글에 새로운 댓글을 작성합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               postId:
+ *                 type: integer
+ *                 description: 댓글을 작성할 게시글의 ID
+ *               content:
+ *                 type: string
+ *                 description: 댓글의 내용
+ *     responses:
+ *       201:
+ *         description: 댓글이 성공적으로 생성되었습니다.
+ *       400:
+ *         description: 필수 필드(postId, content)가 누락되었습니다.
+ *       500:
+ *         description: 댓글 생성 중 오류가 발생했습니다.
+ */
 router.post('/comment/create', async (req, res) => {
     try {
         // 현재 관리자 한 명뿐이므로 authorId는 임의로 1로 부여한다.
@@ -21,7 +47,30 @@ router.post('/comment/create', async (req, res) => {
     }
   });
 
-// 댓글 삭제 API (admin 권한 추후 부여)
+// admin 권한 추후 부여
+/**
+ * @swagger
+ * /forumpage/comment/delete:
+ *   delete:
+ *     summary: 댓글 삭제
+ *     description: 특정 ID의 댓글을 삭제합니다.
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 삭제할 댓글의 ID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 댓글이 성공적으로 삭제되었습니다.
+ *       400:
+ *         description: 댓글 ID가 누락되었습니다.
+ *       404:
+ *         description: 댓글을 찾을 수 없습니다.
+ *       500:
+ *         description: 댓글 삭제 중 오류가 발생했습니다.
+ */
 router.delete('/comment/delete', async (req, res) => {
     const { id } = req.query;
   

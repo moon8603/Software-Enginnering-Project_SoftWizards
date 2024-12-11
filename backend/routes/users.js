@@ -1,29 +1,61 @@
+require('dotenv').config();
+
 var express = require('express');
 var router = express.Router();
 var db = require("../models/index");
+var jwt = require('jsonwebtoken');
 
-/* GET users listing. #1
-router.get('/:id', async(req, res, next) => {
-  const users = await db.User.findAll();
-  res.render('user', { users });
-}); */
-
-/* GET users listing. #2
-router.get('/:id', async (req, res) => {
-  try {
-    const user = await db.User.findByPk(req.params.id);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-*/
-
-// http:localhost:3000/loginpage/login
+/**
+ * @swagger
+ * /loginpage/login:
+ *   post:
+ *     summary: 로그인
+ *     description: 이메일과 비밀번호를 사용하여 사용자가 로그인합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: 로그인할 사용자의 이메일
+ *               password:
+ *                 type: string
+ *                 description: 사용자의 비밀번호
+ *     responses:
+ *       200:
+ *         description: 로그인 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: 사용자의 ID
+ *                     email:
+ *                       type: string
+ *                       description: 사용자의 이메일
+ *                     password:
+ *                       type: string
+ *                       description: 사용자의 비밀번호
+ *                 message:
+ *                   type: string
+ *                   description: 로그인 성공 메시지
+ *       400:
+ *         description: 이메일과 비밀번호가 누락되었습니다.
+ *       404:
+ *         description: 이메일에 해당하는 사용자를 찾을 수 없습니다.
+ *       401:
+ *         description: 비밀번호가 틀렸습니다.
+ *       500:
+ *         description: 서버 오류로 로그인에 실패했습니다.
+ */
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -44,10 +76,18 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "비밀번호가 틀렸습니다." });
     }
 
+    // JWT 토큰 발급
+    const token = jwt.sign(
+      { id: user.id, email: user.email }, // payload: 사용자 정보
+      process.env.JWT_SECRET, // JWT 비밀 키 (환경변수로 관리)
+      { expiresIn: '1h' } // 만료 시간 설정 (1시간)
+    );
+
     // ID O, PW O
     return res.status(200).json({
       // 제대로 연동되었는지 확인하기 위한 임시 return data
-      user: { id: user.id, email: user.email, password: user.password },
+      //user: { id: user.id, email: user.email, password: user.password },
+      token: token,
       message: "Login success",
     });
   } catch (error) {

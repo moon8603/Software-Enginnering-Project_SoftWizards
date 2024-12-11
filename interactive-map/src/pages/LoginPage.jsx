@@ -11,6 +11,8 @@ import {
   ActionIcon
 } from "@mantine/core";
 import { RiCloseLargeLine } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
+import useStore from "../store/forumStore";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -35,20 +37,32 @@ const LoginPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      });
+      })
       const data = await response.json();
-      if (response.ok) {
-        alert("Login successful!");
-        console.log("User info:", data);
-        // 추후 토큰 저장 등
-      } else {
-        alert(data.message || "Login failed");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      alert("An error occurred. Please try again.");
+
+    if (data.token) {
+      // 로컬 스토리지에 토큰 저장
+      localStorage.setItem("jwtToken", data.token);
+
+      // 토큰 디코딩하여 isAdmin 정보 추출
+      const decodedToken = jwtDecode(data.token);
+      const isAdmin = decodedToken.isAdmin;
+
+      // useStore 상태 업데이트
+      useStore.getState().setAdmin(isAdmin);
+      alert("로그인 성공");
+      navigate("/main");
+    } else {
+      alert("로그인에 실패했습니다. 아이디 등을 다시 점검하세요.");
+      console.log("로그인 실패");
     }
-  };
+  } catch (error) {
+
+    alert("로그인 중 오류가 발생했습니다.");
+    console.error("로그인 에러:", error);
+  }
+};
+      
 
   const handleCloseButton = () => {
     navigate("/main");

@@ -2,7 +2,28 @@ var express = require('express');
 var router = express.Router();
 var db = require("../models/index");
 
-/* GET posts listing. */
+/**
+ * @swagger
+ * /forumpage/posts:
+ *   get:
+ *     summary: 게시글 목록 조회
+ *     description: 모든 게시글을 조회하거나 특정 게시글과 해당 댓글을 조회합니다.
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 특정 게시글을 조회하기 위한 게시글 ID
+ *         required: false
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 게시글과 댓글을 성공적으로 조회했습니다.
+ *       404:
+ *         description: 주어진 ID로 게시글을 찾을 수 없습니다.
+ *       500:
+ *         description: 게시글 조회 중 오류가 발생했습니다.
+ */
+
 router.get('/', async(req, res, next) => {
   try {
     let posts, comments;
@@ -78,7 +99,36 @@ router.get('/', async(req, res, next) => {
 });
 
 
-// 게시글 생성
+/**
+ * @swagger
+ * /forumpage/posts/create:
+ *   post:
+ *     summary: 게시글 생성
+ *     description: 새로운 게시글을 생성합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               author:
+ *                 type: string
+ *                 description: 게시글 작성자
+ *               title:
+ *                 type: string
+ *                 description: 게시글 제목
+ *               content:
+ *                 type: string
+ *                 description: 게시글 내용
+ *     responses:
+ *       201:
+ *         description: 게시글이 성공적으로 생성되었습니다.
+ *       400:
+ *         description: 필수 필드(author, title, content)가 누락되었습니다.
+ *       500:
+ *         description: 게시글 생성 중 오류가 발생했습니다.
+ */
 router.post('/create', async (req, res) => {
   try {
       const { author, title, content } = req.body;
@@ -93,7 +143,30 @@ router.post('/create', async (req, res) => {
   }
 });
 
-// 게시글 삭제 (admin 권한 추후 부여)
+// (admin 권한 추후 부여)
+/**
+ * @swagger
+ * /forumpage/posts/delete:
+ *   delete:
+ *     summary: 게시글 삭제
+ *     description: 특정 ID의 게시글과 해당 댓글을 삭제합니다.
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: 삭제할 게시글의 ID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 게시글과 댓글이 성공적으로 삭제되었습니다.
+ *       400:
+ *         description: 게시글 ID가 누락되었습니다.
+ *       404:
+ *         description: 주어진 ID로 게시글을 찾을 수 없습니다.
+ *       500:
+ *         description: 게시글 삭제 중 오류가 발생했습니다.
+ */
 router.delete('/delete', async (req, res) => {
   const { id } = req.query;
 
