@@ -70,19 +70,20 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
               padding: "4px",
               background: selectedCategories.includes(category) ? "#ddd" : "#fff",
               border: "1px solid #ccc",
-              //marginBottom: "5px",
+              // marginBottom: "5px",
               borderRadius: "4px",
             }}
           >
-            {imageSrcs[category] && (
-              <img 
-                src={imageSrcs[category]} 
-                alt={category} 
-                style={{ width: '24px', height: '24px', marginRight: '10px' }} 
-                onError={(e) => e.target.style.display = 'none'}
-              />
-            )}
-            <span>{category}</span>
+              {imageSrcs[category] && (
+                <img
+                  src={imageSrcs[category]}
+                  alt={category}
+                  style={{ width: '24px', height: '24px', marginRight: '10px' }}
+                  onError={(e) => e.target.style.display = 'none'}
+                />
+              )}
+              <span>{category}</span>
+
           </li>
         ))}
       </ul>
