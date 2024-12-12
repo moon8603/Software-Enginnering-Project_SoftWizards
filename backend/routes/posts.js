@@ -17,7 +17,7 @@ var db = require("../models/index");
  *           type: integer
  *     responses:
  *       200:
- *         description: 게시글과 댓글을 성공적으로 조회했습니다.
+ *         description: 게시글과 댓글과 유저를 성공적으로 조회했습니다.
  *       404:
  *         description: 주어진 ID로 게시글을 찾을 수 없습니다.
  *       500:
@@ -73,13 +73,20 @@ router.get('/', async(req, res, next) => {
     });
 
     // 가공된 comments 데이터
-    const commentsData = (comments || []).map(item => {
-      return {
-        ...item.dataValues,
+    const commentsData = [];
+    for (let comment of (comments || [])) {
+      const author = await db.User.findOne({
+        where: { id: comment.authorId },
+        attributes: ['email'],
+      });
+
+      commentsData.push({
+        ...comment.dataValues,
         // 작성날짜형식 0000-00-00
-        createdAt: item.createdAt.toISOString().split('T')[0],
-      };
-    });
+        createdAt: comment.createdAt.toISOString().split('T')[0],
+        email: author.email,
+      });
+    }
 
     // JSON 형식으로 응답
     res.json({
