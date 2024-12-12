@@ -48,10 +48,10 @@
 /* main page login btn styling */
 .login-btn-text {
   display: grid;
-  width: 120px;
-  margin: 5px;
+  margin: 5px 0;
   font-size: 13px;
   justify-content: center;
+  line-height: 16px;
 }
 
 /* forum page styling------------------------------------------- */
@@ -63,7 +63,6 @@
   display: flex;
   justify-content: end;
   position: relative;
-  right: 1rem;
   top: 3rem;
 }
 
@@ -100,6 +99,10 @@
 .postdetail-title, .postdetail-content, .postdetail-paper-group-text {
   word-break: break-word;
 }
+.postdetail-paper {
+  margin-top: 10px;
+  padding: 20px;
+}
 .postdetail-paper-group-text {
   width: 100%;
 }
@@ -126,6 +129,22 @@
   ul {
     display: grid;
     gap: 4px;
+    list-style: none;
+    padding: 0;
+    li {
+      display: flex;  /*flex를 사용하여 이미지와 텍스트 정렬*/
+      align-items: center;
+      cursor: pointer;
+      padding: 4px;
+      border: 1px solid #ccc;
+      /* marginBottom: 5px; */
+      border-radius: 4px;
+      img {
+        width: 24px;
+        aspect-ratio: 1;
+        margin-right: 10px;
+      }
+    }
   }
 }
 /* facility list styling ------------------------------------------ */
@@ -152,6 +171,7 @@
   display: flex;
   width: 260px;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 5px;
   padding: 10px;
   background-color: #fff;
@@ -179,6 +199,18 @@
 .facility-item .text-content {
   flex: 1; /* 텍스트가 버튼과 이미지를 제외한 공간을 차지 */
   text-align: left; /* 텍스트를 좌측 정렬 */
+}
+
+.amenitylist-facility-image {
+  width: 28px;
+  aspect-ratio: 1;
+  margin-right: 10px;
+}
+
+.amenitylist-div-editicon {
+  width: 20px;
+  aspect-ratio: 1;
+  cursor: pointer;
 }
 
 /* modal styling --------------------------------------------------- */
@@ -240,4 +272,22 @@
 
 .modal-buttons button:hover {
   background-color: #f0f0f0;
+}
+/* DetailedInfo.jsx styling ------------------------------------- */
+.detailedinfo-div-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.detailedinfo-editicon {
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  margin-bottom: 2.5px;
+  cursor: pointer;
+}
+.detailedinfo-facility-image {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
 }

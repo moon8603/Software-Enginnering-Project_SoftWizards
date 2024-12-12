@@ -49,19 +49,12 @@ const LoginBtn = () => {
     <Group>
       {!isAdmin && (
         <Button onClick={handleClick} style={{width: "120px"}} fz="md">
-          
           로그인
         </Button>
       )}
     
       {isAdmin && (
-        <Button onClick={handleLogout} fz="md" className='login-btn-text'>
-          {/* <div className='fix-button'>
-          {decodedToken ? 
-          <div className="login-btn-text">{decodedToken.email}</div>
-          : <div className="login-btn-text">이메일을 찾을 수 없습니다.</div>}
-          <div className="login-btn-text">에서 로그아웃</div>
-          </div> */}
+        <Button onClick={handleLogout} fz="md" bg="cyan.5">
           <div className="login-btn-text">
             {decodedToken ?
               <span>{decodedToken.email} </span> : <span>이메일을 찾을 수 없습니다.</span>

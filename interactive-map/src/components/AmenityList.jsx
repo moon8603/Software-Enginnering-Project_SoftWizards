@@ -27,21 +27,6 @@ const AmenityList = ({ facilities, onEditFacility }) => {
 }, [setAdmin]);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const [imageSrcs, setImageSrcs] = useState({});
 
   const isWithinWorkingHours = (workingHours) => {
@@ -117,12 +102,12 @@ const AmenityList = ({ facilities, onEditFacility }) => {
           const imageSrc = imageSrcs[facility.id]; // 미리 불러온 이미지 URL 사용
 
           return (
-            <div className="facility-item" key={facility.id} style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="facility-item" key={facility.id}>
               {imageSrc && (
                 <img 
                   src={imageSrc} 
-                  alt={facility.name} 
-                  style={{ width: '24px', height: '24px', marginRight: '10px' }} 
+                  alt={facility.name}
+                  className='amenitylist-facility-image'
                   onError={(e) => e.target.style.display = 'none'}
                 />
               )}
@@ -139,8 +124,8 @@ const AmenityList = ({ facilities, onEditFacility }) => {
               {isAdmin && editIcon && (
                 <img 
                   src={editIcon} 
-                  alt="edit" 
-                  style={{ width: '20px', height: '20px', cursor: 'pointer' }} 
+                  alt="edit"
+                  className='amenitylist-div-editicon'
                   onClick={() => onEditFacility(facility)} 
                 />
               )}
