@@ -3,16 +3,10 @@
     {
       "id": 1,
       "name": "전농관",
-      "coordinates": [
-        37.583613,
-        127.056579
-      ],
+      "coordinates": "37.583613 127.056579",
       "description": "1F: 전농관 카페, 2F: 입학처",
       "workingHour": "00:00 ~ 23:58",
-      "type": [
-        "기본 편의 시설",
-        "   강의실"
-      ]
+      "type": "기본 편의 시설,    강의실"
     },
     {
       "id": 51,
@@ -328,7 +322,7 @@
       "coordinates": "37.583462 127.055123",
       "description": "",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기타 시설, 입구, 정문"
+      "type": "기타 편의 시설,  입구"
     },
     {
       "id": 33,
@@ -336,7 +330,7 @@
       "coordinates": "37.585271 127.060967",
       "description": "",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기타 시설, 입구, 후문"
+      "type": "기타 편의 시설,  입구"
     },
     {
       "id": 34,
@@ -473,6 +467,20 @@
       "description": "",
       "workingHour": "00:00 ~ 23:59",
       "type": "휴식 및 복지 편의 시설, 주차장"
+    },
+    {
+      "id": 61,
+      "name": "test name",
+      "coordinates": [
+        37.583613,
+        127.056
+      ],
+      "description": "test description",
+      "workingHour": "13:00 ~ 23:59",
+      "type": [
+        "기본 편의 시설",
+        "    테스트2"
+      ]
     }
   ]
 }
