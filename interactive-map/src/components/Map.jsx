@@ -6,7 +6,7 @@ import CategoryList from "./CategoryList";
 import EditModal from "./EditModal";
 import DetailedInfo from "./DetailedInfo";
 
-// Import the icons
+// Import the icons, may add more icon later
 import redIconUrl from "../images/red-icon.png";
 import greenIconUrl from "../images/green-icon.png";
 import blueIconUrl from "../images/blue-icon.png";
@@ -52,6 +52,8 @@ const Map = () => {
     fetchFacilities();
   }, []);
 
+  // Define a custom icon for facilities
+  // -->
   // Define custom icons
   const icons = {
     red: new L.Icon({
@@ -142,7 +144,7 @@ const Map = () => {
         return icons.green;
       case "스포츠 편의 시설":
         return icons.blue;
-      case "기타 시설":
+      case "기타 편의 시설":
         return icons.orange;
       default:
         return icons.grey; // Default

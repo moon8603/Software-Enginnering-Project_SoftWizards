@@ -17,7 +17,13 @@ const db = {};
 //   sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  ...config,
+  dialectOptions: {
+    timezone: '+09:00', // 한국 시간 KST
+  },
+  timezone: '+09:00', // 한국 시간 KST
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

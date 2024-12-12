@@ -30,7 +30,7 @@ const DetailedInfo = ({ facility, onEdit }) => {
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         <h3 style={{ margin: 0 }}>{facility.name}</h3>
-        <img
+        {/* <img
           src={editIcon}
           alt="edit"
           style={{
@@ -41,7 +41,7 @@ const DetailedInfo = ({ facility, onEdit }) => {
             cursor: "pointer"
           }}
           onClick={onEdit}
-        />
+        /> */}
       </div>
       <p>{facility.description}</p>
       <p>Working Hours: {facility.workingHour}</p>

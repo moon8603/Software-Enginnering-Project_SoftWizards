@@ -23,13 +23,14 @@
   /* height: 60px; */
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   margin: 10px 0;
 }
 .buttons {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 10px;
 }
 .no-post-text {
   padding: 20px;
@@ -43,6 +44,28 @@
 /* login page form login button*/
 .login-btn.mantine-Button-root {
 
+}
+
+/* main page login btn styling */
+.login-btn-text {
+  margin: 5px;
+  font-size: 13px;
+
+/* login page styling */
+.loginpage-center-box-div{
+  display: flex;
+  justify-content: end;
+  position: relative;
+  bottom: 2rem;
+}
+
+/* PostLine.jsx file's styling */
+.forumpage-container-box-div {
+  display: flex;
+  justify-content: end;
+  position: relative;
+  right: 1rem;
+  top: 3rem;
 }
 
 .postline-card-group {
@@ -84,7 +107,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-height: var(--category-height);
+  /* max-height: var(--category-height); */
+  height: 225px;
   background-color: #f8f9fa;
   padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -93,28 +117,31 @@
     /* 100%: category-list-container's height */
     /* 30px: heading */
     /* 36px: button's height */
-    /* 12px: button's margin top */
+    /* 15px: button's margin top */
     /* 10px: martine button animation */
-    height: calc(100% - 30px - 36px - 12px - 10px);
+    height: calc(100% - 30px - 36px - 15px - 10px);
     li {
       margin-bottom: 2px;
     }
   }
+  z-index: 10;
 }
 
 /* 시설 목록 컨테이너 스타일 (우측 탭) */
 .facility-list-container {
-  height: var(--facility-height);
+  /* height: var(--facility-height); */
+  height: calc(100dvh - 60px - 225px);
   background-color: #f8f9fa;
-  padding: 0 20px;
+  padding: 8px 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
+  /* overflow-y: auto; */
   box-sizing: border-box;
 }
   
 .facility-list {
   height: calc(100% - 30px);
   overflow: auto;
+  margin-top: 5px;
 }
   
 .facility-item {

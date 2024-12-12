@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes)=>{
             // 건물, 도서관 과 같은 형태로 저장된다.
             type:DataTypes.STRING(1000)
         },
-        
+        link: {
+            type:DataTypes.STRING(1000)
+        },
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: sequelize.fn('CURRENT_TIMESTAMP'),
