@@ -12,6 +12,7 @@ const AmenityList = ({ facilities, onEditFacility }) => {
   const [decodedToken, setDecodedToken] = useState(null);  // 디코딩된 토큰을 상태로 관리
 
   const adminEmail = "test@gmail.com";
+  // const adminEmail = useStore((state) => state.adminEmail);
   useEffect(() => {
   const storedToken = localStorage.getItem("jwtToken");
   if (storedToken) {

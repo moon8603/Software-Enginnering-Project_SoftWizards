@@ -33,7 +33,7 @@ const PostDetail = () => {
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
-  const adminEmail = "test@gmail.com";
+  const adminEmail = useStore((state) => state.adminEmail);
 
   // Fetch comments from mock data
   useEffect(() => {

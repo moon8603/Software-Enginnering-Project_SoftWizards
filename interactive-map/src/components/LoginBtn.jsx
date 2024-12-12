@@ -9,7 +9,7 @@ const LoginBtn = () => {
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
 
-  const adminEmail = "test@gmail.com";
+  const adminEmail = useStore((state) => state.adminEmail);
 
   const [token, setToken] = useState(null);  // JWT 토큰을 상태로 관리
   const [decodedToken, setDecodedToken] = useState(null);  // 디코딩된 토큰을 상태로 관리
