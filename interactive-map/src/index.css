@@ -15,16 +15,15 @@
   box-sizing: border-box;
 }
 
-/* main page's styling */
+/* main page styling ---------------------------------------*/
 .main-page {
   display: flex;
 }
-.main-page-button {
+.main-page-button-area {
   /* height: 60px; */
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 .buttons {
   display: flex;
@@ -32,26 +31,13 @@
   align-items: center;
   margin-bottom: 10px;
 }
-.no-post-text {
-  padding: 20px;
+.popup-error {
+  color: red;
+  font-size: 20px;
 }
 
 
-/* forum page styling */
-.mantine-focus-auto.forum-main-page{
-  color: #228be6;
-}
-/* login page form login button*/
-.login-btn.mantine-Button-root {
-
-}
-
-/* main page login btn styling */
-.login-btn-text {
-  margin: 5px;
-  font-size: 13px;
-
-/* login page styling */
+/* login page styling --------------------------------------------*/
 .loginpage-center-box-div{
   display: flex;
   justify-content: end;
@@ -59,7 +45,20 @@
   bottom: 2rem;
 }
 
-/* PostLine.jsx file's styling */
+/* main page login btn styling */
+.login-btn-text {
+  display: grid;
+  width: 120px;
+  margin: 5px;
+  font-size: 13px;
+  justify-content: center;
+}
+
+/* forum page styling------------------------------------------- */
+.mantine-focus-auto.forum-main-page{
+  color: #228be6;
+}
+/* PostLine.jsx file styling */
 .forumpage-container-box-div {
   display: flex;
   justify-content: end;
@@ -83,7 +82,7 @@
   color: #228be6;
 }
 .postline-button, .postline-button-admin {
-  margin: 20px 10px;
+  margin-bottom: 20px;
 }
 .postline-button-admin {
   margin-left: 1rem;
@@ -91,57 +90,62 @@
 .postline-group-div {
   margin-right: auto;
 }
-.postline-info-author-time-text {
+.postline-info-author-time-text,
+.postdetail-container-stack-card-group-text {
   display: grid;
   grid-template-columns: 200px auto;
 }
-.postline-date {
-  margin-right: 20px;
-}
 
-.postdetail-title, .postdetail-content, .postdetail-comment {
+/* PostDetail.jsx styling-------------------------------------------- */
+.postdetail-title, .postdetail-content, .postdetail-paper-group-text {
   word-break: break-word;
 }
-
-.category-list-container {
+.postdetail-paper-group-text {
+  width: 100%;
+}
+.postdetail-paper-div-stack-div, .postline-container-stack-card-div {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  /* max-height: var(--category-height); */
-  height: 225px;
+  justify-content: space-between;
+  align-items: center
+}
+.postdetail-container-stack-text {
+  margin-top: 10px;
+  font-size: 14px;
+}
+/* category list styling -------------------------------------------- */
+.category-list-h3 {
+  padding: 0 20px;
+}
+.category-list-container {
+  height: var(--category-height);
   background-color: #f8f9fa;
   padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  box-sizing: border-box;
   ul {
-    /* 100%: category-list-container's height */
-    /* 30px: heading */
-    /* 36px: button's height */
-    /* 15px: button's margin top */
-    /* 10px: martine button animation */
-    height: calc(100% - 30px - 36px - 15px - 10px);
-    li {
-      margin-bottom: 2px;
-    }
+    display: grid;
+    gap: 4px;
   }
-  z-index: 10;
 }
-
+/* facility list styling ------------------------------------------ */
 /* 시설 목록 컨테이너 스타일 (우측 탭) */
 .facility-list-container {
   /* height: var(--facility-height); */
-  height: calc(100dvh - 60px - 225px);
+  height: calc(var(--facility-height) - 20px);
   background-color: #f8f9fa;
-  padding: 8px 20px;
+  padding: 0 20px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  /* overflow-y: auto; */
+  overflow-y: auto;
   box-sizing: border-box;
 }
   
 .facility-list {
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
+  /* max-height: 90%; */
   overflow: auto;
   margin-top: 5px;
+  padding-right: 10px;
 }
   
 .facility-item {
@@ -177,6 +181,7 @@
   text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
+/* modal styling --------------------------------------------------- */
 /* modal overlay */
 .modal-overlay {
   position: fixed;

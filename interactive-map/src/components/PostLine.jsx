@@ -171,7 +171,7 @@ const PostLine = () => {
       </Button>
         
       <Button
-        className="postline-button"
+        className="postline-button-admin"
         fz="h4"
         size="sm"
         margin-left="10px"

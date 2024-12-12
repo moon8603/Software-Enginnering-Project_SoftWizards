@@ -20,11 +20,6 @@ function MyRoute() {
           <div className="main-page">
             <Map />
 
-            {/* <div className="main-page-button">
-              <LoginBtn />
-
-              <ForumBtn />
-            </div> */}
           </div>
         }
       />

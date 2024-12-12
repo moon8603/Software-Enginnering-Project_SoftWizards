@@ -158,7 +158,7 @@ const toggleAdminMode = () => {
           </Button>
         
           {isAdmin && (
-            <Button onClick={() => setIsCommenting(true)} fz="md">
+            <Button className="postline-button-admin" onClick={() => setIsCommenting(true)} fz="md">
               댓글 작성
             </Button>
           )}
