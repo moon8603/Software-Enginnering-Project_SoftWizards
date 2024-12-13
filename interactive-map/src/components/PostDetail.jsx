@@ -11,20 +11,19 @@ import {
 } from "@mantine/core";
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useStore from "../store/forumStore";
 import { jwtDecode } from "jwt-decode";
-import {  useNavigate  } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
+var decodedToken;
 
-
-
-const PostDetail = ({ props }) => {
+const PostDetail = () => {
   const navigate = useNavigate();
-  
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('id');
+  const id = queryParams.get("id");
 
   console.log("id입니다 ", id);
   const [posts, setPosts] = useState([]); // State for posts
@@ -36,7 +35,7 @@ const PostDetail = ({ props }) => {
   // Zustand store
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
-  const adminEmail = "test@gmail.com";
+  const adminEmail = useStore((state) => state.adminEmail);
 
   // Fetch comments from mock data
   useEffect(() => {
@@ -46,15 +45,19 @@ const PostDetail = ({ props }) => {
     }
 
     const token = localStorage.getItem("jwtToken");
+    
+    
     if (token) {
-      const decodedToken = jwtDecode(token);
+      //const decodedToken = jwtDecode(token);
+      decodedToken = jwtDecode(token);
       console.log(decodedToken);
+      console.log("사용자 id는 ", decodedToken.id);
       if (decodedToken.email === adminEmail) {
         setAdmin(true);
-      }     
+      }
     }
 
-    fetch(`http://localhost:3000/forumpage?id=${ id }`)
+    fetch(`http://localhost:3000/forumpage?id=${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch post data");
@@ -67,12 +70,7 @@ const PostDetail = ({ props }) => {
         setPosts(data.data.postsData[0]);
       })
       .catch((error) => console.error(error));
-}, [id]);
-
-// Toggle admin mode for testing
-const toggleAdminMode = () => {
-  setAdmin(!isAdmin);
-};
+  }, [id]);
 
   // Handle comment submission
   const handleCommentSubmit = () => {
@@ -81,7 +79,7 @@ const toggleAdminMode = () => {
         //id: replies.length + 1,
         content: commentText,
         //author: "Admin",
-        authorId: 1,
+        authorId: decodedToken.id,
         postId: id,
         //createdAt: new Date().toISOString().split("T")[0],
       };
@@ -135,34 +133,31 @@ const toggleAdminMode = () => {
 
   return (
     <div>
-      
-      {/* <Button onClick={toggleAdminMode} fz="md" className="postline-button-admin">
-        {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-      </Button> */}
       <Stack>
-        {/* <Group spacing="sm">
-          <Button onClick={toggleAdminMode} fz="md">
-            {isAdmin ? "관리자 모드 OFF" : "관리자 모드 ON"}
-          </Button> */}
         <Group>
           <Button
             className="postline-button"
             fz="h4"
-            size="sm"
-            onClick={() => navigate('/forumpage')}
+            onClick={() => navigate("/forumpage")}
             fullWidth={false}
+            variant="outline"
           >
             목록
           </Button>
-        
+
           {isAdmin && (
-            <Button onClick={() => setIsCommenting(true)} fz="md">
+            <Button
+              className="postline-button-admin"
+              onClick={() => setIsCommenting(true)}
+              fz="md"
+              variant="light"
+            >
               댓글 작성
             </Button>
           )}
         </Group>
         {/* Post details */}
-        <Card shadow="md" padding="lg" radius="md" withBorder>
+        <Card shadow="lg" padding="lg" radius="md" withBorder>
           <Group position="apart">
             <Text
               size="md"
@@ -230,10 +225,10 @@ const toggleAdminMode = () => {
           replies.map((reply) => (
             <Paper
               key={reply.id}
-              shadow="xs"
+              shadow="lg"
               radius="md"
               withBorder
-              style={{ marginTop: "10px", padding: "20px" }}
+              className="postdetail-paper"
             >
               <div>
                 <Stack spacing="xs">
@@ -255,7 +250,7 @@ const toggleAdminMode = () => {
                         작성날짜: <strong>{reply.createdAt}</strong>
                       </span>{" "}
                       <span>
-                        작성자: <strong>{reply.authorId}</strong>
+                        작성자: <strong>{reply.email}</strong>
                       </span>
                     </Text>
 

@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import AmenityList from "./AmenityList";
 import CategoryList from "./CategoryList";
@@ -12,7 +13,6 @@ import greenIconUrl from "../images/green-icon.png";
 import blueIconUrl from "../images/blue-icon.png";
 import orangeIconUrl from "../images/orange-icon.png";
 import greyIconUrl from "../images/grey-icon.png";
-import "leaflet/dist/leaflet.css";
 import LoginBtn from "./LoginBtn";
 import ForumBtn from "./ForumBtn";
 
@@ -22,17 +22,16 @@ const Map = () => {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [selectedCategories, setSelectedCategories] = useState([]);
-  // Set initial position to be centered on campus
+  // 초기 위치가 캠퍼스 중심으로 설정됨됨
   const campusCoordinates = [37.583804, 127.058934];
-  const zoomLevel = 17; //the larger the zoomLevel, more zoom in into map
+  const zoomLevel = 17; //숫자가 클 수록 더 줌인됨됨
 
   // Load facilities data
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
-        const response = await fetch("./src/data/facilities.json");
-        // const response = await fetch("http://localhost:3000/main");
-        // console.log(response);
+        // const response = await fetch("./src/data/facilities.json");
+        const response = await fetch("http://localhost:3000/main");
         if (!response.ok) {
           throw new Error("Failed to fetch facilities data");
         }
@@ -40,13 +39,14 @@ const Map = () => {
         // console.log("Facilities data:", result); for debugging
         // type이 parsing 될 때 띄어쓰기를 기준으로 잘못 분리되는 현상 수정
         const finalData = result.data.map((facility) => {
-          const parsedType = facility.type.join(' ').split(',');
+          const parsedType = facility.type.join(" ").split(",");
           return { ...facility, type: parsedType };
         });
         setFacilities(finalData); // Extract the data array
         setFilteredFacilities(finalData);
       } catch (error) {
         console.error("Error fetching facilities data:", error);
+        alert("서비스에 오류가 발생했습니다. 다시 접속해주세요");
       }
     };
     fetchFacilities();
@@ -89,13 +89,13 @@ const Map = () => {
   };
 
   const updateFacility = (updatedFacility) => {
-    setFacilities(prevFacilities => 
-      prevFacilities.map(facility => 
+    setFacilities((prevFacilities) =>
+      prevFacilities.map((facility) =>
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
-    setFilteredFacilities(prevFiltered =>
-      prevFiltered.map(facility => 
+    setFilteredFacilities((prevFiltered) =>
+      prevFiltered.map((facility) =>
         facility.id === updatedFacility.id ? updatedFacility : facility
       )
     );
@@ -131,8 +131,8 @@ const Map = () => {
 
   // Function to select the appropriate icon
   const getIconForFacility = (facility) => {
-     //console.log("facility type: ", facility.type[0]);
-    
+    //console.log("facility type: ", facility.type[0]);
+
     if (!isWithinWorkingHours(facility.workingHour)) {
       return icons.grey;
     }
@@ -151,8 +151,8 @@ const Map = () => {
     }
   };
 
-   // Filter facilities by selected categories
-   const handleCategoryFilter = (categories) => {
+  // Filter facilities by selected categories
+  const handleCategoryFilter = (categories) => {
     // setSelectedCategories(categories);
     if (categories.length === 0) {
       setFilteredFacilities(facilities); // No filter, show all facilities
@@ -186,23 +186,28 @@ const Map = () => {
             icon={getIconForFacility(facility)}
           >
             <Popup>
-              <DetailedInfo 
-                facility={facility} 
-                onEdit={() => {
-                  setSelectedFacility(facility);
-                  setIsModalOpen(true);
-                }}
-              />
+              {!facility ? (
+                <div className="popup-error">팝업창을 불러올 수 없습니다</div>
+              ) : (
+                <DetailedInfo
+                  facility={facility}
+                  onEdit={() => {
+                    setSelectedFacility(facility);
+                    setIsModalOpen(true);
+                  }}
+                />
+              )}
             </Popup>
           </Marker>
         ))}
       </MapContainer>
-      <div className="main-page-button">
+
+      <div className="main-page-button-area">
         <div className="buttons">
           <LoginBtn />
           <ForumBtn />
         </div>
-        
+
         <CategoryList
           facilities={facilities}
           // activeCategory={activeCategory}

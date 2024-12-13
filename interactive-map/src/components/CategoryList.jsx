@@ -53,49 +53,50 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
   }, [categories]);
 
   return (
-    <div className="category-list-container">
-      <h3>Category</h3>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+    <>
+      <h3 className="category-list-h3">Category</h3>
+      <div className="category-list-container">
+        <ul>
         {categories.map((category) => (
-          <li
-            key={category}
-            className={`category-item ${
-              selectedCategories.includes(category) ? "active" : ""
-            }`}
-            onClick={() => toggleCategory(category)}
-            style={{
-              display: 'flex', // flex를 사용하여 이미지와 텍스트 정렬
-              alignItems: 'center',
-              cursor: "pointer",
-              padding: "4px",
-              background: selectedCategories.includes(category) ? "#ddd" : "#fff",
-              border: "1px solid #ccc",
-              // marginBottom: "5px",
-              borderRadius: "4px",
-            }}
-          >
-              {imageSrcs[category] && (
-                <img
-                  src={imageSrcs[category]}
-                  alt={category}
-                  style={{ width: '24px', height: '24px', marginRight: '10px' }}
-                  onError={(e) => e.target.style.display = 'none'}
-                />
+            <>
+              {category ? (
+                <li
+                  key={category}
+                  className={`category-item ${
+                    selectedCategories.includes(category) ? "active" : ""
+                  }`}
+                  onClick={() => toggleCategory(category)}
+                  style={{
+                    background: selectedCategories.includes(category)
+                      ? "#ddd"
+                      : "#fff",
+                  }}
+                >
+                  {imageSrcs[category] && (
+                    <img
+                      src={imageSrcs[category]}
+                      alt={category}
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                  )}
+                  <span>{category}</span>
+                </li>
+              ) : (
+                <div>오류 발생했습니다. 다시 시도해주세요</div>
               )}
-              <span>{category}</span>
-
-          </li>
-        ))}
-      </ul>
-      <Button
-        onClick={() => onCategoryFilter(selectedCategories)}
-        fullWidth
-        mt="sm"
-        variant="outline"
-      >
-        필터 적용
-      </Button>
-    </div>
+            </>
+          ))}
+        </ul>
+        <Button
+          onClick={() => onCategoryFilter(selectedCategories)}
+          fullWidth
+          mt="sm"
+          variant="outline"
+        >
+          필터 적용
+        </Button>
+      </div>
+    </>
   );
 };
 
