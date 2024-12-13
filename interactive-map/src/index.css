@@ -158,6 +158,12 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+
+.facility-title-button-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
   
 .facility-list {
   height: calc(100% - 40px);

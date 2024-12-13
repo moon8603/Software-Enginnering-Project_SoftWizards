@@ -330,6 +330,7 @@ router.put('/update', async (req, res) => {
       description: updatedFacility.description,
       workingHour: updatedFacility.workingHour,
       type: Array.isArray(updatedFacility.type) ? updatedFacility.type.join(', ') : updatedFacility.type,
+      link: updatedFacility.link,
     });
 
     // facilities.json에서 해당 시설 업데이트
