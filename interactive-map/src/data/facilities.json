@@ -102,10 +102,7 @@
     {
       "id": 10,
       "name": "학생회관",
-      "coordinates": [
-        37.58367,
-        127.059945
-      ],
+      "coordinates": "37.58367 127.059945",
       "description": "B1F: 서점, 편의점, 복사실, 동아리방, 1F: 카페, 식당",
       "workingHour": "00:00 ~ 23:59",
       "type": "기본 편의 시설, 학생회관",
@@ -293,19 +290,11 @@
     {
       "id": 28,
       "name": "100주년기념관",
-      "coordinates": [
-        37.584272,
-        127.05564
-      ],
+      "coordinates": "37.584272 127.05564",
       "description": "1F: 실내 체육관, 3F: 파리바게뜨",
       "workingHour": "실내 체육관: 09:00 ~ 21:00",
       "fee": "교직원 및 학생: 5,000원/시간",
-      "type": [
-        "기본 편의 시설",
-        " 강의실",
-        " 스포츠 편의 시설",
-        " 체육관"
-      ],
+      "type": "기본 편의 시설,  강의실,  스포츠 편의 시설,  체육관",
       "link": "https://physical.uos.ac.kr/physical/main.do?identified=anonymous&"
     },
     {
