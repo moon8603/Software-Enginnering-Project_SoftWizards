@@ -78,7 +78,10 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
 - **Forum Layer**:
   - 게시글과 댓글의 CRUD 작업을 지원한다.
 
-![Architecture Diagram](https://example.com/architecture-diagram)
+**Archtecture diagram**
+
+![architecture-diagram](https://github.com/user-attachments/assets/5b3e6a5a-f519-4d6c-90b7-e83066cf8129)
+
 
 ---
 
