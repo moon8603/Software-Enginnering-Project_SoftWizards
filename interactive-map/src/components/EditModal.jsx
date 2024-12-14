@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const EditModal = ({ facility, onClose, onApply, onDelete }) => {
+const EditModal = ({ facility, onClose, onApply, onDelete, facilityList = [] }) => {
   const [formData, setFormData] = useState(facility);
 
   // facility가 변경될 때마다 formData를 새롭게 업데이트
@@ -12,8 +12,40 @@ const EditModal = ({ facility, onClose, onApply, onDelete }) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const validateFormData = () => {
+    const { name, type, workingHour } = formData;
+    const namePattern = /^\s*$/;
+    const timePattern = /^([01]\d|2[0-3]):([0-5]\d) ~ ([01]\d|2[0-3]):([0-5]\d)$/;
+
+    if (namePattern.test(name)) {
+      alert('시설 이름을 입력해주세요.');
+      return false;
+    }
+
+    if (facilityList.some(facility => facility.name === name)) {
+      alert('이미 존재하는 시설 이름과 중복될 수 없습니다.');
+      return false;
+    }
+
+    const typeList = facilityList.map(facility => facility.type[0]);
+    if (!type || !typeList.includes(type)) {
+      alert('유효하지 않은 유형입니다.');
+      return false;
+    }
+
+    if (!timePattern.test(workingHour)) {
+      alert('운영 시간은 "00:00 ~ 02:35"와 같은 형태여야 합니다.');
+      return false;
+    }
+
+    return true;
+  };
+
   // "적용" 버튼 클릭 시 확인 메시지
   const handleApplyClick = async () => {
+    if (!validateFormData()) {
+      return;
+    }
     const confirmApply = window.confirm('정말 적용하시겠습니까?');
     if (confirmApply) {
       //onApply(formData);
