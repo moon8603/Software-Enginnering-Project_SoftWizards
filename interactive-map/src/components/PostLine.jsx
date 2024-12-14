@@ -44,7 +44,7 @@ const PostLine = () => {
     }
 
     fetch("http://localhost:3000/forumpage")
-    // fetch("./src/mock/mockPosts.json")
+      // fetch("./src/mock/mockPosts.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch posts data");
@@ -57,7 +57,6 @@ const PostLine = () => {
       // .then((data) => setPosts(data))
       .catch((error) => console.error(error));
   }, [setAdmin]);
-
 
   // Handle "글 작성" button click
   const handleNewPostSubmit = () => {
@@ -95,7 +94,15 @@ const PostLine = () => {
   };
 
   const handleDeletePost = (id) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    fetch(`http://localhost:3000/forumpage/delete?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to delete post");
+        return response.json();
+      })
+      .then(() => setPosts(posts.filter((post) => post.id !== id)))
+      .catch((error) => console.error("Error deleting post:", error));
   };
 
   // Render post list or post detail
