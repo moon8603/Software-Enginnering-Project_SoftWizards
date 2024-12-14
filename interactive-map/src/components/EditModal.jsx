@@ -43,6 +43,9 @@ const EditModal = ({ facility, onClose, onApply, onDelete, facilityList = [] }) 
 
   // "적용" 버튼 클릭 시 확인 메시지
   const handleApplyClick = async () => {
+    if (!validateFormData()) {
+      return;
+    }
     const confirmApply = window.confirm('정말 적용하시겠습니까?');
     if (confirmApply) {
       //onApply(formData);
