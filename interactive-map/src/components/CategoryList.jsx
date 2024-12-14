@@ -56,35 +56,33 @@ const CategoryList = ({ facilities, onCategoryFilter }) => {
     <>
       <h3 className="category-list-h3">Category</h3>
       <div className="category-list-container">
-        <ul>
-        {categories.map((category) => (
-            <>
-              {category ? (
-                <li
-                  key={category}
-                  className={`category-item ${
-                    selectedCategories.includes(category) ? "active" : ""
-                  }`}
-                  onClick={() => toggleCategory(category)}
-                  style={{
-                    background: selectedCategories.includes(category)
-                      ? "#ddd"
-                      : "#fff",
-                  }}
-                >
-                  {imageSrcs[category] && (
-                    <img
-                      src={imageSrcs[category]}
-                      alt={category}
-                      onError={(e) => (e.target.style.display = "none")}
-                    />
-                  )}
-                  <span>{category}</span>
-                </li>
-              ) : (
-                <div>오류 발생했습니다. 다시 시도해주세요</div>
+      <ul>
+          {categories.map(
+            (category) =>
+              !category && alert("오류 발생했습니다. 다시 시도해주세요")
+          )}
+          {categories.map((category) => (
+            <li
+              key={category}
+              className={`category-item ${
+                selectedCategories.includes(category) ? "active" : ""
+              }`}
+              onClick={() => toggleCategory(category)}
+              style={{
+                background: selectedCategories.includes(category)
+                  ? "#ddd"
+                  : "#fff",
+              }}
+            >
+              {imageSrcs[category] && (
+                <img
+                  src={imageSrcs[category]}
+                  alt={category}
+                  onError={(e) => (e.target.style.display = "none")}
+                />
               )}
-            </>
+              <span>{category}</span>
+            </li>
           ))}
         </ul>
         <Button
