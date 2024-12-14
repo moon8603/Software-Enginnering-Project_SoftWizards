@@ -9,7 +9,7 @@ const LoginBtn = () => {
   const isAdmin = useStore((state) => state.isAdmin);
   const setAdmin = useStore((state) => state.setAdmin);
 
-  const adminEmail = "test@gmail.com";
+  const adminEmail = useStore((state) => state.adminEmail);
 
   const [token, setToken] = useState(null);  // JWT 토큰을 상태로 관리
   const [decodedToken, setDecodedToken] = useState(null);  // 디코딩된 토큰을 상태로 관리
@@ -49,18 +49,17 @@ const LoginBtn = () => {
     <Group>
       {!isAdmin && (
         <Button onClick={handleClick} style={{width: "120px"}} fz="md">
-          
           로그인
         </Button>
       )}
     
       {isAdmin && (
-        <Button onClick={handleLogout} fz="md">
-          <div className='fix-button'>
-          {decodedToken ? 
-          <div class="login-btn-text">{decodedToken.email}</div>
-          : <div class="login-btn-text">이메일을 찾을 수 없습니다.</div>}
-          <div class="login-btn-text">에서 로그아웃</div>
+        <Button onClick={handleLogout} fz="md" bg="cyan.5">
+          <div className="login-btn-text">
+            {decodedToken ?
+              <span>{decodedToken.email} </span> : <span>이메일을 찾을 수 없습니다.</span>
+            }
+            에서 로그아웃
           </div>
         </Button>
       )}

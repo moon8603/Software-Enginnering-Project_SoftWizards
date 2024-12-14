@@ -71,7 +71,11 @@ const EditModal = ({ facility, onClose, onApply, onDelete }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>시설 수정</h2>
+        {facility ? (
+          <h2>시설 수정</h2>
+        ) : (
+          <h2>시설 추가</h2>
+        )}
 
         {/* 이름 수정 */}
         <label>이름</label>
@@ -80,6 +84,18 @@ const EditModal = ({ facility, onClose, onApply, onDelete }) => {
           value={formData?.name || ''} 
           onChange={e => handleInputChange('name', e.target.value)} 
         />
+
+        {/* 좌표 추가*/}
+        {!facility && 
+        <>
+          <label>좌표</label>
+          <input 
+            type="text" 
+            value={formData?.coordinates || ''} 
+            onChange={e => handleInputChange('coordinates', e.target.value)} 
+          />
+        </>
+        }
 
         {/* 타입 수정 */}
         <label>타입</label>
@@ -116,8 +132,12 @@ const EditModal = ({ facility, onClose, onApply, onDelete }) => {
 
         {/* 버튼 */}
         <div className="modal-buttons">
-          <button onClick={handleApplyClick}>적용</button>
-          <button onClick={handleDeleteClick}>삭제</button>
+          {facility ? (
+            <button onClick={handleApplyClick}>적용</button>
+          ) : (
+            <button>추가</button>            
+          )}
+          {facility && <button onClick={handleDeleteClick}>삭제</button>}
           <button onClick={onClose}>취소</button>
         </div>
       </div>

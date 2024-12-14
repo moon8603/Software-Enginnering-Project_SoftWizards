@@ -3,16 +3,11 @@
     {
       "id": 1,
       "name": "전농관",
-      "coordinates": [
-        37.583613,
-        127.056579
-      ],
+      "coordinates": "37.583613 127.056579",
       "description": "1F: 전농관 카페, 2F: 입학처",
-      "workingHour": "00:00 ~ 23:58",
-      "type": [
-        "기본 편의 시설",
-        "   강의실"
-      ]
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 강의실",
+      "link": "https://oia.uos.ac.kr/kiice/main.do?identified=anonymous&"
     },
     {
       "id": 51,
@@ -36,7 +31,8 @@
       "coordinates": "37.584629 127.060618",
       "description": "4F: 학생 라운지",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기본 편의 시설, 강의실, 학생 라운지"
+      "type": "기본 편의 시설,    강의실,    학생 라운지",
+      "link": "https://www.google.com/"
     },
     {
       "id": 4,
@@ -60,7 +56,8 @@
       "coordinates": "37.58479 127.057716",
       "description": "1F: 은행",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기본 편의 시설, 대학본부, 은행"
+      "type": "기본 편의 시설, 대학본부, 은행",
+      "link": "https://www.uos.ac.kr/intro.jsp"
     },
     {
       "id": 7,
@@ -105,10 +102,14 @@
     {
       "id": 10,
       "name": "학생회관",
-      "coordinates": "37.58367 127.059945",
+      "coordinates": [
+        37.58367,
+        127.059945
+      ],
       "description": "B1F: 서점, 편의점, 복사실, 동아리방, 1F: 카페, 식당",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기본 편의 시설, 학생회관"
+      "type": "기본 편의 시설, 학생회관",
+      "link": "https://www.uos.ac.kr/intro.jsp"
     },
     {
       "id": 54,
@@ -180,7 +181,8 @@
       "coordinates": "37.583052 127.061005",
       "description": "B1F, 1F: 학생 라운지, 6F: 세미나실",
       "workingHour": "00:00 ~ 23:59",
-      "type": "기본 편의 시설, 강의실, 학생 라운지, 세미나실"
+      "type": "기본 편의 시설,  강의실,  학생 라운지,  세미나실",
+      "link": "google.com"
     },
     {
       "id": 17,
@@ -291,11 +293,20 @@
     {
       "id": 28,
       "name": "100주년기념관",
-      "coordinates": "37.584272 127.05564",
+      "coordinates": [
+        37.584272,
+        127.05564
+      ],
       "description": "1F: 실내 체육관, 3F: 파리바게뜨",
       "workingHour": "실내 체육관: 09:00 ~ 21:00",
       "fee": "교직원 및 학생: 5,000원/시간",
-      "type": "기본 편의 시설, 강의실, 스포츠 편의 시설, 체육관"
+      "type": [
+        "기본 편의 시설",
+        " 강의실",
+        " 스포츠 편의 시설",
+        " 체육관"
+      ],
+      "link": "https://physical.uos.ac.kr/physical/main.do?identified=anonymous&"
     },
     {
       "id": 29,
@@ -325,16 +336,10 @@
     {
       "id": 32,
       "name": "정문",
-      "coordinates": [
-        37.583462,
-        127.055123
-      ],
+      "coordinates": "37.583462 127.055123",
       "description": "",
       "workingHour": "00:00 ~ 23:59",
-      "type": [
-        "기타 편의 시설",
-        " 입구"
-      ]
+      "type": "기타 편의 시설, 입구"
     },
     {
       "id": 33,
@@ -479,6 +484,14 @@
       "description": "",
       "workingHour": "00:00 ~ 23:59",
       "type": "휴식 및 복지 편의 시설, 주차장"
+    },
+    {
+      "id": 61,
+      "name": "test name",
+      "coordinates": "37.583613 127.056",
+      "description": "test description",
+      "workingHour": "13:00 ~ 23:59",
+      "type": "기본 편의 시설,     테스트2"
     }
   ]
 }
