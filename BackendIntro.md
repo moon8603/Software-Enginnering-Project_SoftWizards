@@ -18,5 +18,12 @@
 5. **개발 서버 시작**
   `npm run dev`  
 
-- npm run dev 하고 나서 http://localhost:5173/main에서 DB 연동 확인 가능
+- **사전 점검 사항**
+  1. backend/.env 파일은 원래 gitignore에 추가해야 하지만 여기서는 업로드한다.
+  2. mysql에 DB와 더미 데이터가 존재한다는 가정 하에 실행된다.
+
+- npm run dev 하고 나서 http://localhost:5173/main 에서 DB 연동 확인 가능
+
 `API 문서 (swagger): http://localhost:3000/docs`
+
+`API 문서 (Postman): https://documenter.getpostman.com/view/40252845/2sAYHxojVH`

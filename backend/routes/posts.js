@@ -4,7 +4,7 @@ var db = require("../models/index");
 
 /**
  * @swagger
- * /forumpage/posts:
+ * /forumpage:
  *   get:
  *     summary: 게시글 목록 조회
  *     description: 모든 게시글을 조회하거나 특정 게시글과 해당 댓글을 조회합니다.
@@ -108,7 +108,7 @@ router.get('/', async(req, res, next) => {
 
 /**
  * @swagger
- * /forumpage/posts/create:
+ * /forumpage/create:
  *   post:
  *     summary: 게시글 생성
  *     description: 새로운 게시글을 생성합니다.
@@ -153,7 +153,7 @@ router.post('/create', async (req, res) => {
 // (admin 권한 추후 부여)
 /**
  * @swagger
- * /forumpage/posts/delete:
+ * /forumpage/delete:
  *   delete:
  *     summary: 게시글 삭제
  *     description: 특정 ID의 게시글과 해당 댓글을 삭제합니다.
