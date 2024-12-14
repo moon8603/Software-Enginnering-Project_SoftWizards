@@ -108,7 +108,7 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
 
 ## Project Deliverables
 
-1. **요구사항 분석 명세서 final version**: [SRS-final](https://example.com/requirements)
+1. **요구사항 분석 명세서 final version**: [SRS-final](artifacts/SRS_SoftWizards_1.0.3.docx)
 
 2. **Architecture 및 Design Documents**:
    - **Software Architecture**: [High level architecture](https://example.com/software-architecture)
