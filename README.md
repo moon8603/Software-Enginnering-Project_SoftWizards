@@ -27,6 +27,8 @@
 - **시설 상세 정보 팝업**:
   - 시설 아이콘 클릭 시 운영 시간, 설명 등을 팝업 형태로 제공한다
 
+[고화질 데모 영상 리디렉션](https://url.kr/edknz4)
+
 https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
 
 
@@ -111,12 +113,12 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
 1. **요구사항 분석 명세서 final version**: [SRS-final](artifacts/SRS_SoftWizards_1.0.3.docx)
 
 2. **Architecture 및 Design Documents**:
-   - **Software Architecture**: [High level architecture](https://example.com/software-architecture)
-   - **Software Design**: [Class Diagram](https://example.com/software-design), [Use case Diagram](https://example.com/software-design)
-   - **UI Design**: [UI Design](https://example.com/ui-design)
+   - **Software Architecture**: [High level architecture](artifacts/High-Level_Architecture_UML_Diagrams_Document_1.0.1.docx)
+   - **Software Design**: [Class Diagram](artifacts/class_diagram_v2.1.png), [Use case Diagram](artifacts/use_case_diagram_v2.0.png)
+   - **UI Design**: [UI Design](artifacts/UI_Design_Document_1.0.3.docx)
 
 3. **Coding Standard**:
-   - [Coding Standard](https://example.com/coding-standard)
+   - [Coding Standard](artifacts/coding_standard_1.0.1.docx)
 
 4. **Code: Branch Description 과 코드에 관한 Documentation**:
     - **Branch Description**
