@@ -1,0 +1,96 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>376</x><y>328</y><w>224</w><h>80</h></coordinates><panel_attributes>Amenities
+--
+-id : int
+--
+-chageState(time(), this.business hour)
+-openPopUp()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>144</x><y>328</y><w>168</w><h>104</h></coordinates><panel_attributes>Amenity Info
+--
+-name : char
+-state : bool
+-location : vec2f, char
+-business hour : vec2i
+-type : char
+-introduction : text
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>360</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>144</x><y>472</y><w>168</w><h>56</h></coordinates><panel_attributes>Pop-up
+--
+-uml : char
+--
+-redirection()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>224</x><y>424</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>600</y><w>128</w><h>56</h></coordinates><panel_attributes>Basic Amenities
+--
+-type : char
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>600</y><w>168</w><h>56</h></coordinates><panel_attributes>Rest and Welfare Amenities
+--
+-type : char
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>600</x><y>600</y><w>112</w><h>56</h></coordinates><panel_attributes>Fitness Amenities
+--
+-type : char
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>400</y><w>24</w><h>216</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>400</y><w>200</w><h>216</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>230;10;230;190;10;190;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>400</y><w>192</w><h>216</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;190;220;190;220;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>432</y><w>128</w><h>40</h></coordinates><panel_attributes>General User
+--
+--
+-writePost()
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>776</x><y>336</y><w>128</w><h>40</h></coordinates><panel_attributes>User
+--
+--
+-viewMap()
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>432</y><w>128</w><h>104</h></coordinates><panel_attributes>Administrator
+--
+-name : char
+-id : char
+-pwHash : int
+--
+-logIn()
+-manageAmenities()
+-commentOnPost()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>368</y><w>120</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;50;10;50;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>368</y><w>168</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50;190;50;190;80</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>424</y><w>136</w><h>40</h></coordinates><panel_attributes>lt=-
+ &lt; Ask to
+Answer to &gt; </panel_attributes><additional_attributes>10;20;150;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>976</x><y>720</y><w>128</w><h>24</h></coordinates><panel_attributes>QnA Board
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1032</x><y>672</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>976</x><y>584</y><w>176</w><h>96</h></coordinates><panel_attributes>Post
+--
+-postPw : int
+-title : char
+-content : text
+-image : jpg
+--
+-Authentication(postPw) : bool
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>768</x><y>584</y><w>176</w><h>72</h></coordinates><panel_attributes>Comment
+--
+-commentId : int
+-content : text
+--
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>936</x><y>624</y><w>56</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1016</x><y>464</y><w>40</w><h>136</h></coordinates><panel_attributes>lt=&lt;-
+write
+m1=0..n</panel_attributes><additional_attributes>10;150;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>504</y><w>104</w><h>96</h></coordinates><panel_attributes>lt=&lt;.
+write
+m1=0..n</panel_attributes><additional_attributes>90;100;90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>592</x><y>352</y><w>136</w><h>96</h></coordinates><panel_attributes>lt=&lt;.
+manage</panel_attributes><additional_attributes>10;20;150;20;150;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>128</y><w>168</w><h>136</h></coordinates><panel_attributes>Map
+--
+-mapImage : jpg
+-size : vec2i
+-offset : vec2i
+-zoomRate : float
+-category
+--
+-showIcons()
+-onClick()
+-getAmenityId()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>256</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>144</x><y>136</y><w>168</w><h>40</h></coordinates><panel_attributes>Amenity List
+--
+-AmenityIds : array
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>152</y><w>112</w><h>24</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>144</x><y>208</y><w>168</w><h>56</h></coordinates><panel_attributes>Icon
+--
+-IconImage : jpg
+-color : int //16진수
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>216</x><y>256</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>224</y><w>112</w><h>24</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>192</y><w>296</w><h>160</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;350;10;350;180</additional_attributes></element></diagram>
