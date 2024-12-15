@@ -481,6 +481,54 @@
       "description": "test description",
       "workingHour": "13:00 ~ 23:59",
       "type": "기본 편의 시설,     테스트2"
+    },
+    {
+      "id": 62,
+      "name": "New Amenity",
+      "coordinates": "37.5665 126.978",
+      "description": "New Amenity Description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 도서관"
+    },
+    {
+      "id": 102,
+      "name": "New Amenity",
+      "coordinates": "37.5665 126.978",
+      "description": "New Amenity Description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 도서관"
+    },
+    {
+      "id": 106,
+      "name": "New Amenity",
+      "coordinates": "37.5665 126.978",
+      "description": "New Amenity Description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 도서관"
+    },
+    {
+      "id": 110,
+      "name": "New Amenity961",
+      "coordinates": "37.5665 126.978",
+      "description": "New Amenity Description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 도서관"
+    },
+    {
+      "id": 111,
+      "name": "New Amenity3108",
+      "coordinates": "37.5665 126.978",
+      "description": "New Amenity Description",
+      "workingHour": "00:00 ~ 23:59",
+      "type": "기본 편의 시설, 도서관"
+    },
+    {
+      "id": 112,
+      "name": "Updated Amenity",
+      "coordinates": "37.5665 126.979",
+      "description": "Updated Description",
+      "workingHour": "8 AM - 8 PM",
+      "type": "updatedType1, updatedType2"
     }
   ]
 }

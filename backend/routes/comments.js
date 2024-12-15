@@ -8,19 +8,18 @@ var db = require("../models/index");
  *   post:
  *     summary: 댓글 생성
  *     description: 게시글에 새로운 댓글을 작성합니다.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               postId:
- *                 type: integer
- *                 description: 댓글을 작성할 게시글의 ID
- *               content:
- *                 type: string
- *                 description: 댓글의 내용
+ *     tags: [Comments]
+ *     parameters:
+ *       - in: formData
+ *         name: postId
+ *         type: integer
+ *         description: 댓글을 작성할 게시글의 ID
+ *         required: true
+ *       - in: formData
+ *         name: content
+ *         type: string
+ *         description: 댓글의 내용
+ *         required: true
  *     responses:
  *       201:
  *         description: 댓글이 성공적으로 생성되었습니다.
@@ -54,6 +53,7 @@ router.post('/comment/create', async (req, res) => {
  *   delete:
  *     summary: 댓글 삭제
  *     description: 특정 ID의 댓글을 삭제합니다.
+ *     tags: [Comments]
  *     parameters:
  *       - in: query
  *         name: id

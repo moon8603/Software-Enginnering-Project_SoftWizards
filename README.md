@@ -96,6 +96,11 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
 ---
 
 ## Installation Guide
+0. Mysql 설정
+- seproject라는 이름을 가진 database를 만든다.
+- backend/config/config.json에 비밀번호를 자기의 mysql 설정에 맞게 변경한다.
+- 서버를 한 번 켜고 메인페이지에 접속한 후 seproject database에 user table이 생겼다면 id:1, email:test@gmail.com pw:test0000인 admin 계정 데이터를 넣어둔다.
+
 1. **모든 코드를 다운로드한 상태에서 Terminal을 열고 interactive-map 디렉토리로 이동한다**
    ```bash
    cd interactive-map
@@ -103,6 +108,14 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
   `npm install`
 3. **개발 서버 시작한다**
   `npm run dev`
+4. **다른 Terminal을 열고 backend 디렉토리로 이동한다**
+   ```bash
+   cd backend
+5. **필요한 dependencies 설치한다**
+  `npm install`
+6. **개발 서버 시작한다**
+  `npm run dev`
+
   - 터미널에서 `Local: http://localhost:5173/`과 같은 링크를 누르면 웹페이지로 리디렉션될 것이다.
   - 프로젝트는 기본적으로 `http://localhost:5173`에서 실행된다.
 
@@ -126,7 +139,18 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
       2. **dev**: 개발 중인 코드를 관리하는 브랜치이다.
       (예시: `dev/backend/feature/login/IS-14-create-forum-API`, `dev/frontend/feature/overall-styling/IS-16-styling-all`).
 5. **테스트 케이스 및 결과**:
-   - [Test case and test result](https://example.com/test-cases)
+   - [Test case and test result](artifacts/SoftWizards%20Test%20Case_1.0.2.xlsx)
+   - [Unit test](artifacts/test_result_v1.0.docx)
+      - test code 실행방법 (test code는 backend/test 폴더 내 파일안에 있다.)
+      1. `cd backend`
+      2. `npm test`
+6. **API DOCS**:
+   - [API DOCS](artifacts/api_docs_v1.0.docx)
+     - [api 문서1 (postman)](https://documenter.getpostman.com/view/40252845/2sAYHxojVH)
+     - api 문서2 (swagger) 실행방법
+     1. `cd backend`
+     2. `npm run dev`
+     3. 웹에 접속 후 http://localhost:3000/docs 로 접속
 
 ---
 
@@ -157,7 +181,7 @@ https://github.com/user-attachments/assets/5e0c130b-eb2f-4f2c-bbd9-92855ffce951
       - `migrations/`: 데이터베이스 마이그레이션 파일 관리.
       - `models/`: MySQL 데이터베이스 모델 정의.
       - `public/`: 정적 파일(CSS, JS 등)을 저장.
-      - `routes/`: API 라우트 정의 (예: `auth.js`, `amenities.js`).
+      - `routes/`: API 라우트 정의 (API 정의: `index.js`, 실제 API 구현: `amenities.js` 등, jwt인증: `jwt.js`).
       - `test/`: API 및 기능 단위 테스트 스크립트.
       - `node_modules/`: npm 설치 패키지.
 

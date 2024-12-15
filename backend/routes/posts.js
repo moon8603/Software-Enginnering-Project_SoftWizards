@@ -8,6 +8,7 @@ var db = require("../models/index");
  *   get:
  *     summary: 게시글 목록 조회
  *     description: 모든 게시글을 조회하거나 특정 게시글과 해당 댓글을 조회합니다.
+ *     tags: [Posts]
  *     parameters:
  *       - in: query
  *         name: id
@@ -112,22 +113,23 @@ router.get('/', async(req, res, next) => {
  *   post:
  *     summary: 게시글 생성
  *     description: 새로운 게시글을 생성합니다.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               author:
- *                 type: string
- *                 description: 게시글 작성자
- *               title:
- *                 type: string
- *                 description: 게시글 제목
- *               content:
- *                 type: string
- *                 description: 게시글 내용
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: formData
+ *         name: author
+ *         type: string
+ *         description: 게시글 작성자
+ *         required: true
+ *       - in: formData
+ *         name: title
+ *         type: string
+ *         description: 게시글 제목
+ *         required: true
+ *       - in: formData
+ *         name: content
+ *         type: string
+ *         description: 게시글 내용
+ *         required: true
  *     responses:
  *       201:
  *         description: 게시글이 성공적으로 생성되었습니다.
@@ -157,6 +159,7 @@ router.post('/create', async (req, res) => {
  *   delete:
  *     summary: 게시글 삭제
  *     description: 특정 ID의 게시글과 해당 댓글을 삭제합니다.
+ *     tags: [Posts]
  *     parameters:
  *       - in: query
  *         name: id

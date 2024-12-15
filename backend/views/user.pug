@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Users List
+  ul
+    each user in users
+      li
+        p 이메일: #{user.email}
+        p 비밀번호: #{user.password}
