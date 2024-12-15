@@ -50,6 +50,7 @@ const saveFacilitiesToFile = (facilities) => {
  *   get:
  *     summary: 시설 목록 조회
  *     description: Amenity id가 없으면 전체 목록을, 있으면 특정 시설을 조회
+ *     tags: [Amenities]
  *     parameters:
  *       - in: query
  *         name: id
@@ -134,6 +135,7 @@ router.get('/', async(req, res, next) => {
  *   get:
  *     summary: 초기 시설 데이터 설정
  *     description: facilities.json 파일의 데이터를 DB에 저장
+ *     tags: [Amenities]
  *     responses:
  *       200:
  *         description: DB 설정 완료
@@ -178,27 +180,36 @@ router.get('/set', async (req, res) => {
  *   post:
  *     summary: 개별 시설 추가
  *     description: 새로운 Amenity를 추가
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               coordinates:
- *                 type: array
- *                 items:
- *                   type: number
- *               description:
- *                 type: string
- *               workingHour:
- *                 type: string
- *               type:
- *                 type: array
- *                 items:
- *                   type: string
+ *     tags: [Amenities]
+ *     parameters:
+ *       - in: formData
+ *         name: name
+ *         type: string
+ *         description: 시설의 이름
+ *         required: true
+ *       - in: formData
+ *         name: coordinates
+ *         type: string
+ *         description: 시설의 좌표 (위도, 경도)
+ *         example: "37.5665, 126.9780"
+ *         required: true
+ *       - in: formData
+ *         name: description
+ *         type: string
+ *         description: 시설에 대한 설명
+ *         required: true
+ *       - in: formData
+ *         name: workingHour
+ *         type: string
+ *         description: 시설의 운영 시간
+ *         example: "00:00 ~ 23:59"
+ *         required: true
+ *       - in: formData
+ *         name: type
+ *         type: string
+ *         description: 시설의 종류
+ *         example: "기본 편의 시설, 도서관"
+ *         required: true
  *     responses:
  *       201:
  *         description: Amenity 생성 성공
@@ -276,6 +287,7 @@ router.post('/create', async (req, res) => {
  *   put:
  *     summary: 시설 정보 수정
  *     description: 기존 시설 정보를 수정
+ *     tags: [Amenities]
  *     parameters:
  *       - in: query
  *         name: id
@@ -354,6 +366,7 @@ router.put('/update', async (req, res) => {
  *   delete:
  *     summary: 시설 삭제
  *     description: 특정 id의 시설을 삭제
+ *     tags: [Amenities]
  *     parameters:
  *       - in: query
  *         name: id

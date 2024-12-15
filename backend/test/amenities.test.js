@@ -82,8 +82,8 @@ describe('Amenity API tests', () => {
         name: "Updated Amenity",
         coordinates: [37.5665, 126.979],
         description: "Updated Description",
-        workingHour: "8 AM - 8 PM",
-        type: ["updatedType1", "updatedType2"]
+        workingHour: "00:00 ~ 23:59",
+        type: ["기본 편의 시설", "도서관"]
       });
 
     expect(res.statusCode).toBe(200);

@@ -11,19 +11,18 @@ var jwt = require('jsonwebtoken');
  *   post:
  *     summary: 로그인
  *     description: 이메일과 비밀번호를 사용하여 사용자가 로그인합니다.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: 로그인할 사용자의 이메일
- *               password:
- *                 type: string
- *                 description: 사용자의 비밀번호
+ *     tags: [Users]
+ *     parameters:
+ *       - in: formData
+ *         name: email
+ *         type: string
+ *         description: 로그인할 사용자의 이메일
+ *         required: true
+ *       - in: formData
+ *         name: password
+ *         type: string
+ *         description: 사용자의 비밀번호
+ *         required: true
  *     responses:
  *       200:
  *         description: 로그인 성공
@@ -32,18 +31,9 @@ var jwt = require('jsonwebtoken');
  *             schema:
  *               type: object
  *               properties:
- *                 user:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: integer
- *                       description: 사용자의 ID
- *                     email:
- *                       type: string
- *                       description: 사용자의 이메일
- *                     password:
- *                       type: string
- *                       description: 사용자의 비밀번호
+ *                 token:
+ *                   type: string
+ *                   description: JWT 토큰
  *                 message:
  *                   type: string
  *                   description: 로그인 성공 메시지
